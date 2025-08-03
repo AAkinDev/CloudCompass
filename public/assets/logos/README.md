@@ -1,38 +1,60 @@
-# Cloud Provider Logos
+# CloudCompass Logos
 
-This directory contains logos and icons for cloud service providers.
+This directory contains all the logos used in the CloudCompass application.
 
-## Usage
+## Logo Files
 
-- Store official logos from cloud providers
-- Use for documentation and presentations
-- Maintain consistent branding across the project
+### CloudCompass Logo
+- **File**: `CloudCompass-logo.png`
+- **Size**: 1.2 MB
+- **Usage**: Main application logo displayed in header, hero section, and footer
+- **Format**: High-quality PNG
 
-## Available Logos
+### Cloud Service Provider Logos
 
-- `aws.png` - Amazon Web Services logo ✅
-- `Azure.png` - Microsoft Azure logo ✅
-- `Google_cloud.png` - Google Cloud Platform logo ✅
-- `oracle-cloud.png` - Oracle Cloud Infrastructure logo ✅
-- `IBM_Cloud_logo.png` - IBM Cloud logo ✅
+#### AWS (Amazon Web Services)
+- **File**: `aws-logo.png`
+- **Size**: 47 KB
+- **Usage**: AWS service provider logo in comparison interface
+- **URL**: `https://raw.githubusercontent.com/AAkinDev/CloudCompass/main/public/assets/logos/aws-logo.png`
 
-All logos are now available and being used in the main README.
+#### Microsoft Azure
+- **File**: `azure-logo.png`
+- **Size**: 13 KB
+- **Usage**: Azure service provider logo in comparison interface
+- **URL**: `https://raw.githubusercontent.com/AAkinDev/CloudCompass/main/public/assets/logos/azure-logo.png`
 
-## Usage in README
+#### Google Cloud Platform (GCP)
+- **File**: `gcp-logo.png`
+- **Size**: 3.5 KB
+- **Usage**: GCP service provider logo in comparison interface
+- **URL**: `https://raw.githubusercontent.com/AAkinDev/CloudCompass/main/public/assets/logos/gcp-logo.png`
 
-The logos are displayed in the main README.md file in the "Supported Cloud Providers" table. Each logo is properly linked and will display the actual provider branding when viewed on GitHub or other Markdown renderers.
+#### Oracle Cloud Infrastructure (OCI)
+- **File**: `oracle-logo.png`
+- **Size**: 91 KB
+- **Usage**: Oracle Cloud service provider logo in comparison interface
+- **URL**: `https://raw.githubusercontent.com/AAkinDev/CloudCompass/main/public/assets/logos/oracle-logo.png`
 
-## Guidelines
+#### IBM Cloud
+- **File**: `ibm-logo.png`
+- **Size**: 38 KB
+- **Usage**: IBM Cloud service provider logo in comparison interface
+- **URL**: `https://raw.githubusercontent.com/AAkinDev/CloudCompass/main/public/assets/logos/ibm-logo.png`
 
-- Use official logos from provider websites
-- Maintain aspect ratios when resizing
-- Prefer PNG format for transparency support
-- Keep file sizes reasonable for web use
+## Logo Integration
 
-## Sources
+All logos are referenced in the `CloudCompass.jsx` component using GitHub raw URLs for reliable loading. Each logo component includes error handling that displays a fallback colored div if the image fails to load.
 
-- AWS: https://aws.amazon.com/logo/
-- Azure: https://azure.microsoft.com/en-us/
-- GCP: https://cloud.google.com/
-- Oracle Cloud: https://www.oracle.com/cloud/
-- IBM Cloud: https://www.ibm.com/cloud/ 
+## File Naming Convention
+
+- All provider logos follow the pattern: `{provider}-logo.png`
+- CloudCompass logo: `CloudCompass-logo.png`
+- All filenames are lowercase with hyphens for consistency
+
+## Quality Standards
+
+- All logos are high-quality PNG files
+- Logos maintain their original aspect ratios
+- File sizes are optimized for web delivery
+- All logos are properly licensed for use in the CloudCompass application 
