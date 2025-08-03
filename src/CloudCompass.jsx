@@ -1,5 +1,6 @@
 import React, { useState, useMemo } from 'react';
 import { Search, Filter, BarChart3, Users, Zap, Database, Shield, Globe, Monitor, Brain, Calculator, Download, Star, ExternalLink } from 'lucide-react';
+import CloudCompassLogo from './components/CloudCompassLogo';
 
 const CloudCompass = () => {
   const [activeView, setActiveView] = useState('compare');
@@ -355,14 +356,9 @@ const CloudCompass = () => {
       <header className="bg-white shadow-sm border-b">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center py-4">
-            <div className="flex items-center gap-3">
-              <div className="w-8 h-8 bg-gradient-to-r from-blue-500 to-purple-600 rounded-lg flex items-center justify-center">
-                <Globe className="w-5 h-5 text-white" />
-              </div>
-              <div>
-                <h1 className="text-xl font-bold">CloudCompass</h1>
-                <p className="text-sm text-gray-600">Navigate Your Cloud Journey</p>
-              </div>
+            <CloudCompassLogo size="default" className="flex-shrink-0" />
+            <div>
+              <p className="text-sm text-gray-600">Navigate Your Cloud Journey</p>
             </div>
             
             <nav className="flex gap-1">
@@ -396,6 +392,9 @@ const CloudCompass = () => {
       {/* Main Content */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="text-center py-12">
+          <div className="flex justify-center mb-6">
+            <CloudCompassLogo size="xl" />
+          </div>
           <h2 className="text-3xl font-bold text-gray-900 mb-4">
             Navigate Your Cloud Journey with Confidence
           </h2>
@@ -423,8 +422,11 @@ const CloudCompass = () => {
       <footer className="bg-white border-t mt-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
-            <div className="text-sm text-gray-600">
-              © 2025 CloudCompass by AAkinDev. Navigate your cloud journey with confidence.
+            <div className="flex items-center gap-3">
+              <CloudCompassLogo size="small" />
+              <div className="text-sm text-gray-600">
+                © 2025 CloudCompass by AAkinDev. Navigate your cloud journey with confidence.
+              </div>
             </div>
             <div className="flex items-center gap-4">
               <button className="flex items-center gap-2 text-sm text-gray-600 hover:text-gray-900">
