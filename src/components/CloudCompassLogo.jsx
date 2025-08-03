@@ -18,7 +18,7 @@ const CloudCompassLogo = ({ className = "", size = "default", showText = true })
   return (
     <div className={`flex items-center gap-2 ${className}`}>
       <img 
-        src="https://raw.githubusercontent.com/AAkinDev/CloudCompass/main/public/assets/logos/CloudCompass-logo.png"
+        src="https://raw.githubusercontent.com/AAkinDev/CloudCompass/main/public/assets/logos/cloudcompass-logo.png"
         alt="CloudCompass"
         className={`${sizeClasses[size]} flex-shrink-0 object-contain`}
         onError={(e) => {
