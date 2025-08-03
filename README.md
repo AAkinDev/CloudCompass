@@ -20,7 +20,7 @@ A comprehensive cloud service comparison and recommendation platform.
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/yourusername/CloudCompass.git
+git clone https://github.com/AAkinDev/CloudCompass.git
 cd CloudCompass
 ```
 
