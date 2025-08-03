@@ -2,10 +2,10 @@ import React from 'react';
 
 const CloudCompassLogo = ({ className = "", size = "default", showText = true }) => {
   const sizeClasses = {
-    small: "w-8 h-8",
-    default: "w-12 h-8", 
-    large: "w-16 h-12",
-    xl: "w-20 h-16"
+    small: "w-16 h-16",      // was w-8 h-8
+    default: "w-24 h-16",    // was w-12 h-8
+    large: "w-32 h-24",      // was w-16 h-12
+    xl: "w-40 h-32"          // was w-20 h-16
   };
 
   const textSizes = {

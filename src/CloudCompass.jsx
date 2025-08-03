@@ -16,10 +16,10 @@ const CloudCompass = () => {
     <img 
       src="https://raw.githubusercontent.com/AAkinDev/CloudCompass/main/public/assets/logos/aws-logo.png" 
       alt="AWS" 
-      className="w-8 h-6 object-contain"
+      className="w-16 h-12 object-contain"
       onError={(e) => {
         e.target.style.display = 'none';
-        e.target.parentNode.innerHTML = '<div class="w-8 h-6 bg-orange-500 rounded flex items-center justify-center text-white text-xs font-bold">AWS</div>';
+        e.target.parentNode.innerHTML = '<div class="w-16 h-12 bg-orange-500 rounded flex items-center justify-center text-white text-sm font-bold">AWS</div>';
       }}
     />
   );
@@ -28,10 +28,10 @@ const CloudCompass = () => {
     <img 
       src="https://raw.githubusercontent.com/AAkinDev/CloudCompass/main/public/assets/logos/azure-logo.png" 
       alt="Microsoft Azure" 
-      className="w-6 h-6 object-contain"
+      className="w-12 h-12 object-contain"
       onError={(e) => {
         e.target.style.display = 'none';
-        e.target.parentNode.innerHTML = '<div class="w-6 h-6 bg-blue-600 rounded flex items-center justify-center text-white text-xs font-bold">Az</div>';
+        e.target.parentNode.innerHTML = '<div class="w-12 h-12 bg-blue-600 rounded flex items-center justify-center text-white text-sm font-bold">Az</div>';
       }}
     />
   );
@@ -40,10 +40,10 @@ const CloudCompass = () => {
     <img 
       src="https://raw.githubusercontent.com/AAkinDev/CloudCompass/main/public/assets/logos/gcp-logo.png" 
       alt="Google Cloud Platform" 
-      className="w-6 h-6 object-contain"
+      className="w-12 h-12 object-contain"
       onError={(e) => {
         e.target.style.display = 'none';
-        e.target.parentNode.innerHTML = '<div class="w-6 h-6 bg-red-500 rounded flex items-center justify-center text-white text-xs font-bold">GCP</div>';
+        e.target.parentNode.innerHTML = '<div class="w-12 h-12 bg-red-500 rounded flex items-center justify-center text-white text-sm font-bold">GCP</div>';
       }}
     />
   );
@@ -52,10 +52,10 @@ const CloudCompass = () => {
     <img 
       src="https://raw.githubusercontent.com/AAkinDev/CloudCompass/main/public/assets/logos/oracle-logo.png" 
       alt="Oracle Cloud" 
-      className="w-8 h-6 object-contain"
+      className="w-16 h-12 object-contain"
       onError={(e) => {
         e.target.style.display = 'none';
-        e.target.parentNode.innerHTML = '<div class="w-8 h-6 bg-red-600 rounded flex items-center justify-center text-white text-xs font-bold">OCI</div>';
+        e.target.parentNode.innerHTML = '<div class="w-16 h-12 bg-red-600 rounded flex items-center justify-center text-white text-sm font-bold">OCI</div>';
       }}
     />
   );
@@ -64,10 +64,10 @@ const CloudCompass = () => {
     <img 
       src="https://raw.githubusercontent.com/AAkinDev/CloudCompass/main/public/assets/logos/ibm-logo.png" 
       alt="IBM Cloud" 
-      className="w-8 h-6 object-contain"
+      className="w-16 h-12 object-contain"
       onError={(e) => {
         e.target.style.display = 'none';
-        e.target.parentNode.innerHTML = '<div class="w-8 h-6 bg-blue-800 rounded flex items-center justify-center text-white text-xs font-bold">IBM</div>';
+        e.target.parentNode.innerHTML = '<div class="w-16 h-12 bg-blue-800 rounded flex items-center justify-center text-white text-sm font-bold">IBM</div>';
       }}
     />
   );
