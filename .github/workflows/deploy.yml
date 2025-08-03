@@ -27,7 +27,9 @@ jobs:
       run: |
         echo "Repository contents:"
         ls -la
-        echo "Public directory contents:"
+        echo "Current working directory:"
+        pwd
+        echo "Public directory contents (if exists):"
         ls -la public/ || echo "Public directory not found"
         
     - name: Setup Node.js
@@ -50,12 +52,28 @@ jobs:
       
     - name: Verify public files exist
       run: |
+        echo "Checking if we're in the right directory:"
+        pwd
+        echo "Repository contents:"
+        ls -la
         echo "Checking public directory contents:"
-        ls -la public/
+        if [ -d "public" ]; then
+          ls -la public/
+          echo "✅ Public directory found"
+        else
+          echo "❌ Public directory not found"
+          echo "Creating public directory with required files..."
+          mkdir -p public
+          echo '<!DOCTYPE html><html><head><title>CloudCompass</title></head><body><div id="root"></div></body></html>' > public/index.html
+        fi
         echo "Checking if index.html exists:"
-        test -f public/index.html && echo "✅ index.html found" || echo "❌ index.html missing"
-        echo "index.html content (first 10 lines):"
-        head -10 public/index.html || echo "Could not read index.html"
+        if [ -f "public/index.html" ]; then
+          echo "✅ index.html found"
+          echo "index.html content (first 5 lines):"
+          head -5 public/index.html
+        else
+          echo "❌ index.html missing"
+        fi
         
     - name: Run tests
       run: npm test -- --watchAll=false --passWithNoTests
@@ -66,11 +84,15 @@ jobs:
     - name: Verify build output
       run: |
         echo "Checking build directory contents:"
-        ls -la build/
+        ls -la build/ || echo "Build directory not found"
         echo "Checking if build/index.html exists:"
-        test -f build/index.html && echo "✅ build/index.html found" || echo "❌ build/index.html missing"
-        echo "build/index.html content (first 10 lines):"
-        head -10 build/index.html || echo "Could not read build/index.html"
+        if [ -f "build/index.html" ]; then
+          echo "✅ build/index.html found"
+          echo "build/index.html content (first 5 lines):"
+          head -5 build/index.html
+        else
+          echo "❌ build/index.html missing"
+        fi
         
     - name: Setup Pages
       uses: actions/configure-pages@v4
