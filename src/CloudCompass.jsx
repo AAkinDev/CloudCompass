@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect, useCallback } from 'react';
 import { Search, Filter, BarChart3, Users, Zap, Database, Shield, Globe, Monitor, Brain, Calculator, Download, Star, ExternalLink } from 'lucide-react';
 import CloudCompassLogo from './components/CloudCompassLogo';
 
@@ -483,20 +483,130 @@ const CloudCompass = () => {
   };
 
   const getRecommendations = () => {
-    const { useCase } = quizAnswers;
+    const { useCase, scale, budget } = quizAnswers;
     let recommendations = [];
 
+    // Enhanced recommendation logic based on use case, scale, and budget
     if (useCase === 'web') {
       recommendations.push(
-        serviceData.find(s => s.category === 'compute' && s.name === 'Virtual Machines'),
-        serviceData.find(s => s.category === 'database' && s.name === 'Relational Database'),
-        serviceData.find(s => s.category === 'storage' && s.name === 'Object Storage')
+        {
+          ...serviceData.find(s => s.category === 'compute' && s.name === 'Virtual Machines'),
+          reason: 'Essential for hosting web applications',
+          priority: 'High'
+        },
+        {
+          ...serviceData.find(s => s.category === 'database' && s.name === 'Relational Database'),
+          reason: 'Store user data and application state',
+          priority: 'High'
+        },
+        {
+          ...serviceData.find(s => s.category === 'storage' && s.name === 'Object Storage'),
+          reason: 'Store static assets and user uploads',
+          priority: 'Medium'
+        },
+        {
+          ...serviceData.find(s => s.category === 'networking' && s.name === 'Load Balancer'),
+          reason: 'Distribute traffic across multiple instances',
+          priority: scale === 'large' || scale === 'enterprise' ? 'High' : 'Medium'
+        }
+      );
+    } else if (useCase === 'mobile') {
+      recommendations.push(
+        {
+          ...serviceData.find(s => s.category === 'compute' && s.name === 'Serverless Functions'),
+          reason: 'Handle mobile app backend logic efficiently',
+          priority: 'High'
+        },
+        {
+          ...serviceData.find(s => s.category === 'database' && s.name === 'NoSQL Database'),
+          reason: 'Store mobile app data with flexible schema',
+          priority: 'High'
+        },
+        {
+          ...serviceData.find(s => s.category === 'storage' && s.name === 'Object Storage'),
+          reason: 'Store app assets and user content',
+          priority: 'Medium'
+        }
       );
     } else if (useCase === 'analytics') {
       recommendations.push(
-        serviceData.find(s => s.category === 'storage' && s.name === 'Object Storage'),
-        serviceData.find(s => s.category === 'compute' && s.name === 'Virtual Machines')
+        {
+          ...serviceData.find(s => s.category === 'storage' && s.name === 'Object Storage'),
+          reason: 'Store large datasets for analysis',
+          priority: 'High'
+        },
+        {
+          ...serviceData.find(s => s.category === 'compute' && s.name === 'Virtual Machines'),
+          reason: 'Process analytics workloads',
+          priority: 'High'
+        },
+        {
+          ...serviceData.find(s => s.category === 'ai' && s.name === 'Machine Learning'),
+          reason: 'Build and deploy ML models',
+          priority: 'Medium'
+        }
       );
+    } else if (useCase === 'ml') {
+      recommendations.push(
+        {
+          ...serviceData.find(s => s.category === 'ai' && s.name === 'Machine Learning'),
+          reason: 'Core ML platform for model training and deployment',
+          priority: 'High'
+        },
+        {
+          ...serviceData.find(s => s.category === 'compute' && s.name === 'Virtual Machines'),
+          reason: 'High-performance compute for training',
+          priority: 'High'
+        },
+        {
+          ...serviceData.find(s => s.category === 'storage' && s.name === 'Object Storage'),
+          reason: 'Store training data and model artifacts',
+          priority: 'High'
+        }
+      );
+    } else if (useCase === 'enterprise') {
+      recommendations.push(
+        {
+          ...serviceData.find(s => s.category === 'compute' && s.name === 'Virtual Machines'),
+          reason: 'Core infrastructure for enterprise workloads',
+          priority: 'High'
+        },
+        {
+          ...serviceData.find(s => s.category === 'database' && s.name === 'Relational Database'),
+          reason: 'Enterprise-grade data management',
+          priority: 'High'
+        },
+        {
+          ...serviceData.find(s => s.category === 'security' && s.name === 'Identity Management'),
+          reason: 'Enterprise security and access control',
+          priority: 'High'
+        },
+        {
+          ...serviceData.find(s => s.category === 'networking' && s.name === 'Load Balancer'),
+          reason: 'High availability and scalability',
+          priority: 'High'
+        }
+      );
+    }
+
+    // Filter recommendations based on budget
+    if (budget === 'minimal') {
+      recommendations = recommendations.filter(rec => 
+        rec.costs && Object.values(rec.costs).some(cost => 
+          cost === 'Free' || parseFloat(cost.replace(/[^0-9.]/g, '')) < 0.05
+        )
+      );
+    } else if (budget === 'balanced') {
+      // Keep all recommendations but prioritize cost-effective options
+      recommendations.sort((a, b) => {
+        const aCost = Math.min(...Object.values(a.costs || {}).map(cost => 
+          cost === 'Free' ? 0 : parseFloat(cost.replace(/[^0-9.]/g, '')) || 999
+        ));
+        const bCost = Math.min(...Object.values(b.costs || {}).map(cost => 
+          cost === 'Free' ? 0 : parseFloat(cost.replace(/[^0-9.]/g, '')) || 999
+        ));
+        return aCost - bCost;
+      });
     }
 
     return recommendations.filter(Boolean);
@@ -991,24 +1101,72 @@ const CloudCompass = () => {
           </div>
         ) : (
           <div>
-            <h3 className="text-lg font-semibold mb-4">Your Recommendations</h3>
+            <h3 className="text-lg font-semibold mb-4">Your Personalized Recommendations</h3>
+            <div className="mb-6 p-4 bg-blue-50 rounded-lg">
+              <h4 className="font-semibold text-blue-800 mb-2">Based on your profile:</h4>
+              <div className="text-sm text-blue-700">
+                <p>• Use Case: {quizAnswers["What's your primary use case?"]}</p>
+                <p>• Scale: {quizAnswers["What's your expected scale?"]}</p>
+                <p>• Budget: {quizAnswers["What's your budget preference?"]}</p>
+              </div>
+            </div>
+            
             <div className="space-y-4">
-              {getRecommendations().map(service => (
-                <div key={service.id} className="p-4 border border-gray-200 rounded-lg">
-                  <h4 className="font-semibold">{service.name}</h4>
-                  <p className="text-sm text-gray-600">{service.description}</p>
+              {getRecommendations().map((service, index) => (
+                <div key={service.id} className="p-4 border border-gray-200 rounded-lg hover:shadow-md transition-shadow">
+                  <div className="flex justify-between items-start mb-2">
+                    <h4 className="font-semibold text-lg">{service.name}</h4>
+                    <span className={`px-2 py-1 rounded text-xs font-medium ${
+                      service.priority === 'High' ? 'bg-red-100 text-red-800' :
+                      service.priority === 'Medium' ? 'bg-yellow-100 text-yellow-800' :
+                      'bg-green-100 text-green-800'
+                    }`}>
+                      {service.priority} Priority
+                    </span>
+                  </div>
+                  <p className="text-sm text-gray-600 mb-3">{service.description}</p>
+                  <div className="bg-gray-50 p-3 rounded">
+                    <p className="text-sm font-medium text-gray-700 mb-1">Why this service?</p>
+                    <p className="text-sm text-gray-600">{service.reason}</p>
+                  </div>
+                  
+                  {/* Show provider options */}
+                  <div className="mt-3">
+                    <p className="text-xs font-medium text-gray-500 mb-2">Available on:</p>
+                    <div className="flex gap-2">
+                      {selectedProviders.map(providerId => {
+                        const provider = providers.find(p => p.id === providerId);
+                        const serviceName = service[providerId];
+                        return serviceName ? (
+                          <div key={providerId} className="flex items-center gap-1 text-xs">
+                            <provider.logo />
+                            <span className="text-gray-600">{serviceName}</span>
+                          </div>
+                        ) : null;
+                      })}
+                    </div>
+                  </div>
                 </div>
               ))}
             </div>
-            <button
-              onClick={() => {
-                setQuizStep(0);
-                setQuizAnswers({});
-              }}
-              className="mt-6 w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition-colors"
-            >
-              Start Over
-            </button>
+            
+            <div className="mt-6 space-y-3">
+              <button
+                onClick={() => setActiveView('compare')}
+                className="w-full bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 transition-colors font-medium"
+              >
+                Compare These Services
+              </button>
+              <button
+                onClick={() => {
+                  setQuizStep(0);
+                  setQuizAnswers({});
+                }}
+                className="w-full bg-gray-200 text-gray-700 py-2 rounded-lg hover:bg-gray-300 transition-colors"
+              >
+                Start Over
+              </button>
+            </div>
           </div>
         )}
       </div>
@@ -1038,15 +1196,300 @@ const CloudCompass = () => {
     </div>
   );
 
-  const CalculatorView = () => (
-    <div className="space-y-6">
-      <div className="bg-white rounded-lg p-6 shadow-sm">
-        <h2 className="text-2xl font-bold mb-4">Cost Calculator</h2>
-        <p className="text-gray-600">Calculate estimated costs for your cloud infrastructure.</p>
-        {/* Add cost calculator implementation here */}
+  const CalculatorView = () => {
+    const [calculatorState, setCalculatorState] = useState({
+      compute: { instances: 2, hours: 730, type: 'general' },
+      storage: { gb: 100, type: 'standard' },
+      database: { instances: 1, hours: 730, type: 'general' },
+      bandwidth: { gb: 1000 },
+      region: 'us-east-1'
+    });
+
+    const [selectedProvider, setSelectedProvider] = useState('aws');
+    const [monthlyCosts, setMonthlyCosts] = useState({});
+
+    const calculateCosts = useCallback(() => {
+      const costs = {};
+      
+      // Compute costs
+      const computeCosts = {
+        aws: { general: 0.0116, memory: 0.0232, compute: 0.0348 },
+        azure: { general: 0.012, memory: 0.024, compute: 0.036 },
+        gcp: { general: 0.0104, memory: 0.0208, compute: 0.0312 },
+        oracle: { general: 0.011, memory: 0.022, compute: 0.033 },
+        ibm: { general: 0.013, memory: 0.026, compute: 0.039 }
+      };
+
+      // Storage costs per GB/month
+      const storageCosts = {
+        aws: { standard: 0.023, infrequent: 0.0125, archive: 0.004 },
+        azure: { standard: 0.0184, infrequent: 0.01, archive: 0.002 },
+        gcp: { standard: 0.020, infrequent: 0.012, archive: 0.004 },
+        oracle: { standard: 0.0255, infrequent: 0.013, archive: 0.003 },
+        ibm: { standard: 0.024, infrequent: 0.012, archive: 0.004 }
+      };
+
+      // Database costs per hour
+      const databaseCosts = {
+        aws: { general: 0.017, memory: 0.034, compute: 0.068 },
+        azure: { general: 0.0208, memory: 0.0416, compute: 0.0624 },
+        gcp: { general: 0.0150, memory: 0.030, compute: 0.045 },
+        oracle: { general: 0.016, memory: 0.032, compute: 0.048 },
+        ibm: { general: 0.019, memory: 0.038, compute: 0.057 }
+      };
+
+      // Bandwidth costs per GB
+      const bandwidthCosts = {
+        aws: 0.09,
+        azure: 0.087,
+        gcp: 0.12,
+        oracle: 0.0085,
+        ibm: 0.09
+      };
+
+      providers.forEach(provider => {
+        const computeCost = computeCosts[provider.id][calculatorState.compute.type] * 
+                          calculatorState.compute.instances * calculatorState.compute.hours;
+        
+        const storageCost = storageCosts[provider.id][calculatorState.storage.type] * 
+                          calculatorState.storage.gb;
+        
+        const databaseCost = databaseCosts[provider.id][calculatorState.database.type] * 
+                           calculatorState.database.instances * calculatorState.database.hours;
+        
+        const bandwidthCost = bandwidthCosts[provider.id] * calculatorState.bandwidth.gb;
+        
+        costs[provider.id] = {
+          compute: computeCost,
+          storage: storageCost,
+          database: databaseCost,
+          bandwidth: bandwidthCost,
+          total: computeCost + storageCost + databaseCost + bandwidthCost
+        };
+      });
+
+      setMonthlyCosts(costs);
+    }, [calculatorState]);
+
+    useEffect(() => {
+      calculateCosts();
+    }, [calculateCosts]);
+
+    return (
+      <div className="space-y-6">
+        <div className="bg-white rounded-lg p-6 shadow-sm">
+          <h2 className="text-2xl font-bold mb-4">Cost Calculator</h2>
+          <p className="text-gray-600 mb-6">Calculate estimated monthly costs for your cloud infrastructure.</p>
+          
+          {/* Provider Selection */}
+          <div className="mb-6">
+            <h3 className="text-lg font-semibold mb-3">Select Provider</h3>
+            <div className="grid grid-cols-2 md:grid-cols-5 gap-3">
+              {providers.map(provider => (
+                <button
+                  key={provider.id}
+                  onClick={() => setSelectedProvider(provider.id)}
+                  className={`p-3 rounded-lg border-2 transition-all ${
+                    selectedProvider === provider.id
+                      ? 'border-blue-500 bg-blue-50'
+                      : 'border-gray-200 hover:border-gray-300'
+                  }`}
+                >
+                  <provider.logo />
+                  <div className="text-sm font-medium mt-2">{provider.name}</div>
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {/* Calculator Form */}
+          <div className="grid md:grid-cols-2 gap-6">
+            <div className="space-y-4">
+              <h3 className="text-lg font-semibold">Infrastructure Configuration</h3>
+              
+              {/* Compute */}
+              <div className="space-y-2">
+                <label className="block text-sm font-medium text-gray-700">Compute Instances</label>
+                <div className="grid grid-cols-2 gap-2">
+                  <div>
+                    <label className="block text-xs text-gray-500">Number of Instances</label>
+                    <input
+                      type="number"
+                      value={calculatorState.compute.instances}
+                      onChange={(e) => setCalculatorState(prev => ({
+                        ...prev,
+                        compute: { ...prev.compute, instances: parseInt(e.target.value) || 0 }
+                      }))}
+                      className="w-full p-2 border border-gray-300 rounded-md"
+                      min="1"
+                      max="100"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-xs text-gray-500">Instance Type</label>
+                    <select
+                      value={calculatorState.compute.type}
+                      onChange={(e) => setCalculatorState(prev => ({
+                        ...prev,
+                        compute: { ...prev.compute, type: e.target.value }
+                      }))}
+                      className="w-full p-2 border border-gray-300 rounded-md"
+                    >
+                      <option value="general">General Purpose</option>
+                      <option value="memory">Memory Optimized</option>
+                      <option value="compute">Compute Optimized</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+
+              {/* Storage */}
+              <div className="space-y-2">
+                <label className="block text-sm font-medium text-gray-700">Storage</label>
+                <div className="grid grid-cols-2 gap-2">
+                  <div>
+                    <label className="block text-xs text-gray-500">Storage (GB)</label>
+                    <input
+                      type="number"
+                      value={calculatorState.storage.gb}
+                      onChange={(e) => setCalculatorState(prev => ({
+                        ...prev,
+                        storage: { ...prev.storage, gb: parseInt(e.target.value) || 0 }
+                      }))}
+                      className="w-full p-2 border border-gray-300 rounded-md"
+                      min="1"
+                      max="10000"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-xs text-gray-500">Storage Type</label>
+                    <select
+                      value={calculatorState.storage.type}
+                      onChange={(e) => setCalculatorState(prev => ({
+                        ...prev,
+                        storage: { ...prev.storage, type: e.target.value }
+                      }))}
+                      className="w-full p-2 border border-gray-300 rounded-md"
+                    >
+                      <option value="standard">Standard</option>
+                      <option value="infrequent">Infrequent Access</option>
+                      <option value="archive">Archive</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+
+              {/* Database */}
+              <div className="space-y-2">
+                <label className="block text-sm font-medium text-gray-700">Database</label>
+                <div className="grid grid-cols-2 gap-2">
+                  <div>
+                    <label className="block text-xs text-gray-500">Database Instances</label>
+                    <input
+                      type="number"
+                      value={calculatorState.database.instances}
+                      onChange={(e) => setCalculatorState(prev => ({
+                        ...prev,
+                        database: { ...prev.database, instances: parseInt(e.target.value) || 0 }
+                      }))}
+                      className="w-full p-2 border border-gray-300 rounded-md"
+                      min="0"
+                      max="10"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-xs text-gray-500">Database Type</label>
+                    <select
+                      value={calculatorState.database.type}
+                      onChange={(e) => setCalculatorState(prev => ({
+                        ...prev,
+                        database: { ...prev.database, type: e.target.value }
+                      }))}
+                      className="w-full p-2 border border-gray-300 rounded-md"
+                    >
+                      <option value="general">General Purpose</option>
+                      <option value="memory">Memory Optimized</option>
+                      <option value="compute">Compute Optimized</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+
+              {/* Bandwidth */}
+              <div className="space-y-2">
+                <label className="block text-sm font-medium text-gray-700">Bandwidth</label>
+                <div>
+                  <label className="block text-xs text-gray-500">Data Transfer (GB)</label>
+                  <input
+                    type="number"
+                    value={calculatorState.bandwidth.gb}
+                    onChange={(e) => setCalculatorState(prev => ({
+                      ...prev,
+                      bandwidth: { ...prev.bandwidth, gb: parseInt(e.target.value) || 0 }
+                    }))}
+                    className="w-full p-2 border border-gray-300 rounded-md"
+                    min="0"
+                    max="10000"
+                  />
+                </div>
+              </div>
+            </div>
+
+            {/* Cost Results */}
+            <div className="space-y-4">
+              <h3 className="text-lg font-semibold">Monthly Cost Estimate</h3>
+              
+              {Object.keys(monthlyCosts).length > 0 && (
+                <div className="space-y-3">
+                  {providers.map(provider => {
+                    const costs = monthlyCosts[provider.id];
+                    if (!costs) return null;
+                    
+                    return (
+                      <div key={provider.id} className={`p-4 rounded-lg border-2 ${
+                        selectedProvider === provider.id 
+                          ? 'border-blue-500 bg-blue-50' 
+                          : 'border-gray-200'
+                      }`}>
+                        <div className="flex items-center justify-between mb-3">
+                          <div className="flex items-center gap-2">
+                            <provider.logo />
+                            <span className="font-semibold">{provider.name}</span>
+                          </div>
+                          <span className="text-2xl font-bold text-blue-600">
+                            ${costs.total.toFixed(2)}
+                          </span>
+                        </div>
+                        
+                        <div className="space-y-1 text-sm">
+                          <div className="flex justify-between">
+                            <span>Compute:</span>
+                            <span>${costs.compute.toFixed(2)}</span>
+                          </div>
+                          <div className="flex justify-between">
+                            <span>Storage:</span>
+                            <span>${costs.storage.toFixed(2)}</span>
+                          </div>
+                          <div className="flex justify-between">
+                            <span>Database:</span>
+                            <span>${costs.database.toFixed(2)}</span>
+                          </div>
+                          <div className="flex justify-between">
+                            <span>Bandwidth:</span>
+                            <span>${costs.bandwidth.toFixed(2)}</span>
+                          </div>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
       </div>
-    </div>
-  );
+    );
+  };
 
   const renderView = () => {
     switch (activeView) {
