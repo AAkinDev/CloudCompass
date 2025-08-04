@@ -13,63 +13,103 @@ const CloudCompass = () => {
 
   // Logo components using actual logo images from GitHub repo
   const AWSLogo = () => (
-    <img 
-      src="https://raw.githubusercontent.com/AAkinDev/CloudCompass/main/public/assets/logos/aws-logo.png" 
-      alt="AWS" 
-      className="w-16 h-12 object-contain"
-      onError={(e) => {
-        e.target.style.display = 'none';
-        e.target.parentNode.innerHTML = '<div class="w-16 h-12 bg-orange-500 rounded flex items-center justify-center text-white text-sm font-bold">AWS</div>';
-      }}
-    />
+    <a
+      href="https://aws.amazon.com/"
+      target="_blank"
+      rel="noopener noreferrer"
+      className="hover:opacity-80 transition-opacity"
+      title="Visit Amazon Web Services platform"
+    >
+      <img 
+        src="https://raw.githubusercontent.com/AAkinDev/CloudCompass/main/public/assets/logos/aws-logo.png" 
+        alt="AWS" 
+        className="w-16 h-12 object-contain"
+        onError={(e) => {
+          e.target.style.display = 'none';
+          e.target.parentNode.innerHTML = '<div class="w-16 h-12 bg-orange-500 rounded flex items-center justify-center text-white text-sm font-bold">AWS</div>';
+        }}
+      />
+    </a>
   );
 
   const AzureLogo = () => (
-    <img 
-      src="https://raw.githubusercontent.com/AAkinDev/CloudCompass/main/public/assets/logos/azure-logo.png" 
-      alt="Microsoft Azure" 
-      className="w-12 h-12 object-contain"
-      onError={(e) => {
-        e.target.style.display = 'none';
-        e.target.parentNode.innerHTML = '<div class="w-12 h-12 bg-blue-600 rounded flex items-center justify-center text-white text-sm font-bold">Az</div>';
-      }}
-    />
+    <a
+      href="https://azure.microsoft.com/"
+      target="_blank"
+      rel="noopener noreferrer"
+      className="hover:opacity-80 transition-opacity"
+      title="Visit Microsoft Azure platform"
+    >
+      <img 
+        src="https://raw.githubusercontent.com/AAkinDev/CloudCompass/main/public/assets/logos/azure-logo.png" 
+        alt="Microsoft Azure" 
+        className="w-12 h-12 object-contain"
+        onError={(e) => {
+          e.target.style.display = 'none';
+          e.target.parentNode.innerHTML = '<div class="w-12 h-12 bg-blue-600 rounded flex items-center justify-center text-white text-sm font-bold">Az</div>';
+        }}
+      />
+    </a>
   );
 
   const GoogleCloudLogo = () => (
-    <img 
-      src="https://raw.githubusercontent.com/AAkinDev/CloudCompass/main/public/assets/logos/gcp-logo.png" 
-      alt="Google Cloud Platform" 
-      className="w-12 h-12 object-contain"
-      onError={(e) => {
-        e.target.style.display = 'none';
-        e.target.parentNode.innerHTML = '<div class="w-12 h-12 bg-red-500 rounded flex items-center justify-center text-white text-sm font-bold">GCP</div>';
-      }}
-    />
+    <a
+      href="https://cloud.google.com/"
+      target="_blank"
+      rel="noopener noreferrer"
+      className="hover:opacity-80 transition-opacity"
+      title="Visit Google Cloud Platform"
+    >
+      <img 
+        src="https://raw.githubusercontent.com/AAkinDev/CloudCompass/main/public/assets/logos/gcp-logo.png" 
+        alt="Google Cloud Platform" 
+        className="w-12 h-12 object-contain"
+        onError={(e) => {
+          e.target.style.display = 'none';
+          e.target.parentNode.innerHTML = '<div class="w-12 h-12 bg-red-500 rounded flex items-center justify-center text-white text-sm font-bold">GCP</div>';
+        }}
+      />
+    </a>
   );
 
   const OracleLogo = () => (
-    <img 
-      src="https://raw.githubusercontent.com/AAkinDev/CloudCompass/main/public/assets/logos/oracle-logo.png" 
-      alt="Oracle Cloud" 
-      className="w-16 h-12 object-contain"
-      onError={(e) => {
-        e.target.style.display = 'none';
-        e.target.parentNode.innerHTML = '<div class="w-16 h-12 bg-red-600 rounded flex items-center justify-center text-white text-sm font-bold">OCI</div>';
-      }}
-    />
+    <a
+      href="https://www.oracle.com/cloud/"
+      target="_blank"
+      rel="noopener noreferrer"
+      className="hover:opacity-80 transition-opacity"
+      title="Visit Oracle Cloud platform"
+    >
+      <img 
+        src="https://raw.githubusercontent.com/AAkinDev/CloudCompass/main/public/assets/logos/oracle-logo.png" 
+        alt="Oracle Cloud" 
+        className="w-16 h-12 object-contain"
+        onError={(e) => {
+          e.target.style.display = 'none';
+          e.target.parentNode.innerHTML = '<div class="w-16 h-12 bg-red-600 rounded flex items-center justify-center text-white text-sm font-bold">OCI</div>';
+        }}
+      />
+    </a>
   );
 
   const IBMCloudLogo = () => (
-    <img 
-      src="https://raw.githubusercontent.com/AAkinDev/CloudCompass/main/public/assets/logos/ibm-logo.png" 
-      alt="IBM Cloud" 
-      className="w-16 h-12 object-contain"
-      onError={(e) => {
-        e.target.style.display = 'none';
-        e.target.parentNode.innerHTML = '<div class="w-16 h-12 bg-blue-800 rounded flex items-center justify-center text-white text-sm font-bold">IBM</div>';
-      }}
-    />
+    <a
+      href="https://www.ibm.com/cloud/"
+      target="_blank"
+      rel="noopener noreferrer"
+      className="hover:opacity-80 transition-opacity"
+      title="Visit IBM Cloud platform"
+    >
+      <img 
+        src="https://raw.githubusercontent.com/AAkinDev/CloudCompass/main/public/assets/logos/ibm-logo.png" 
+        alt="IBM Cloud" 
+        className="w-16 h-12 object-contain"
+        onError={(e) => {
+          e.target.style.display = 'none';
+          e.target.parentNode.innerHTML = '<div class="w-16 h-12 bg-blue-800 rounded flex items-center justify-center text-white text-sm font-bold">IBM</div>';
+        }}
+      />
+    </a>
   );
 
   const providers = [
@@ -532,15 +572,7 @@ const CloudCompass = () => {
               return serviceName ? (
                 <div key={providerId} className="flex items-center justify-between py-2 px-3 border border-gray-100 rounded-md bg-gray-50">
                   <div className="flex items-center gap-3">
-                    <a
-                      href={provider.platformUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="hover:opacity-80 transition-opacity"
-                      title={`Visit ${provider.fullName} platform`}
-                    >
-                      <provider.logo />
-                    </a>
+                    <provider.logo />
                     <div>
                       <a
                         href={provider.platformUrl}
