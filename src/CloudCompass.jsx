@@ -682,7 +682,15 @@ const CloudCompass = () => {
               return serviceName ? (
                 <div key={providerId} className="flex items-center justify-between py-2 px-3 border border-gray-100 rounded-md bg-gray-50">
                   <div className="flex items-center gap-3">
-                    <provider.logo />
+                    <a
+                      href={provider.platformUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="hover:opacity-80 transition-opacity"
+                      title={`Visit ${provider.fullName} platform`}
+                    >
+                      <provider.logo />
+                    </a>
                     <div>
                       <a
                         href={provider.platformUrl}
@@ -1056,7 +1064,7 @@ const CloudCompass = () => {
                         ? `${provider.borderColor} ${provider.bgColor} ${provider.textColor} shadow-sm`
                         : 'border-gray-200 text-gray-600 hover:border-gray-300 hover:bg-gray-50'
                     }`}
-                    title={`${selectedProviders.includes(provider.id) ? 'Hide' : 'Show'} ${provider.name}`}
+                    title={`${selectedProviders.includes(provider.id) ? 'Hide' : 'Show'} ${provider.name} in comparison`}
                   >
                     <provider.logo />
                   </button>
@@ -1098,7 +1106,15 @@ const CloudCompass = () => {
                       return (
                         <th key={providerId} className="px-6 py-4 text-center text-sm font-semibold text-gray-900 min-w-[150px]">
                           <div className="flex flex-col items-center gap-2">
-                            <provider.logo />
+                            <a
+                              href={provider.platformUrl}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="hover:opacity-80 transition-opacity"
+                              title={`Visit ${provider.fullName} platform`}
+                            >
+                              <provider.logo />
+                            </a>
                             <span>{provider.name}</span>
                           </div>
                         </th>
