@@ -112,6 +112,67 @@ const CloudCompass = () => {
     </a>
   );
 
+  // Non-clickable logo components for filter cards
+  const AWSLogoFilter = () => (
+    <img 
+      src="https://raw.githubusercontent.com/AAkinDev/CloudCompass/main/public/assets/logos/aws-logo.png" 
+      alt="AWS" 
+      className="w-8 h-6 object-contain"
+      onError={(e) => {
+        e.target.style.display = 'none';
+        e.target.parentNode.innerHTML = '<div class="w-8 h-6 bg-orange-500 rounded flex items-center justify-center text-white text-xs font-bold">AWS</div>';
+      }}
+    />
+  );
+
+  const AzureLogoFilter = () => (
+    <img 
+      src="https://raw.githubusercontent.com/AAkinDev/CloudCompass/main/public/assets/logos/azure-logo.png" 
+      alt="Microsoft Azure" 
+      className="w-8 h-6 object-contain"
+      onError={(e) => {
+        e.target.style.display = 'none';
+        e.target.parentNode.innerHTML = '<div class="w-8 h-6 bg-blue-600 rounded flex items-center justify-center text-white text-xs font-bold">Az</div>';
+      }}
+    />
+  );
+
+  const GoogleCloudLogoFilter = () => (
+    <img 
+      src="https://raw.githubusercontent.com/AAkinDev/CloudCompass/main/public/assets/logos/gcp-logo.png" 
+      alt="Google Cloud Platform" 
+      className="w-8 h-6 object-contain"
+      onError={(e) => {
+        e.target.style.display = 'none';
+        e.target.parentNode.innerHTML = '<div class="w-8 h-6 bg-red-500 rounded flex items-center justify-center text-white text-xs font-bold">GCP</div>';
+      }}
+    />
+  );
+
+  const OracleLogoFilter = () => (
+    <img 
+      src="https://raw.githubusercontent.com/AAkinDev/CloudCompass/main/public/assets/logos/oracle-logo.png" 
+      alt="Oracle Cloud" 
+      className="w-8 h-6 object-contain"
+      onError={(e) => {
+        e.target.style.display = 'none';
+        e.target.parentNode.innerHTML = '<div class="w-8 h-6 bg-red-600 rounded flex items-center justify-center text-white text-xs font-bold">OCI</div>';
+      }}
+    />
+  );
+
+  const IBMCloudLogoFilter = () => (
+    <img 
+      src="https://raw.githubusercontent.com/AAkinDev/CloudCompass/main/public/assets/logos/ibm-logo.png" 
+      alt="IBM Cloud" 
+      className="w-8 h-6 object-contain"
+      onError={(e) => {
+        e.target.style.display = 'none';
+        e.target.parentNode.innerHTML = '<div class="w-8 h-6 bg-blue-800 rounded flex items-center justify-center text-white text-xs font-bold">IBM</div>';
+      }}
+    />
+  );
+
   const providers = [
     { 
       id: 'aws', 
@@ -119,6 +180,7 @@ const CloudCompass = () => {
       color: 'bg-orange-500', 
       fullName: 'Amazon Web Services',
       logo: AWSLogo,
+      logoFilter: AWSLogoFilter,
       bgColor: 'bg-orange-50',
       textColor: 'text-orange-700',
       borderColor: 'border-orange-200',
@@ -130,6 +192,7 @@ const CloudCompass = () => {
       color: 'bg-blue-600', 
       fullName: 'Microsoft Azure',
       logo: AzureLogo,
+      logoFilter: AzureLogoFilter,
       bgColor: 'bg-blue-50',
       textColor: 'text-blue-700',
       borderColor: 'border-blue-200',
@@ -141,6 +204,7 @@ const CloudCompass = () => {
       color: 'bg-red-500', 
       fullName: 'Google Cloud Platform',
       logo: GoogleCloudLogo,
+      logoFilter: GoogleCloudLogoFilter,
       bgColor: 'bg-red-50',
       textColor: 'text-red-700',
       borderColor: 'border-red-200',
@@ -152,6 +216,7 @@ const CloudCompass = () => {
       color: 'bg-red-600', 
       fullName: 'Oracle Cloud',
       logo: OracleLogo,
+      logoFilter: OracleLogoFilter,
       bgColor: 'bg-red-50',
       textColor: 'text-red-700',
       borderColor: 'border-red-200',
@@ -163,6 +228,7 @@ const CloudCompass = () => {
       color: 'bg-blue-800', 
       fullName: 'IBM Cloud',
       logo: IBMCloudLogo,
+      logoFilter: IBMCloudLogoFilter,
       bgColor: 'bg-blue-50',
       textColor: 'text-blue-700',
       borderColor: 'border-blue-200',
@@ -480,6 +546,13 @@ const CloudCompass = () => {
       }
       return prev;
     });
+  };
+
+  const resetComparison = () => {
+    setCompareList([]);
+    setSelectedProviders(['aws', 'azure', 'gcp', 'oracle', 'ibm']);
+    setSelectedCategory('all');
+    setSearchTerm('');
   };
 
   const getRecommendations = () => {
@@ -1066,7 +1139,7 @@ const CloudCompass = () => {
                     }`}
                     title={`${selectedProviders.includes(provider.id) ? 'Hide' : 'Show'} ${provider.name} in comparison`}
                   >
-                    <provider.logo />
+                    <provider.logoFilter />
                   </button>
                 ))}
               </div>
@@ -1087,7 +1160,16 @@ const CloudCompass = () => {
                 />
               </div>
             </div>
-            <CategoryStats />
+            <div className="flex items-center gap-3">
+              <CategoryStats />
+              <button
+                onClick={resetComparison}
+                className="px-4 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors font-medium"
+                title="Reset all filters and comparison list"
+              >
+                Reset All
+              </button>
+            </div>
           </div>
         </div>
 
