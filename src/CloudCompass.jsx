@@ -125,7 +125,7 @@ const CloudCompass = () => {
     },
   ];
 
-  // Service data with cost information and pricing links
+  // Service data with comprehensive comparison metrics
   const serviceData = useMemo(() => [
     {
       id: 1, category: 'compute', name: 'Virtual Machines', 
@@ -134,6 +134,11 @@ const CloudCompass = () => {
       pricing: 'Pay-per-hour', maturity: 5,
       costs: { aws: '$0.0116/hour', azure: '$0.012/hour', gcp: '$0.0104/hour', oracle: '$0.011/hour', ibm: '$0.013/hour' },
       costType: 'hourly',
+      security: { aws: 'AES-256 encryption, IAM, VPC', azure: 'BitLocker, Azure AD, NSG', gcp: 'AES-256, IAM, VPC', oracle: 'AES-256, IAM, VCN', ibm: 'AES-256, IAM, VPC' },
+      compliance: { aws: 'SOC 1/2/3, PCI DSS, HIPAA, FedRAMP', azure: 'SOC 1/2/3, PCI DSS, HIPAA, FedRAMP', gcp: 'SOC 1/2/3, PCI DSS, HIPAA, FedRAMP', oracle: 'SOC 1/2/3, PCI DSS, HIPAA', ibm: 'SOC 1/2/3, PCI DSS, HIPAA' },
+      performance: { aws: '99.95% SLA, 400+ instance types', azure: '99.95% SLA, 400+ instance types', gcp: '99.95% SLA, 500+ machine types', oracle: '99.95% SLA, 200+ shapes', ibm: '99.95% SLA, 100+ profiles' },
+      support: { aws: '24/7, 4 tiers', azure: '24/7, 4 tiers', gcp: '24/7, 4 tiers', oracle: '24/7, 3 tiers', ibm: '24/7, 4 tiers' },
+      regions: { aws: 25, azure: 60, gcp: 35, oracle: 30, ibm: 20 },
       pricingLinks: {
         aws: 'https://aws.amazon.com/ec2/pricing/',
         azure: 'https://azure.microsoft.com/en-us/pricing/details/virtual-machines/',
@@ -149,6 +154,11 @@ const CloudCompass = () => {
       pricing: 'Cluster + compute costs', maturity: 5,
       costs: { aws: '$0.10/hour + compute', azure: 'Free + compute', gcp: '$0.10/hour + compute', oracle: '$0.08/hour + compute', ibm: '$0.11/hour + compute' },
       costType: 'cluster',
+      security: { aws: 'Pod security, network policies, RBAC', azure: 'Pod security, network policies, RBAC', gcp: 'Pod security, network policies, RBAC', oracle: 'Pod security, network policies, RBAC', ibm: 'Pod security, network policies, RBAC' },
+      compliance: { aws: 'SOC 1/2/3, PCI DSS, HIPAA', azure: 'SOC 1/2/3, PCI DSS, HIPAA', gcp: 'SOC 1/2/3, PCI DSS, HIPAA', oracle: 'SOC 1/2/3, PCI DSS', ibm: 'SOC 1/2/3, PCI DSS, HIPAA' },
+      performance: { aws: '99.95% SLA, auto-scaling', azure: '99.95% SLA, auto-scaling', gcp: '99.95% SLA, auto-scaling', oracle: '99.95% SLA, auto-scaling', ibm: '99.95% SLA, auto-scaling' },
+      support: { aws: '24/7, 4 tiers', azure: '24/7, 4 tiers', gcp: '24/7, 4 tiers', oracle: '24/7, 3 tiers', ibm: '24/7, 4 tiers' },
+      regions: { aws: 20, azure: 50, gcp: 30, oracle: 25, ibm: 15 },
       pricingLinks: {
         aws: 'https://aws.amazon.com/eks/pricing/',
         azure: 'https://azure.microsoft.com/en-us/pricing/details/kubernetes-service/',
@@ -164,6 +174,11 @@ const CloudCompass = () => {
       pricing: 'Per-execution', maturity: 5,
       costs: { aws: '$0.20 per 1M requests', azure: '$0.20 per 1M requests', gcp: '$0.40 per 1M requests', oracle: '$0.20 per 1M requests', ibm: '$0.17 per 1M requests' },
       costType: 'requests',
+      security: { aws: 'IAM, VPC, encryption at rest/transit', azure: 'Azure AD, VNet, encryption', gcp: 'IAM, VPC, encryption', oracle: 'IAM, VCN, encryption', ibm: 'IAM, VPC, encryption' },
+      compliance: { aws: 'SOC 1/2/3, PCI DSS, HIPAA', azure: 'SOC 1/2/3, PCI DSS, HIPAA', gcp: 'SOC 1/2/3, PCI DSS, HIPAA', oracle: 'SOC 1/2/3, PCI DSS', ibm: 'SOC 1/2/3, PCI DSS' },
+      performance: { aws: 'Cold start < 100ms, auto-scaling', azure: 'Cold start < 100ms, auto-scaling', gcp: 'Cold start < 100ms, auto-scaling', oracle: 'Cold start < 100ms, auto-scaling', ibm: 'Cold start < 100ms, auto-scaling' },
+      support: { aws: '24/7, 4 tiers', azure: '24/7, 4 tiers', gcp: '24/7, 4 tiers', oracle: '24/7, 3 tiers', ibm: '24/7, 4 tiers' },
+      regions: { aws: 22, azure: 55, gcp: 32, oracle: 28, ibm: 18 },
       pricingLinks: {
         aws: 'https://aws.amazon.com/lambda/pricing/',
         azure: 'https://azure.microsoft.com/en-us/pricing/details/functions/',
@@ -179,6 +194,11 @@ const CloudCompass = () => {
       pricing: 'Per GB stored', maturity: 5,
       costs: { aws: '$0.023/GB/month', azure: '$0.0184/GB/month', gcp: '$0.020/GB/month', oracle: '$0.0255/GB/month', ibm: '$0.024/GB/month' },
       costType: 'storage',
+      security: { aws: 'AES-256, IAM, bucket policies', azure: 'AES-256, Azure AD, RBAC', gcp: 'AES-256, IAM, bucket policies', oracle: 'AES-256, IAM, bucket policies', ibm: 'AES-256, IAM, bucket policies' },
+      compliance: { aws: 'SOC 1/2/3, PCI DSS, HIPAA, FedRAMP', azure: 'SOC 1/2/3, PCI DSS, HIPAA, FedRAMP', gcp: 'SOC 1/2/3, PCI DSS, HIPAA, FedRAMP', oracle: 'SOC 1/2/3, PCI DSS, HIPAA', ibm: 'SOC 1/2/3, PCI DSS, HIPAA' },
+      performance: { aws: '99.999999999% durability, 99.99% availability', azure: '99.999999999% durability, 99.99% availability', gcp: '99.999999999% durability, 99.99% availability', oracle: '99.999999999% durability, 99.99% availability', ibm: '99.999999999% durability, 99.99% availability' },
+      support: { aws: '24/7, 4 tiers', azure: '24/7, 4 tiers', gcp: '24/7, 4 tiers', oracle: '24/7, 3 tiers', ibm: '24/7, 4 tiers' },
+      regions: { aws: 25, azure: 60, gcp: 35, oracle: 30, ibm: 20 },
       pricingLinks: {
         aws: 'https://aws.amazon.com/s3/pricing/',
         azure: 'https://azure.microsoft.com/en-us/pricing/details/storage/blobs/',
@@ -194,6 +214,11 @@ const CloudCompass = () => {
       pricing: 'Per GB + IOPS', maturity: 5,
       costs: { aws: '$0.10/GB/month', azure: '$0.048/GB/month', gcp: '$0.040/GB/month', oracle: '$0.0255/GB/month', ibm: '$0.10/GB/month' },
       costType: 'storage',
+      security: { aws: 'AES-256 encryption, IAM, VPC', azure: 'BitLocker, Azure AD, NSG', gcp: 'AES-256, IAM, VPC', oracle: 'AES-256, IAM, VCN', ibm: 'AES-256, IAM, VPC' },
+      compliance: { aws: 'SOC 1/2/3, PCI DSS, HIPAA', azure: 'SOC 1/2/3, PCI DSS, HIPAA', gcp: 'SOC 1/2/3, PCI DSS, HIPAA', oracle: 'SOC 1/2/3, PCI DSS', ibm: 'SOC 1/2/3, PCI DSS, HIPAA' },
+      performance: { aws: 'Up to 64,000 IOPS, 1,000 MB/s', azure: 'Up to 80,000 IOPS, 2,000 MB/s', gcp: 'Up to 64,000 IOPS, 1,000 MB/s', oracle: 'Up to 50,000 IOPS, 800 MB/s', ibm: 'Up to 60,000 IOPS, 1,000 MB/s' },
+      support: { aws: '24/7, 4 tiers', azure: '24/7, 4 tiers', gcp: '24/7, 4 tiers', oracle: '24/7, 3 tiers', ibm: '24/7, 4 tiers' },
+      regions: { aws: 25, azure: 60, gcp: 35, oracle: 30, ibm: 20 },
       pricingLinks: {
         aws: 'https://aws.amazon.com/ebs/pricing/',
         azure: 'https://azure.microsoft.com/en-us/pricing/details/managed-disks/',
@@ -209,6 +234,11 @@ const CloudCompass = () => {
       pricing: 'Instance + storage', maturity: 5,
       costs: { aws: '$0.017/hour', azure: '$0.0208/hour', gcp: '$0.0150/hour', oracle: '$0.016/hour', ibm: '$0.019/hour' },
       costType: 'hourly',
+      security: { aws: 'AES-256, IAM, VPC, SSL/TLS', azure: 'AES-256, Azure AD, VNet, SSL/TLS', gcp: 'AES-256, IAM, VPC, SSL/TLS', oracle: 'AES-256, IAM, VCN, SSL/TLS', ibm: 'AES-256, IAM, VPC, SSL/TLS' },
+      compliance: { aws: 'SOC 1/2/3, PCI DSS, HIPAA, FedRAMP', azure: 'SOC 1/2/3, PCI DSS, HIPAA, FedRAMP', gcp: 'SOC 1/2/3, PCI DSS, HIPAA, FedRAMP', oracle: 'SOC 1/2/3, PCI DSS, HIPAA', ibm: 'SOC 1/2/3, PCI DSS, HIPAA' },
+      performance: { aws: '99.95% SLA, auto-scaling, read replicas', azure: '99.995% SLA, auto-scaling, read replicas', gcp: '99.95% SLA, auto-scaling, read replicas', oracle: '99.995% SLA, auto-scaling, read replicas', ibm: '99.95% SLA, auto-scaling, read replicas' },
+      support: { aws: '24/7, 4 tiers', azure: '24/7, 4 tiers', gcp: '24/7, 4 tiers', oracle: '24/7, 3 tiers', ibm: '24/7, 4 tiers' },
+      regions: { aws: 20, azure: 50, gcp: 30, oracle: 25, ibm: 15 },
       pricingLinks: {
         aws: 'https://aws.amazon.com/rds/pricing/',
         azure: 'https://azure.microsoft.com/en-us/pricing/details/azure-sql-database/',
@@ -224,6 +254,11 @@ const CloudCompass = () => {
       pricing: 'Request units + storage', maturity: 5,
       costs: { aws: '$0.25 per 1M reads', azure: '$0.008 per 100 RUs/s', gcp: '$0.18 per 100K operations', oracle: '$0.133 per 1M reads', ibm: '$1.00 per 1M reads' },
       costType: 'operations',
+      security: { aws: 'AES-256, IAM, VPC, point-in-time recovery', azure: 'AES-256, Azure AD, VNet, point-in-time recovery', gcp: 'AES-256, IAM, VPC, point-in-time recovery', oracle: 'AES-256, IAM, VCN, point-in-time recovery', ibm: 'AES-256, IAM, VPC, point-in-time recovery' },
+      compliance: { aws: 'SOC 1/2/3, PCI DSS, HIPAA', azure: 'SOC 1/2/3, PCI DSS, HIPAA', gcp: 'SOC 1/2/3, PCI DSS, HIPAA', oracle: 'SOC 1/2/3, PCI DSS', ibm: 'SOC 1/2/3, PCI DSS, HIPAA' },
+      performance: { aws: 'Single-digit ms latency, auto-scaling', azure: 'Single-digit ms latency, auto-scaling', gcp: 'Single-digit ms latency, auto-scaling', oracle: 'Single-digit ms latency, auto-scaling', ibm: 'Single-digit ms latency, auto-scaling' },
+      support: { aws: '24/7, 4 tiers', azure: '24/7, 4 tiers', gcp: '24/7, 4 tiers', oracle: '24/7, 3 tiers', ibm: '24/7, 4 tiers' },
+      regions: { aws: 18, azure: 45, gcp: 28, oracle: 22, ibm: 12 },
       pricingLinks: {
         aws: 'https://aws.amazon.com/dynamodb/pricing/',
         azure: 'https://azure.microsoft.com/en-us/pricing/details/cosmos-db/',
@@ -239,6 +274,11 @@ const CloudCompass = () => {
       pricing: 'Per hour + data processed', maturity: 5,
       costs: { aws: '$0.0225/hour', azure: '$0.025/hour', gcp: '$0.025/hour', oracle: '$0.020/hour', ibm: '$0.030/hour' },
       costType: 'hourly',
+      security: { aws: 'SSL/TLS termination, WAF integration, DDoS protection', azure: 'SSL/TLS termination, WAF integration, DDoS protection', gcp: 'SSL/TLS termination, WAF integration, DDoS protection', oracle: 'SSL/TLS termination, WAF integration, DDoS protection', ibm: 'SSL/TLS termination, WAF integration, DDoS protection' },
+      compliance: { aws: 'SOC 1/2/3, PCI DSS, HIPAA', azure: 'SOC 1/2/3, PCI DSS, HIPAA', gcp: 'SOC 1/2/3, PCI DSS, HIPAA', oracle: 'SOC 1/2/3, PCI DSS', ibm: 'SOC 1/2/3, PCI DSS, HIPAA' },
+      performance: { aws: '99.99% SLA, auto-scaling, health checks', azure: '99.99% SLA, auto-scaling, health checks', gcp: '99.99% SLA, auto-scaling, health checks', oracle: '99.99% SLA, auto-scaling, health checks', ibm: '99.99% SLA, auto-scaling, health checks' },
+      support: { aws: '24/7, 4 tiers', azure: '24/7, 4 tiers', gcp: '24/7, 4 tiers', oracle: '24/7, 3 tiers', ibm: '24/7, 4 tiers' },
+      regions: { aws: 22, azure: 55, gcp: 32, oracle: 28, ibm: 18 },
       pricingLinks: {
         aws: 'https://aws.amazon.com/elasticloadbalancing/pricing/',
         azure: 'https://azure.microsoft.com/en-us/pricing/details/load-balancer/',
@@ -254,6 +294,11 @@ const CloudCompass = () => {
       pricing: 'Data transfer', maturity: 5,
       costs: { aws: '$0.085/GB', azure: '$0.087/GB', gcp: '$0.08/GB', oracle: '$0.06/GB', ibm: '$0.09/GB' },
       costType: 'transfer',
+      security: { aws: 'SSL/TLS, WAF, DDoS protection, geo-blocking', azure: 'SSL/TLS, WAF, DDoS protection, geo-blocking', gcp: 'SSL/TLS, WAF, DDoS protection, geo-blocking', oracle: 'SSL/TLS, WAF, DDoS protection, geo-blocking', ibm: 'SSL/TLS, WAF, DDoS protection, geo-blocking' },
+      compliance: { aws: 'SOC 1/2/3, PCI DSS', azure: 'SOC 1/2/3, PCI DSS', gcp: 'SOC 1/2/3, PCI DSS', oracle: 'SOC 1/2/3, PCI DSS', ibm: 'SOC 1/2/3, PCI DSS' },
+      performance: { aws: '200+ edge locations, < 50ms latency', azure: '200+ edge locations, < 50ms latency', gcp: '200+ edge locations, < 50ms latency', oracle: '150+ edge locations, < 50ms latency', ibm: '100+ edge locations, < 50ms latency' },
+      support: { aws: '24/7, 4 tiers', azure: '24/7, 4 tiers', gcp: '24/7, 4 tiers', oracle: '24/7, 3 tiers', ibm: '24/7, 4 tiers' },
+      regions: { aws: 200, azure: 200, gcp: 200, oracle: 150, ibm: 100 },
       pricingLinks: {
         aws: 'https://aws.amazon.com/cloudfront/pricing/',
         azure: 'https://azure.microsoft.com/en-us/pricing/details/cdn/',
@@ -269,12 +314,57 @@ const CloudCompass = () => {
       pricing: 'Free tier available', maturity: 5,
       costs: { aws: 'Free', azure: '$6/user/month', gcp: 'Free', oracle: '$4/user/month', ibm: '$3/user/month' },
       costType: 'user',
+      security: { aws: 'MFA, SSO, fine-grained permissions, audit logs', azure: 'MFA, SSO, fine-grained permissions, audit logs', gcp: 'MFA, SSO, fine-grained permissions, audit logs', oracle: 'MFA, SSO, fine-grained permissions, audit logs', ibm: 'MFA, SSO, fine-grained permissions, audit logs' },
+      compliance: { aws: 'SOC 1/2/3, PCI DSS, HIPAA, FedRAMP', azure: 'SOC 1/2/3, PCI DSS, HIPAA, FedRAMP', gcp: 'SOC 1/2/3, PCI DSS, HIPAA, FedRAMP', oracle: 'SOC 1/2/3, PCI DSS, HIPAA', ibm: 'SOC 1/2/3, PCI DSS, HIPAA' },
+      performance: { aws: '99.9% SLA, global availability', azure: '99.9% SLA, global availability', gcp: '99.9% SLA, global availability', oracle: '99.9% SLA, global availability', ibm: '99.9% SLA, global availability' },
+      support: { aws: '24/7, 4 tiers', azure: '24/7, 4 tiers', gcp: '24/7, 4 tiers', oracle: '24/7, 3 tiers', ibm: '24/7, 4 tiers' },
+      regions: { aws: 25, azure: 60, gcp: 35, oracle: 30, ibm: 20 },
       pricingLinks: {
         aws: 'https://aws.amazon.com/iam/pricing/',
         azure: 'https://azure.microsoft.com/en-us/pricing/details/active-directory/',
         gcp: 'https://cloud.google.com/identity/pricing',
         oracle: 'https://www.oracle.com/cloud/security/identity-management/pricing/',
         ibm: 'https://www.ibm.com/cloud/security-and-compliance/pricing'
+      }
+    },
+    {
+      id: 11, category: 'ai', name: 'Machine Learning',
+      aws: 'SageMaker', azure: 'Machine Learning', gcp: 'Vertex AI', oracle: 'AI Services', ibm: 'Watson Studio',
+      description: 'Managed ML platform', useCase: 'AI/ML model training and deployment',
+      pricing: 'Compute + storage + API calls', maturity: 4,
+      costs: { aws: '$0.046/hour training', azure: '$0.05/hour training', gcp: '$0.044/hour training', oracle: '$0.048/hour training', ibm: '$0.052/hour training' },
+      costType: 'compute',
+      security: { aws: 'AES-256, IAM, VPC, model encryption', azure: 'AES-256, Azure AD, VNet, model encryption', gcp: 'AES-256, IAM, VPC, model encryption', oracle: 'AES-256, IAM, VCN, model encryption', ibm: 'AES-256, IAM, VPC, model encryption' },
+      compliance: { aws: 'SOC 1/2/3, PCI DSS, HIPAA', azure: 'SOC 1/2/3, PCI DSS, HIPAA', gcp: 'SOC 1/2/3, PCI DSS, HIPAA', oracle: 'SOC 1/2/3, PCI DSS', ibm: 'SOC 1/2/3, PCI DSS, HIPAA' },
+      performance: { aws: 'Auto-scaling, distributed training, model optimization', azure: 'Auto-scaling, distributed training, model optimization', gcp: 'Auto-scaling, distributed training, model optimization', oracle: 'Auto-scaling, distributed training, model optimization', ibm: 'Auto-scaling, distributed training, model optimization' },
+      support: { aws: '24/7, 4 tiers', azure: '24/7, 4 tiers', gcp: '24/7, 4 tiers', oracle: '24/7, 3 tiers', ibm: '24/7, 4 tiers' },
+      regions: { aws: 15, azure: 30, gcp: 20, oracle: 18, ibm: 12 },
+      pricingLinks: {
+        aws: 'https://aws.amazon.com/sagemaker/pricing/',
+        azure: 'https://azure.microsoft.com/en-us/pricing/details/machine-learning/',
+        gcp: 'https://cloud.google.com/vertex-ai/pricing',
+        oracle: 'https://www.oracle.com/cloud/ai-services/pricing/',
+        ibm: 'https://www.ibm.com/cloud/watson-studio/pricing'
+      }
+    },
+    {
+      id: 12, category: 'monitoring', name: 'Application Monitoring',
+      aws: 'CloudWatch', azure: 'Application Insights', gcp: 'Cloud Monitoring', oracle: 'Application Performance Monitoring', ibm: 'Cloud Monitoring',
+      description: 'Application performance monitoring', useCase: 'APM, observability, troubleshooting',
+      pricing: 'Per metric + data ingestion', maturity: 5,
+      costs: { aws: '$0.30 per metric', azure: '$0.25 per metric', gcp: '$0.28 per metric', oracle: '$0.32 per metric', ibm: '$0.35 per metric' },
+      costType: 'metric',
+      security: { aws: 'AES-256, IAM, VPC, data encryption', azure: 'AES-256, Azure AD, VNet, data encryption', gcp: 'AES-256, IAM, VPC, data encryption', oracle: 'AES-256, IAM, VCN, data encryption', ibm: 'AES-256, IAM, VPC, data encryption' },
+      compliance: { aws: 'SOC 1/2/3, PCI DSS, HIPAA', azure: 'SOC 1/2/3, PCI DSS, HIPAA', gcp: 'SOC 1/2/3, PCI DSS, HIPAA', oracle: 'SOC 1/2/3, PCI DSS', ibm: 'SOC 1/2/3, PCI DSS, HIPAA' },
+      performance: { aws: 'Real-time metrics, custom dashboards, alerting', azure: 'Real-time metrics, custom dashboards, alerting', gcp: 'Real-time metrics, custom dashboards, alerting', oracle: 'Real-time metrics, custom dashboards, alerting', ibm: 'Real-time metrics, custom dashboards, alerting' },
+      support: { aws: '24/7, 4 tiers', azure: '24/7, 4 tiers', gcp: '24/7, 4 tiers', oracle: '24/7, 3 tiers', ibm: '24/7, 4 tiers' },
+      regions: { aws: 20, azure: 50, gcp: 30, oracle: 25, ibm: 15 },
+      pricingLinks: {
+        aws: 'https://aws.amazon.com/cloudwatch/pricing/',
+        azure: 'https://azure.microsoft.com/en-us/pricing/details/application-insights/',
+        gcp: 'https://cloud.google.com/monitoring/pricing',
+        oracle: 'https://www.oracle.com/cloud/application-performance-monitoring/pricing/',
+        ibm: 'https://www.ibm.com/cloud/monitoring/pricing'
       }
     }
   ], []);
@@ -464,12 +554,13 @@ const CloudCompass = () => {
             })}
           </div>
           
-          <div className="mt-4 space-y-2">
+          <div className="mt-4 space-y-3">
             <div className="flex items-center justify-between text-xs text-gray-500">
               <span>Use Case: {service.useCase}</span>
               <span>Pricing: {service.pricing}</span>
             </div>
             
+            {/* Cost Comparison */}
             {service.costs && (
               <div className="bg-gray-50 rounded p-3">
                 <div className="text-xs font-semibold text-gray-700 mb-2">Cost Comparison ({service.costType})</div>
@@ -490,6 +581,132 @@ const CloudCompass = () => {
                 </div>
               </div>
             )}
+
+            {/* Security Comparison */}
+            {service.security && (
+              <div className="bg-blue-50 rounded p-3">
+                <div className="text-xs font-semibold text-blue-700 mb-2 flex items-center gap-1">
+                  <Shield className="w-3 h-3" />
+                  Security Features
+                </div>
+                <div className="space-y-1">
+                  {selectedProviders.map(providerId => {
+                    const provider = providers.find(p => p.id === providerId);
+                    const security = service.security[providerId];
+                    return security ? (
+                      <div key={providerId} className="flex items-start justify-between text-xs">
+                        <span className="flex items-center gap-1">
+                          <div className={`w-2 h-2 rounded ${provider.color}`}></div>
+                          {provider.name}
+                        </span>
+                        <span className="text-gray-600 max-w-xs text-right">{security}</span>
+                      </div>
+                    ) : null;
+                  })}
+                </div>
+              </div>
+            )}
+
+            {/* Compliance Comparison */}
+            {service.compliance && (
+              <div className="bg-green-50 rounded p-3">
+                <div className="text-xs font-semibold text-green-700 mb-2 flex items-center gap-1">
+                  <Shield className="w-3 h-3" />
+                  Compliance Certifications
+                </div>
+                <div className="space-y-1">
+                  {selectedProviders.map(providerId => {
+                    const provider = providers.find(p => p.id === providerId);
+                    const compliance = service.compliance[providerId];
+                    return compliance ? (
+                      <div key={providerId} className="flex items-start justify-between text-xs">
+                        <span className="flex items-center gap-1">
+                          <div className={`w-2 h-2 rounded ${provider.color}`}></div>
+                          {provider.name}
+                        </span>
+                        <span className="text-gray-600 max-w-xs text-right">{compliance}</span>
+                      </div>
+                    ) : null;
+                  })}
+                </div>
+              </div>
+            )}
+
+            {/* Performance Comparison */}
+            {service.performance && (
+              <div className="bg-purple-50 rounded p-3">
+                <div className="text-xs font-semibold text-purple-700 mb-2 flex items-center gap-1">
+                  <Zap className="w-3 h-3" />
+                  Performance & SLA
+                </div>
+                <div className="space-y-1">
+                  {selectedProviders.map(providerId => {
+                    const provider = providers.find(p => p.id === providerId);
+                    const performance = service.performance[providerId];
+                    return performance ? (
+                      <div key={providerId} className="flex items-start justify-between text-xs">
+                        <span className="flex items-center gap-1">
+                          <div className={`w-2 h-2 rounded ${provider.color}`}></div>
+                          {provider.name}
+                        </span>
+                        <span className="text-gray-600 max-w-xs text-right">{performance}</span>
+                      </div>
+                    ) : null;
+                  })}
+                </div>
+              </div>
+            )}
+
+            {/* Support & Regions */}
+            <div className="grid grid-cols-2 gap-3">
+              {service.support && (
+                <div className="bg-orange-50 rounded p-3">
+                  <div className="text-xs font-semibold text-orange-700 mb-2 flex items-center gap-1">
+                    <Users className="w-3 h-3" />
+                    Support
+                  </div>
+                  <div className="space-y-1">
+                    {selectedProviders.map(providerId => {
+                      const provider = providers.find(p => p.id === providerId);
+                      const support = service.support[providerId];
+                      return support ? (
+                        <div key={providerId} className="flex items-center justify-between text-xs">
+                          <span className="flex items-center gap-1">
+                            <div className={`w-2 h-2 rounded ${provider.color}`}></div>
+                            {provider.name}
+                          </span>
+                          <span className="text-gray-600">{support}</span>
+                        </div>
+                      ) : null;
+                    })}
+                  </div>
+                </div>
+              )}
+
+              {service.regions && (
+                <div className="bg-indigo-50 rounded p-3">
+                  <div className="text-xs font-semibold text-indigo-700 mb-2 flex items-center gap-1">
+                    <Globe className="w-3 h-3" />
+                    Global Regions
+                  </div>
+                  <div className="space-y-1">
+                    {selectedProviders.map(providerId => {
+                      const provider = providers.find(p => p.id === providerId);
+                      const regions = service.regions[providerId];
+                      return regions ? (
+                        <div key={providerId} className="flex items-center justify-between text-xs">
+                          <span className="flex items-center gap-1">
+                            <div className={`w-2 h-2 rounded ${provider.color}`}></div>
+                            {provider.name}
+                          </span>
+                          <span className="font-mono font-semibold">{regions} regions</span>
+                        </div>
+                      ) : null;
+                    })}
+                  </div>
+                </div>
+              )}
+            </div>
           </div>
         </div>
       </div>
