@@ -1000,78 +1000,253 @@ const CloudCompass = () => {
     </div>
   );
 
-  const CompareView = () => (
-    <div className="space-y-6">
-      {/* Search and Filters */}
-      <div className="bg-white rounded-lg p-6 shadow-sm">
-        <div className="flex flex-col md:flex-row gap-4">
-          <div className="flex-1">
-            <div className="relative">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
-              <input
-                type="text"
-                placeholder="Search services..."
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-              />
+  const CompareView = () => {
+    const [viewMode, setViewMode] = useState('table'); // 'table' or 'cards'
+
+    return (
+      <div className="space-y-6">
+        {/* Header with Controls */}
+        <div className="bg-white rounded-lg p-6 shadow-sm">
+          <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-4">
+            <div>
+              <h2 className="text-2xl font-bold text-gray-900">Service Comparison</h2>
+              <p className="text-gray-600 mt-1">Compare cloud services across providers with detailed metrics</p>
             </div>
-          </div>
-          <div className="flex gap-2">
-            {providers.map(provider => (
-              <button
-                key={provider.id}
-                onClick={() => {
-                  const isSelected = selectedProviders.includes(provider.id);
-                  if (isSelected) {
-                    setSelectedProviders(prev => prev.filter(p => p !== provider.id));
-                  } else {
-                    setSelectedProviders(prev => [...prev, provider.id]);
-                  }
-                }}
-                className={`px-4 py-2 rounded-lg border-2 transition-colors ${
-                  selectedProviders.includes(provider.id)
-                    ? `${provider.borderColor} ${provider.bgColor} ${provider.textColor}`
-                    : 'border-gray-200 text-gray-600 hover:border-gray-300'
-                }`}
-              >
-                {provider.name}
-              </button>
-            ))}
-          </div>
-        </div>
-        
-        <CategoryStats />
-      </div>
-
-      {/* Services Grid */}
-      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {filteredServices.map(service => (
-          <ServiceCard key={service.id} service={service} />
-        ))}
-      </div>
-
-      {/* Compare List */}
-      {compareList.length > 0 && (
-        <div className="bg-white rounded-lg p-6 shadow-sm border-2 border-blue-200">
-          <h3 className="text-lg font-semibold mb-4">Comparison List ({compareList.length}/3)</h3>
-          <div className="space-y-2">
-            {compareList.map(service => (
-              <div key={service.id} className="flex items-center justify-between py-2 px-3 bg-blue-50 rounded">
-                <span className="font-medium">{service.name}</span>
+            
+            <div className="flex items-center gap-3">
+              {/* View Mode Toggle */}
+              <div className="flex bg-gray-100 rounded-lg p-1">
                 <button
-                  onClick={() => toggleCompare(service)}
-                  className="text-red-600 hover:text-red-800 text-sm"
+                  onClick={() => setViewMode('table')}
+                  className={`px-3 py-1 rounded text-sm font-medium transition-colors ${
+                    viewMode === 'table' 
+                      ? 'bg-white text-blue-600 shadow-sm' 
+                      : 'text-gray-600 hover:text-gray-800'
+                  }`}
                 >
-                  Remove
+                  Table View
+                </button>
+                <button
+                  onClick={() => setViewMode('cards')}
+                  className={`px-3 py-1 rounded text-sm font-medium transition-colors ${
+                    viewMode === 'cards' 
+                      ? 'bg-white text-blue-600 shadow-sm' 
+                      : 'text-gray-600 hover:text-gray-800'
+                  }`}
+                >
+                  Card View
                 </button>
               </div>
-            ))}
+
+              {/* Provider Filter */}
+              <div className="flex gap-1">
+                {providers.map(provider => (
+                  <button
+                    key={provider.id}
+                    onClick={() => {
+                      const isSelected = selectedProviders.includes(provider.id);
+                      if (isSelected) {
+                        setSelectedProviders(prev => prev.filter(p => p !== provider.id));
+                      } else {
+                        setSelectedProviders(prev => [...prev, provider.id]);
+                      }
+                    }}
+                    className={`p-2 rounded-lg border-2 transition-all ${
+                      selectedProviders.includes(provider.id)
+                        ? `${provider.borderColor} ${provider.bgColor} ${provider.textColor} shadow-sm`
+                        : 'border-gray-200 text-gray-600 hover:border-gray-300 hover:bg-gray-50'
+                    }`}
+                    title={`${selectedProviders.includes(provider.id) ? 'Hide' : 'Show'} ${provider.name}`}
+                  >
+                    <provider.logo />
+                  </button>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          {/* Search and Category Filter */}
+          <div className="mt-6 flex flex-col md:flex-row gap-4">
+            <div className="flex-1">
+              <div className="relative">
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+                <input
+                  type="text"
+                  placeholder="Search services by name or description..."
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                />
+              </div>
+            </div>
+            <CategoryStats />
           </div>
         </div>
-      )}
-    </div>
-  );
+
+        {/* Table View */}
+        {viewMode === 'table' && (
+          <div className="bg-white rounded-lg shadow-sm overflow-hidden">
+            <div className="overflow-x-auto">
+              <table className="w-full">
+                <thead className="bg-gray-50 border-b">
+                  <tr>
+                    <th className="px-6 py-4 text-left text-sm font-semibold text-gray-900 min-w-[200px]">
+                      Service
+                    </th>
+                    {selectedProviders.map(providerId => {
+                      const provider = providers.find(p => p.id === providerId);
+                      return (
+                        <th key={providerId} className="px-6 py-4 text-center text-sm font-semibold text-gray-900 min-w-[150px]">
+                          <div className="flex flex-col items-center gap-2">
+                            <provider.logo />
+                            <span>{provider.name}</span>
+                          </div>
+                        </th>
+                      );
+                    })}
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-gray-200">
+                  {filteredServices.map(service => (
+                    <tr key={service.id} className="hover:bg-gray-50 transition-colors">
+                      <td className="px-6 py-4">
+                        <div className="flex items-start gap-3">
+                          <div className="flex-1">
+                            <h3 className="font-semibold text-gray-900 mb-1">{service.name}</h3>
+                            <p className="text-sm text-gray-600 mb-2">{service.description}</p>
+                            <div className="flex items-center gap-2 text-xs text-gray-500">
+                              <span>Use Case: {service.useCase}</span>
+                              <span>•</span>
+                              <span>Maturity: {service.maturity}/5</span>
+                            </div>
+                          </div>
+                          <button
+                            onClick={() => toggleCompare(service)}
+                            className={`px-3 py-1 rounded text-xs font-medium transition-colors ${
+                              compareList.find(s => s.id === service.id)
+                                ? 'bg-red-100 text-red-700 hover:bg-red-200'
+                                : 'bg-blue-100 text-blue-700 hover:bg-blue-200'
+                            }`}
+                          >
+                            {compareList.find(s => s.id === service.id) ? 'Remove' : 'Compare'}
+                          </button>
+                        </div>
+                      </td>
+                      
+                      {selectedProviders.map(providerId => {
+                        const serviceName = service[providerId];
+                        
+                        return (
+                          <td key={providerId} className="px-6 py-4 text-center">
+                            {serviceName ? (
+                              <div className="space-y-2">
+                                <div className="font-medium text-gray-900">{serviceName}</div>
+                                
+                                {/* Cost */}
+                                {service.costs && service.costs[providerId] && (
+                                  <div className="text-sm">
+                                    <div className="text-gray-500">Cost</div>
+                                    <div className="font-semibold text-green-600">
+                                      {service.costs[providerId]}
+                                    </div>
+                                  </div>
+                                )}
+
+                                {/* Security */}
+                                {service.security && service.security[providerId] && (
+                                  <div className="text-xs">
+                                    <div className="text-gray-500">Security</div>
+                                    <div className="text-gray-700 line-clamp-2">
+                                      {service.security[providerId]}
+                                    </div>
+                                  </div>
+                                )}
+
+                                {/* Performance */}
+                                {service.performance && service.performance[providerId] && (
+                                  <div className="text-xs">
+                                    <div className="text-gray-500">Performance</div>
+                                    <div className="text-gray-700">
+                                      {service.performance[providerId]}
+                                    </div>
+                                  </div>
+                                )}
+
+                                {/* Support */}
+                                {service.support && service.support[providerId] && (
+                                  <div className="text-xs">
+                                    <div className="text-gray-500">Support</div>
+                                    <div className="text-gray-700">
+                                      {service.support[providerId]}
+                                    </div>
+                                  </div>
+                                )}
+
+                                {/* Regions */}
+                                {service.regions && service.regions[providerId] && (
+                                  <div className="text-xs">
+                                    <div className="text-gray-500">Regions</div>
+                                    <div className="text-gray-700 font-medium">
+                                      {service.regions[providerId]}
+                                    </div>
+                                  </div>
+                                )}
+                              </div>
+                            ) : (
+                              <div className="text-gray-400 text-sm">Not Available</div>
+                            )}
+                          </td>
+                        );
+                      })}
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        )}
+
+        {/* Card View */}
+        {viewMode === 'cards' && (
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {filteredServices.map(service => (
+              <ServiceCard key={service.id} service={service} />
+            ))}
+          </div>
+        )}
+
+        {/* Comparison Summary */}
+        {compareList.length > 0 && (
+          <div className="bg-white rounded-lg p-6 shadow-sm border-2 border-blue-200">
+            <div className="flex items-center justify-between mb-4">
+              <h3 className="text-lg font-semibold text-gray-900">
+                Comparison List ({compareList.length}/3)
+              </h3>
+              <button
+                onClick={() => setCompareList([])}
+                className="text-sm text-red-600 hover:text-red-800 font-medium"
+              >
+                Clear All
+              </button>
+            </div>
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-3">
+              {compareList.map(service => (
+                <div key={service.id} className="flex items-center justify-between py-2 px-3 bg-blue-50 rounded-lg">
+                  <span className="font-medium text-gray-900">{service.name}</span>
+                  <button
+                    onClick={() => toggleCompare(service)}
+                    className="text-red-600 hover:text-red-800 text-sm font-medium"
+                  >
+                    Remove
+                  </button>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+      </div>
+    );
+  };
 
   const WizardView = () => (
     <div className="max-w-2xl mx-auto">
