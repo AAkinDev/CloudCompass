@@ -81,7 +81,8 @@ const CloudCompass = () => {
       logo: AWSLogo,
       bgColor: 'bg-orange-50',
       textColor: 'text-orange-700',
-      borderColor: 'border-orange-200'
+      borderColor: 'border-orange-200',
+      platformUrl: 'https://aws.amazon.com/'
     },
     { 
       id: 'azure', 
@@ -91,7 +92,8 @@ const CloudCompass = () => {
       logo: AzureLogo,
       bgColor: 'bg-blue-50',
       textColor: 'text-blue-700',
-      borderColor: 'border-blue-200'
+      borderColor: 'border-blue-200',
+      platformUrl: 'https://azure.microsoft.com/'
     },
     { 
       id: 'gcp', 
@@ -101,7 +103,8 @@ const CloudCompass = () => {
       logo: GoogleCloudLogo,
       bgColor: 'bg-red-50',
       textColor: 'text-red-700',
-      borderColor: 'border-red-200'
+      borderColor: 'border-red-200',
+      platformUrl: 'https://cloud.google.com/'
     },
     { 
       id: 'oracle', 
@@ -111,7 +114,8 @@ const CloudCompass = () => {
       logo: OracleLogo,
       bgColor: 'bg-red-50',
       textColor: 'text-red-700',
-      borderColor: 'border-red-200'
+      borderColor: 'border-red-200',
+      platformUrl: 'https://www.oracle.com/cloud/'
     },
     { 
       id: 'ibm', 
@@ -121,7 +125,8 @@ const CloudCompass = () => {
       logo: IBMCloudLogo,
       bgColor: 'bg-blue-50',
       textColor: 'text-blue-700',
-      borderColor: 'border-blue-200'
+      borderColor: 'border-blue-200',
+      platformUrl: 'https://www.ibm.com/cloud/'
     },
   ];
 
@@ -527,10 +532,26 @@ const CloudCompass = () => {
               return serviceName ? (
                 <div key={providerId} className="flex items-center justify-between py-2 px-3 border border-gray-100 rounded-md bg-gray-50">
                   <div className="flex items-center gap-3">
-                    <provider.logo />
+                    <a
+                      href={provider.platformUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="hover:opacity-80 transition-opacity"
+                      title={`Visit ${provider.fullName} platform`}
+                    >
+                      <provider.logo />
+                    </a>
                     <div>
-                      <span className="text-sm font-medium text-gray-900">{provider.name}</span>
-                      <div className="text-xs text-gray-500">{provider.fullName}</div>
+                      <a
+                        href={provider.platformUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="hover:text-blue-600 transition-colors"
+                        title={`Visit ${provider.fullName} platform`}
+                      >
+                        <span className="text-sm font-medium text-gray-900">{provider.name}</span>
+                        <div className="text-xs text-gray-500">{provider.fullName}</div>
+                      </a>
                     </div>
                   </div>
                   <div className="flex items-center gap-2">
@@ -570,10 +591,16 @@ const CloudCompass = () => {
                     const cost = service.costs[providerId];
                     return cost ? (
                       <div key={providerId} className="flex items-center justify-between text-xs">
-                        <span className="flex items-center gap-1">
+                        <a
+                          href={provider.platformUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="flex items-center gap-1 hover:text-blue-600 transition-colors"
+                          title={`Visit ${provider.fullName} platform`}
+                        >
                           <div className={`w-2 h-2 rounded ${provider.color}`}></div>
                           {provider.name}
-                        </span>
+                        </a>
                         <span className="font-mono font-semibold">{cost}</span>
                       </div>
                     ) : null;
@@ -595,10 +622,16 @@ const CloudCompass = () => {
                     const security = service.security[providerId];
                     return security ? (
                       <div key={providerId} className="flex items-start justify-between text-xs">
-                        <span className="flex items-center gap-1">
+                        <a
+                          href={provider.platformUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="flex items-center gap-1 hover:text-blue-600 transition-colors"
+                          title={`Visit ${provider.fullName} platform`}
+                        >
                           <div className={`w-2 h-2 rounded ${provider.color}`}></div>
                           {provider.name}
-                        </span>
+                        </a>
                         <span className="text-gray-600 max-w-xs text-right">{security}</span>
                       </div>
                     ) : null;
@@ -620,10 +653,16 @@ const CloudCompass = () => {
                     const compliance = service.compliance[providerId];
                     return compliance ? (
                       <div key={providerId} className="flex items-start justify-between text-xs">
-                        <span className="flex items-center gap-1">
+                        <a
+                          href={provider.platformUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="flex items-center gap-1 hover:text-blue-600 transition-colors"
+                          title={`Visit ${provider.fullName} platform`}
+                        >
                           <div className={`w-2 h-2 rounded ${provider.color}`}></div>
                           {provider.name}
-                        </span>
+                        </a>
                         <span className="text-gray-600 max-w-xs text-right">{compliance}</span>
                       </div>
                     ) : null;
@@ -645,10 +684,16 @@ const CloudCompass = () => {
                     const performance = service.performance[providerId];
                     return performance ? (
                       <div key={providerId} className="flex items-start justify-between text-xs">
-                        <span className="flex items-center gap-1">
+                        <a
+                          href={provider.platformUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="flex items-center gap-1 hover:text-blue-600 transition-colors"
+                          title={`Visit ${provider.fullName} platform`}
+                        >
                           <div className={`w-2 h-2 rounded ${provider.color}`}></div>
                           {provider.name}
-                        </span>
+                        </a>
                         <span className="text-gray-600 max-w-xs text-right">{performance}</span>
                       </div>
                     ) : null;
@@ -671,10 +716,16 @@ const CloudCompass = () => {
                       const support = service.support[providerId];
                       return support ? (
                         <div key={providerId} className="flex items-center justify-between text-xs">
-                          <span className="flex items-center gap-1">
+                          <a
+                            href={provider.platformUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="flex items-center gap-1 hover:text-blue-600 transition-colors"
+                            title={`Visit ${provider.fullName} platform`}
+                          >
                             <div className={`w-2 h-2 rounded ${provider.color}`}></div>
                             {provider.name}
-                          </span>
+                          </a>
                           <span className="text-gray-600">{support}</span>
                         </div>
                       ) : null;
@@ -695,10 +746,16 @@ const CloudCompass = () => {
                       const regions = service.regions[providerId];
                       return regions ? (
                         <div key={providerId} className="flex items-center justify-between text-xs">
-                          <span className="flex items-center gap-1">
+                          <a
+                            href={provider.platformUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="flex items-center gap-1 hover:text-blue-600 transition-colors"
+                            title={`Visit ${provider.fullName} platform`}
+                          >
                             <div className={`w-2 h-2 rounded ${provider.color}`}></div>
                             {provider.name}
-                          </span>
+                          </a>
                           <span className="font-mono font-semibold">{regions} regions</span>
                         </div>
                       ) : null;
