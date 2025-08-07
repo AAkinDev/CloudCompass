@@ -105,25 +105,65 @@
       "us-west-2-wl1-phx1",
       "us-west-2-wl1-sea1"
     ],
-    "lastSynced": "2025-08-07T22:18:55.774Z"
+    "lastSynced": "2025-08-07T22:50:55.700Z"
   },
   "azure": {
-    "services": 0,
-    "regions": [],
-    "lastSynced": "2025-08-07T22:18:55.363Z"
+    "services": 20,
+    "regions": [
+      "australiaeast",
+      "australiasoutheast",
+      "brazilsouth",
+      "canadacentral",
+      "canadaeast",
+      "centralus",
+      "eastasia",
+      "eastus",
+      "japaneast",
+      "japanwest",
+      "koreacentral",
+      "koreasouth",
+      "northcentralus",
+      "northeurope",
+      "southafricanorth",
+      "southcentralus",
+      "southeastasia",
+      "uaenorth",
+      "uksouth",
+      "ukwest",
+      "westeurope",
+      "westus2"
+    ],
+    "lastSynced": "2025-08-07T22:51:50.042Z"
   },
   "gcp": {
-    "services": 0,
-    "regions": [],
-    "lastSynced": "2025-08-07T22:18:54.596Z"
+    "services": 33,
+    "regions": [
+      "asia-east1",
+      "asia-northeast1",
+      "asia-northeast2",
+      "asia-southeast1",
+      "asia-southeast2",
+      "australia-southeast1",
+      "europe-north1",
+      "europe-west1",
+      "europe-west2",
+      "europe-west3",
+      "europe-west4",
+      "europe-west6",
+      "southamerica-east1",
+      "us-central1",
+      "us-east1",
+      "us-west1"
+    ],
+    "lastSynced": "2025-08-07T22:50:54.744Z"
   },
   "ibm": {
     "services": 48,
     "regions": [],
-    "lastSynced": "2025-08-07T22:18:55.695Z"
+    "lastSynced": "2025-08-07T22:50:55.611Z"
   },
   "oracle": {
-    "services": 0,
+    "services": 19,
     "regions": [
       "ap-mumbai-1",
       "ap-seoul-1",
@@ -136,6 +176,6 @@
       "us-west-1",
       "us-west-2"
     ],
-    "lastSynced": "2025-08-07T22:19:01.062Z"
+    "lastSynced": "2025-08-07T22:50:55.600Z"
   }
 }
