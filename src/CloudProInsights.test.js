@@ -28,8 +28,8 @@ test('renders main heading', () => {
 
 test('renders description text', () => {
   render(<CloudProInsights />);
-  const description = screen.getByText(/Smarter Cloud Decisions Start Here/i);
-  expect(description).toBeInTheDocument();
+  const descriptions = screen.getAllByText(/Smarter Cloud Decisions Start Here/i);
+  expect(descriptions.length).toBeGreaterThan(0);
 });
 
 test('renders action buttons', () => {
@@ -43,7 +43,7 @@ test('renders action buttons', () => {
 
 test('renders footer content', () => {
   render(<CloudProInsights />);
-  const footerText = screen.getByText(/© 2025 CloudProInsights by AAkinDev/i);
+  const footerText = screen.getByText(/© 2025 by AAkinDev/i);
   const githubLink = screen.getByRole('link', { name: /GitHub/i });
   
   expect(footerText).toBeInTheDocument();

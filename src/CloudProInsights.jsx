@@ -1788,9 +1788,15 @@ const CloudProInsights = () => {
           <div className="flex justify-between items-center py-4">
             {/* Logo and Brand Section */}
             <div className="flex items-center gap-4">
-              <CloudProInsightsLogo size="default" className="flex-shrink-0" />
+              <button 
+                onClick={() => setActiveView('home')}
+                className="flex-shrink-0 hover:opacity-80 transition-opacity"
+                title="Return to Home"
+              >
+                <CloudProInsightsLogo size="default" />
+              </button>
               <div className="hidden md:block">
-                <p className="text-sm text-gray-500 font-medium">Navigate Your Cloud Journey</p>
+                <p className="text-sm text-gray-500 font-medium">Smarter Cloud Decisions Start Here.</p>
               </div>
             </div>
             
@@ -1834,9 +1840,15 @@ const CloudProInsights = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
             <div className="flex items-center gap-3">
-              <CloudProInsightsLogo size="small" />
+              <button 
+                onClick={() => setActiveView('home')}
+                className="hover:opacity-80 transition-opacity"
+                title="Return to Home"
+              >
+                <CloudProInsightsLogo size="small" />
+              </button>
               <div className="text-sm text-gray-600">
-                © 2025 CloudProInsights by AAkinDev. Navigate your cloud journey with confidence.
+                © 2025 by AAkinDev. Smarter Cloud Decisions Start Here.
               </div>
             </div>
             <div className="flex items-center gap-4">
