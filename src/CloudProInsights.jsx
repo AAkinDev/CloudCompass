@@ -1546,13 +1546,13 @@ const CloudProInsights = () => {
     }, [calculateCosts]);
 
     return (
-      <div className="space-y-6">
-        {/* Header */}
+      <div className="space-y-4">
+        {/* Header Section */}
         <div className="bg-white rounded-lg p-6 shadow-sm">
-          <div className="flex justify-between items-center mb-4">
+          <div className="flex justify-between items-start mb-6">
             <div>
-              <h2 className="text-2xl font-bold">Cost Calculator</h2>
-              <p className="text-gray-600">Calculate estimated monthly costs for your cloud infrastructure.</p>
+              <h2 className="text-2xl font-bold text-gray-900">Cost Calculator</h2>
+              <p className="text-gray-600 mt-1">Calculate estimated monthly costs for your cloud infrastructure.</p>
             </div>
             <button
               onClick={resetCalculator}
@@ -1566,7 +1566,7 @@ const CloudProInsights = () => {
 
           {/* Provider Filter */}
           <div className="mb-6">
-            <h3 className="text-lg font-semibold mb-3">Select Providers to Compare</h3>
+            <h3 className="text-lg font-semibold text-gray-900 mb-4">Select Providers to Compare</h3>
             <div className="flex flex-wrap gap-3">
               {providers.map(provider => (
                 <label
@@ -1591,7 +1591,7 @@ const CloudProInsights = () => {
           </div>
 
           {/* Infrastructure Configuration */}
-          <div className="grid grid-cols-1 lg:grid-cols-4 gap-4 mb-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             <div className="space-y-2">
               <label className="block text-sm font-medium text-gray-700">Compute Instances</label>
               <input
@@ -1601,7 +1601,7 @@ const CloudProInsights = () => {
                   ...prev,
                   compute: { ...prev.compute, instances: parseInt(e.target.value) || 0 }
                 }))}
-                className="w-full p-3 border border-gray-300 rounded-lg"
+                className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                 min="1"
                 max="100"
               />
@@ -1615,7 +1615,7 @@ const CloudProInsights = () => {
                   ...prev,
                   compute: { ...prev.compute, type: e.target.value }
                 }))}
-                className="w-full p-3 border border-gray-300 rounded-lg"
+                className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
               >
                 <option value="general">General Purpose</option>
                 <option value="memory">Memory Optimized</option>
@@ -1632,7 +1632,7 @@ const CloudProInsights = () => {
                   ...prev,
                   storage: { ...prev.storage, gb: parseInt(e.target.value) || 0 }
                 }))}
-                className="w-full p-3 border border-gray-300 rounded-lg"
+                className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                 min="1"
                 max="10000"
               />
@@ -1647,7 +1647,7 @@ const CloudProInsights = () => {
                   ...prev,
                   bandwidth: { ...prev.bandwidth, gb: parseInt(e.target.value) || 0 }
                 }))}
-                className="w-full p-3 border border-gray-300 rounded-lg"
+                className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                 min="0"
                 max="10000"
               />
@@ -1655,153 +1655,20 @@ const CloudProInsights = () => {
           </div>
         </div>
 
-        {/* Cost Results - Landscape Cards */}
+        {/* Cost Results - Optimized Cards */}
         {Object.keys(monthlyCosts).length > 0 && (
           <div className="bg-white rounded-lg p-6 shadow-sm">
-            <h3 className="text-lg font-semibold mb-4">Monthly Cost Estimate</h3>
+            <h3 className="text-lg font-semibold text-gray-900 mb-6">Monthly Cost Estimate</h3>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4">
-              
-              {/* Compute */}
-              <div className="space-y-2">
-                <label className="block text-sm font-medium text-gray-700">Compute Instances</label>
-                <div className="grid grid-cols-2 gap-2">
-                  <div>
-                    <label className="block text-xs text-gray-500">Number of Instances</label>
-                    <input
-                      type="number"
-                      value={calculatorState.compute.instances}
-                      onChange={(e) => setCalculatorState(prev => ({
-                        ...prev,
-                        compute: { ...prev.compute, instances: parseInt(e.target.value) || 0 }
-                      }))}
-                      className="w-full p-2 border border-gray-300 rounded-md"
-                      min="1"
-                      max="100"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-xs text-gray-500">Instance Type</label>
-                    <select
-                      value={calculatorState.compute.type}
-                      onChange={(e) => setCalculatorState(prev => ({
-                        ...prev,
-                        compute: { ...prev.compute, type: e.target.value }
-                      }))}
-                      className="w-full p-2 border border-gray-300 rounded-md"
-                    >
-                      <option value="general">General Purpose</option>
-                      <option value="memory">Memory Optimized</option>
-                      <option value="compute">Compute Optimized</option>
-                    </select>
-                  </div>
-                </div>
-              </div>
-
-              {/* Storage */}
-              <div className="space-y-2">
-                <label className="block text-sm font-medium text-gray-700">Storage</label>
-                <div className="grid grid-cols-2 gap-2">
-                  <div>
-                    <label className="block text-xs text-gray-500">Storage (GB)</label>
-                    <input
-                      type="number"
-                      value={calculatorState.storage.gb}
-                      onChange={(e) => setCalculatorState(prev => ({
-                        ...prev,
-                        storage: { ...prev.storage, gb: parseInt(e.target.value) || 0 }
-                      }))}
-                      className="w-full p-2 border border-gray-300 rounded-md"
-                      min="1"
-                      max="10000"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-xs text-gray-500">Storage Type</label>
-                    <select
-                      value={calculatorState.storage.type}
-                      onChange={(e) => setCalculatorState(prev => ({
-                        ...prev,
-                        storage: { ...prev.storage, type: e.target.value }
-                      }))}
-                      className="w-full p-2 border border-gray-300 rounded-md"
-                    >
-                      <option value="standard">Standard</option>
-                      <option value="infrequent">Infrequent Access</option>
-                      <option value="archive">Archive</option>
-                    </select>
-                  </div>
-                </div>
-              </div>
-
-              {/* Database */}
-              <div className="space-y-2">
-                <label className="block text-sm font-medium text-gray-700">Database</label>
-                <div className="grid grid-cols-2 gap-2">
-                  <div>
-                    <label className="block text-xs text-gray-500">Database Instances</label>
-                    <input
-                      type="number"
-                      value={calculatorState.database.instances}
-                      onChange={(e) => setCalculatorState(prev => ({
-                        ...prev,
-                        database: { ...prev.database, instances: parseInt(e.target.value) || 0 }
-                      }))}
-                      className="w-full p-2 border border-gray-300 rounded-md"
-                      min="0"
-                      max="10"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-xs text-gray-500">Database Type</label>
-                    <select
-                      value={calculatorState.database.type}
-                      onChange={(e) => setCalculatorState(prev => ({
-                        ...prev,
-                        database: { ...prev.database, type: e.target.value }
-                      }))}
-                      className="w-full p-2 border border-gray-300 rounded-md"
-                    >
-                      <option value="general">General Purpose</option>
-                      <option value="memory">Memory Optimized</option>
-                      <option value="compute">Compute Optimized</option>
-                    </select>
-                  </div>
-                </div>
-              </div>
-
-              {/* Bandwidth */}
-              <div className="space-y-2">
-                <label className="block text-sm font-medium text-gray-700">Bandwidth</label>
-                <div>
-                  <label className="block text-xs text-gray-500">Data Transfer (GB)</label>
-                  <input
-                    type="number"
-                    value={calculatorState.bandwidth.gb}
-                    onChange={(e) => setCalculatorState(prev => ({
-                      ...prev,
-                      bandwidth: { ...prev.bandwidth, gb: parseInt(e.target.value) || 0 }
-                    }))}
-                    className="w-full p-2 border border-gray-300 rounded-md"
-                    min="0"
-                    max="10000"
-                  />
-                </div>
-              </div>
-            </div>
-
-            {/* Cost Results */}
-            <div className="space-y-4">
-              <h3 className="text-lg font-semibold">Monthly Cost Estimate</h3>
-              
               {providers.map(provider => {
                 const costs = monthlyCosts[provider.id];
                 if (!costs) return null;
                 
                 return (
-                  <div key={provider.id} className="bg-white border border-gray-200 rounded-lg p-4 shadow-sm hover:shadow-md transition-shadow">
+                  <div key={provider.id} className="bg-white border border-gray-200 rounded-lg p-4 shadow-sm hover:shadow-md transition-all duration-200">
                     {/* Provider Header with Hyperlinked Logo */}
-                    <div className="flex items-center justify-between mb-3">
-                      <div className="flex items-center gap-2">
+                    <div className="flex items-center justify-between mb-4">
+                      <div className="flex items-center gap-3">
                         <a
                           href={pricingReferences[provider.id]?.officialPricing}
                           target="_blank"
@@ -1819,46 +1686,45 @@ const CloudProInsights = () => {
                     </div>
                     
                     {/* Cost Breakdown */}
-                    <div className="space-y-2 text-sm mb-3">
-                      <div className="flex justify-between">
+                    <div className="space-y-3 text-sm">
+                      <div className="flex justify-between items-center">
                         <span className="text-gray-600">Compute:</span>
-                        <span className="font-medium">${costs.compute.toFixed(2)}</span>
+                        <span className="font-medium text-gray-900">${costs.compute.toFixed(2)}</span>
                       </div>
-                      <div className="flex justify-between">
+                      <div className="flex justify-between items-center">
                         <span className="text-gray-600">Storage:</span>
-                        <span className="font-medium">${costs.storage.toFixed(2)}</span>
+                        <span className="font-medium text-gray-900">${costs.storage.toFixed(2)}</span>
                       </div>
-                      <div className="flex justify-between">
+                      <div className="flex justify-between items-center">
                         <span className="text-gray-600">Database:</span>
-                        <span className="font-medium">${costs.database.toFixed(2)}</span>
+                        <span className="font-medium text-gray-900">${costs.database.toFixed(2)}</span>
                       </div>
-                      <div className="flex justify-between">
+                      <div className="flex justify-between items-center">
                         <span className="text-gray-600">Bandwidth:</span>
-                        <span className="font-medium">${costs.bandwidth.toFixed(2)}</span>
+                        <span className="font-medium text-gray-900">${costs.bandwidth.toFixed(2)}</span>
                       </div>
                     </div>
                     
                     {/* Provider-specific tip */}
-                    <div className="pt-3 border-t border-gray-100">
-                      <div className="text-xs text-gray-500">
+                    <div className="pt-4 mt-4 border-t border-gray-100">
+                      <div className="text-xs text-gray-500 leading-relaxed">
                         💡 {pricingReferences[provider.id]?.disclaimer?.split('.')[0]}.
                       </div>
                     </div>
                   </div>
                 );
               })}
-              
             </div>
           </div>
         )}
 
-        {/* Information Section */}
-        <div className="bg-white rounded-lg p-6 shadow-sm">
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        {/* Information Section - Compact */}
+        <div className="bg-white rounded-lg p-4 shadow-sm">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             {/* Important Disclaimers */}
-            <div className="space-y-3">
-              <h4 className="text-sm font-semibold text-gray-800 mb-3">Important Disclaimers</h4>
-              <div className="space-y-2 text-xs text-gray-600">
+            <div>
+              <h4 className="text-sm font-semibold text-gray-800 mb-2">Important Disclaimers</h4>
+              <div className="space-y-1 text-xs text-gray-600">
                 <div>• {generalDisclaimers.accuracy}</div>
                 <div>• {generalDisclaimers.estimates}</div>
                 <div>• {generalDisclaimers.regions}</div>
@@ -1868,8 +1734,8 @@ const CloudProInsights = () => {
             </div>
 
             {/* Pricing Models */}
-            <div className="space-y-3">
-              <h4 className="text-sm font-semibold text-gray-800 mb-3">Pricing Models</h4>
+            <div>
+              <h4 className="text-sm font-semibold text-gray-800 mb-2">Pricing Models</h4>
               <div className="text-xs text-gray-600 space-y-1">
                 <div><strong>On-Demand:</strong> Pay-as-you-go (highest cost)</div>
                 <div><strong>Reserved/Committed:</strong> 1-3 year commitments (up to 72% savings)</div>
@@ -1878,9 +1744,9 @@ const CloudProInsights = () => {
             </div>
 
             {/* Quick Links */}
-            <div className="space-y-3">
-              <h4 className="text-sm font-semibold text-gray-800 mb-3">Official Pricing</h4>
-              <div className="space-y-2 text-xs">
+            <div>
+              <h4 className="text-sm font-semibold text-gray-800 mb-2">Official Pricing</h4>
+              <div className="space-y-1 text-xs">
                 {Object.entries(pricingReferences).map(([providerId, provider]) => (
                   <a
                     key={providerId}
