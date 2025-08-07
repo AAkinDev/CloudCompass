@@ -1,6 +1,7 @@
 import React, { useState, useMemo, useEffect, useCallback } from 'react';
-import { Search, Filter, BarChart3, Users, Zap, Database, Shield, Globe, Monitor, Brain, Calculator, Download, Star, ExternalLink } from 'lucide-react';
+import { Search, Filter, BarChart3, Users, Zap, Database, Shield, Globe, Monitor, Brain, Calculator, Download, Star, ExternalLink, RotateCcw } from 'lucide-react';
 import CloudProInsightsLogo from './components/CloudProInsightsLogo';
+import { accurateCostData } from './data/accurateCostData';
 
 const CloudProInsights = () => {
   const [activeView, setActiveView] = useState('home');
@@ -1480,56 +1481,31 @@ const CloudProInsights = () => {
     const [selectedProvider, setSelectedProvider] = useState('aws');
     const [monthlyCosts, setMonthlyCosts] = useState({});
 
+    const resetCalculator = () => {
+      setCalculatorState({
+        compute: { instances: 2, hours: 730, type: 'general' },
+        storage: { gb: 100, type: 'standard' },
+        database: { instances: 1, hours: 730, type: 'general' },
+        bandwidth: { gb: 1000 },
+        region: 'us-east-1'
+      });
+      setSelectedProvider('aws');
+    };
+
     const calculateCosts = useCallback(() => {
       const costs = {};
       
-      // Compute costs
-      const computeCosts = {
-        aws: { general: 0.0116, memory: 0.0232, compute: 0.0348 },
-        azure: { general: 0.012, memory: 0.024, compute: 0.036 },
-        gcp: { general: 0.0104, memory: 0.0208, compute: 0.0312 },
-        oracle: { general: 0.011, memory: 0.022, compute: 0.033 },
-        ibm: { general: 0.013, memory: 0.026, compute: 0.039 }
-      };
-
-      // Storage costs per GB/month
-      const storageCosts = {
-        aws: { standard: 0.023, infrequent: 0.0125, archive: 0.004 },
-        azure: { standard: 0.0184, infrequent: 0.01, archive: 0.002 },
-        gcp: { standard: 0.020, infrequent: 0.012, archive: 0.004 },
-        oracle: { standard: 0.0255, infrequent: 0.013, archive: 0.003 },
-        ibm: { standard: 0.024, infrequent: 0.012, archive: 0.004 }
-      };
-
-      // Database costs per hour
-      const databaseCosts = {
-        aws: { general: 0.017, memory: 0.034, compute: 0.068 },
-        azure: { general: 0.0208, memory: 0.0416, compute: 0.0624 },
-        gcp: { general: 0.0150, memory: 0.030, compute: 0.045 },
-        oracle: { general: 0.016, memory: 0.032, compute: 0.048 },
-        ibm: { general: 0.019, memory: 0.038, compute: 0.057 }
-      };
-
-      // Bandwidth costs per GB
-      const bandwidthCosts = {
-        aws: 0.09,
-        azure: 0.087,
-        gcp: 0.12,
-        oracle: 0.0085,
-        ibm: 0.09
-      };
-
       providers.forEach(provider => {
-        const computeCost = computeCosts[provider.id][calculatorState.compute.type] * 
+        const computeCost = accurateCostData.compute[provider.id][calculatorState.compute.type] * 
                           calculatorState.compute.instances * calculatorState.compute.hours;
         
-        const storageCost = storageCosts[provider.id][calculatorState.storage.type] * 
+        const storageCost = accurateCostData.storage[provider.id][calculatorState.storage.type] * 
                           calculatorState.storage.gb;
         
-        const databaseCost = databaseCosts[provider.id][calculatorState.database.type] * 
+        const databaseCost = accurateCostData.database[provider.id][calculatorState.database.type] * 
                            calculatorState.database.instances * calculatorState.database.hours;
         
-        const bandwidthCost = bandwidthCosts[provider.id] * calculatorState.bandwidth.gb;
+        const bandwidthCost = accurateCostData.bandwidth[provider.id] * calculatorState.bandwidth.gb;
         
         costs[provider.id] = {
           compute: computeCost,
@@ -1555,7 +1531,17 @@ const CloudProInsights = () => {
           
           {/* Provider Selection */}
           <div className="mb-6">
-            <h3 className="text-lg font-semibold mb-3">Select Provider</h3>
+            <div className="flex justify-between items-center mb-3">
+              <h3 className="text-lg font-semibold">Select Provider</h3>
+              <button
+                onClick={resetCalculator}
+                className="flex items-center gap-2 px-3 py-2 text-sm text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-lg transition-colors"
+                title="Reset calculator to default values"
+              >
+                <RotateCcw className="w-4 h-4" />
+                <span className="hidden sm:inline">Reset</span>
+              </button>
+            </div>
             <div className="grid grid-cols-2 md:grid-cols-5 gap-3">
               {providers.map(provider => (
                 <button
@@ -1566,6 +1552,7 @@ const CloudProInsights = () => {
                       ? 'border-blue-500 bg-blue-50'
                       : 'border-gray-200 hover:border-gray-300'
                   }`}
+                  title={`Select ${provider.name} for cost comparison`}
                 >
                   <provider.logo />
                   <div className="text-sm font-medium mt-2">{provider.name}</div>
@@ -1751,11 +1738,27 @@ const CloudProInsights = () => {
                             <span>${costs.bandwidth.toFixed(2)}</span>
                           </div>
                         </div>
+                        
+                        {/* Cost savings tip */}
+                        <div className="mt-3 pt-3 border-t border-gray-200">
+                          <div className="text-xs text-gray-500">
+                            💡 Tip: Consider spot/preemptible instances for up to 70% savings on compute costs
+                          </div>
+                        </div>
                       </div>
                     );
                   })}
                 </div>
               )}
+              
+              {/* Cost comparison note */}
+              <div className="mt-4 p-3 bg-blue-50 rounded-lg">
+                <div className="text-sm text-blue-800">
+                  <strong>Note:</strong> Costs are estimates based on current pricing. Actual costs may vary based on region, usage patterns, and discounts. 
+                  <br />
+                  <span className="text-xs">Free tier allowances are not included in these calculations.</span>
+                </div>
+              </div>
             </div>
           </div>
         </div>
