@@ -1485,13 +1485,13 @@ const CloudProInsights = () => {
     const getSupportLevel = (providerId, osId) => {
       const provider = operatingSystemSupport.providers[providerId];
       if (!provider || !provider.supportMatrix[osId]) {
-        return 'none';
+        return 'no';
       }
       return provider.supportMatrix[osId].support;
     };
 
     const getSupportLevelInfo = (level) => {
-      return operatingSystemSupport.supportLevels[level] || operatingSystemSupport.supportLevels.none;
+      return operatingSystemSupport.supportLevels[level] || operatingSystemSupport.supportLevels.no;
     };
 
     return (
@@ -1601,7 +1601,6 @@ const CloudProInsights = () => {
                           </div>
                         </div>
                         <div className="text-sm text-gray-600">
-                          <div className="mb-1"><strong>Versions:</strong> {osInfo.versions.join(', ')}</div>
                           <div><strong>Notes:</strong> {osInfo.notes}</div>
                         </div>
                       </div>
