@@ -66,8 +66,12 @@ export default function ProviderAnalytics({ defaultSort = 'services' }) {
 
   // Initial load
   useEffect(() => {
-    loadProviderData();
-    setIsLoading(false);
+    const loadData = async () => {
+      setIsLoading(true);
+      await loadProviderData();
+      setIsLoading(false);
+    };
+    loadData();
   }, [loadProviderData]);
 
   // Refresh data
@@ -123,6 +127,70 @@ export default function ProviderAnalytics({ defaultSort = 'services' }) {
     return (
       <div className="flex justify-center items-center p-8">
         <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
+      </div>
+    );
+  }
+
+  if (providers.length === 0) {
+    return (
+      <div className="space-y-6">
+        {/* Header */}
+        <div className="flex justify-between items-center">
+          <h2 className="text-2xl font-bold text-gray-900">Provider Analytics</h2>
+          <div className="flex items-center gap-4">
+            {/* Search */}
+            <input
+              type="text"
+              placeholder="Search providers..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+            />
+            
+            {/* Sort */}
+            <select
+              value={sortBy}
+              onChange={(e) => setSortBy(e.target.value)}
+              className="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+            >
+              <option value="services">By Services</option>
+              <option value="regions">By Regions</option>
+              <option value="az">A-Z</option>
+            </select>
+            
+            {/* Refresh */}
+            <button
+              onClick={handleRefresh}
+              disabled={isRefreshing}
+              className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
+            >
+              {isRefreshing ? (
+                <span className="inline-flex items-center gap-2">
+                  <span className="animate-spin">⟳</span>
+                  Refreshing...
+                </span>
+              ) : (
+                'Refresh'
+              )}
+            </button>
+          </div>
+        </div>
+
+        {/* No Data Message */}
+        <div className="text-center py-12">
+          <div className="text-gray-500 text-lg mb-4">No provider data available</div>
+          <button
+            onClick={handleRefresh}
+            className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
+          >
+            Load Data
+          </button>
+        </div>
+
+        {/* Last Synced */}
+        <div className="text-center text-sm text-gray-500">
+          Last synced: {formatISO(lastSynced)}
+        </div>
       </div>
     );
   }
