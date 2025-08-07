@@ -2,6 +2,7 @@ import React, { useState, useMemo, useEffect, useCallback } from 'react';
 import { Search, Filter, BarChart3, Users, Zap, Database, Shield, Globe, Monitor, Brain, Calculator, Star, RotateCcw } from 'lucide-react';
 import CloudProInsightsLogo from './components/CloudProInsightsLogo';
 import { accurateCostData } from './data/accurateCostData';
+import ProviderAnalytics from './components/ProviderAnalytics';
 // Removed unused imports - now using NotesSection component
 
 
@@ -1459,22 +1460,7 @@ const CloudProInsights = () => {
   const AnalyticsView = () => (
     <div className="space-y-6">
       <div className="bg-white rounded-lg p-6 shadow-sm">
-        <h2 className="text-2xl font-bold mb-4">Provider Analytics</h2>
-        <div className="grid md:grid-cols-3 gap-6">
-          {providers.map(provider => {
-            const serviceCount = serviceData.filter(service => service[provider.id]).length;
-            return (
-              <div key={provider.id} className="text-center p-4 border rounded-lg">
-                <div className="mb-2">
-                  <provider.logo />
-                </div>
-                <h3 className="font-semibold">{provider.name}</h3>
-                <p className="text-2xl font-bold text-blue-600">{serviceCount}</p>
-                <p className="text-sm text-gray-600">services available</p>
-              </div>
-            );
-          })}
-        </div>
+        <ProviderAnalytics defaultSort="services" />
       </div>
     </div>
   );

@@ -1,0 +1,137 @@
+[
+  {
+    "id": "virtual-servers",
+    "name": "IBM Cloud Virtual Servers",
+    "category": "Compute",
+    "regions": ["us-south", "us-east", "eu-gb", "au-syd"],
+    "status": "GA",
+    "docsUrl": "https://cloud.ibm.com/docs/virtual-servers",
+    "pricingUrl": "https://www.ibm.com/cloud/virtual-servers/pricing"
+  },
+  {
+    "id": "functions",
+    "name": "IBM Cloud Functions",
+    "category": "Compute",
+    "regions": ["us-south", "us-east", "eu-gb", "au-syd"],
+    "status": "GA",
+    "docsUrl": "https://cloud.ibm.com/docs/openwhisk",
+    "pricingUrl": "https://www.ibm.com/cloud/functions/pricing"
+  },
+  {
+    "id": "object-storage",
+    "name": "IBM Cloud Object Storage",
+    "category": "Storage",
+    "regions": ["us-south", "us-east", "eu-gb", "au-syd"],
+    "status": "GA",
+    "docsUrl": "https://cloud.ibm.com/docs/cloud-object-storage",
+    "pricingUrl": "https://www.ibm.com/cloud/object-storage/pricing"
+  },
+  {
+    "id": "cloudant",
+    "name": "IBM Cloudant",
+    "category": "Database",
+    "regions": ["us-south", "us-east", "eu-gb", "au-syd"],
+    "status": "GA",
+    "docsUrl": "https://cloud.ibm.com/docs/Cloudant",
+    "pricingUrl": "https://www.ibm.com/cloud/cloudant/pricing"
+  },
+  {
+    "id": "db2",
+    "name": "IBM Db2",
+    "category": "Database",
+    "regions": ["us-south", "us-east", "eu-gb", "au-syd"],
+    "status": "GA",
+    "docsUrl": "https://cloud.ibm.com/docs/Db2onCloud",
+    "pricingUrl": "https://www.ibm.com/cloud/db2/pricing"
+  },
+  {
+    "id": "vpc",
+    "name": "IBM Cloud VPC",
+    "category": "Networking",
+    "regions": ["us-south", "us-east", "eu-gb", "au-syd"],
+    "status": "GA",
+    "docsUrl": "https://cloud.ibm.com/docs/vpc",
+    "pricingUrl": "https://www.ibm.com/cloud/vpc/pricing"
+  },
+  {
+    "id": "cdn",
+    "name": "IBM Cloud CDN",
+    "category": "Networking",
+    "regions": ["us-south", "us-east", "eu-gb", "au-syd"],
+    "status": "GA",
+    "docsUrl": "https://cloud.ibm.com/docs/cdn",
+    "pricingUrl": "https://www.ibm.com/cloud/cdn/pricing"
+  },
+  {
+    "id": "watson",
+    "name": "IBM Watson",
+    "category": "AI/ML",
+    "regions": ["us-south", "us-east", "eu-gb", "au-syd"],
+    "status": "GA",
+    "docsUrl": "https://cloud.ibm.com/docs/watson",
+    "pricingUrl": "https://www.ibm.com/cloud/watson/pricing"
+  },
+  {
+    "id": "machine-learning",
+    "name": "IBM Machine Learning",
+    "category": "AI/ML",
+    "regions": ["us-south", "us-east", "eu-gb", "au-syd"],
+    "status": "GA",
+    "docsUrl": "https://cloud.ibm.com/docs/ml",
+    "pricingUrl": "https://www.ibm.com/cloud/machine-learning/pricing"
+  },
+  {
+    "id": "iam",
+    "name": "IBM Cloud IAM",
+    "category": "Security",
+    "regions": ["us-south", "us-east", "eu-gb", "au-syd"],
+    "status": "GA",
+    "docsUrl": "https://cloud.ibm.com/docs/account",
+    "pricingUrl": "https://www.ibm.com/cloud/iam/pricing"
+  },
+  {
+    "id": "log-analysis",
+    "name": "IBM Log Analysis",
+    "category": "Analytics",
+    "regions": ["us-south", "us-east", "eu-gb", "au-syd"],
+    "status": "GA",
+    "docsUrl": "https://cloud.ibm.com/docs/log-analysis",
+    "pricingUrl": "https://www.ibm.com/cloud/log-analysis/pricing"
+  },
+  {
+    "id": "continuous-delivery",
+    "name": "IBM Continuous Delivery",
+    "category": "DevTools",
+    "regions": ["us-south", "us-east", "eu-gb", "au-syd"],
+    "status": "GA",
+    "docsUrl": "https://cloud.ibm.com/docs/ContinuousDelivery",
+    "pricingUrl": "https://www.ibm.com/cloud/continuous-delivery/pricing"
+  },
+  {
+    "id": "redis",
+    "name": "IBM Cloud Redis",
+    "category": "Database",
+    "regions": ["us-south", "us-east", "eu-gb", "au-syd"],
+    "status": "GA",
+    "docsUrl": "https://cloud.ibm.com/docs/databases-for-redis",
+    "pricingUrl": "https://www.ibm.com/cloud/databases-for-redis/pricing"
+  },
+  {
+    "id": "file-storage",
+    "name": "IBM Cloud File Storage",
+    "category": "Storage",
+    "regions": ["us-south", "us-east", "eu-gb", "au-syd"],
+    "status": "GA",
+    "docsUrl": "https://cloud.ibm.com/docs/FileStorage",
+    "pricingUrl": "https://www.ibm.com/cloud/file-storage/pricing"
+  },
+  {
+    "id": "kubernetes-service",
+    "name": "IBM Cloud Kubernetes Service",
+    "category": "Compute",
+    "regions": ["us-south", "us-east", "eu-gb", "au-syd"],
+    "status": "GA",
+    "docsUrl": "https://cloud.ibm.com/docs/containers",
+    "pricingUrl": "https://www.ibm.com/cloud/kubernetes-service/pricing"
+  }
+]

@@ -1,0 +1,137 @@
+[
+  {
+    "id": "compute",
+    "name": "Oracle Cloud Compute",
+    "category": "Compute",
+    "regions": ["us-east-1", "us-west-1", "eu-frankfurt-1", "ap-singapore-1"],
+    "status": "GA",
+    "docsUrl": "https://docs.oracle.com/en-us/iaas/Content/Compute/home.htm",
+    "pricingUrl": "https://www.oracle.com/cloud/compute/pricing.html"
+  },
+  {
+    "id": "functions",
+    "name": "Oracle Cloud Functions",
+    "category": "Compute",
+    "regions": ["us-east-1", "us-west-1", "eu-frankfurt-1", "ap-singapore-1"],
+    "status": "GA",
+    "docsUrl": "https://docs.oracle.com/en-us/iaas/Content/Functions/home.htm",
+    "pricingUrl": "https://www.oracle.com/cloud/functions/pricing.html"
+  },
+  {
+    "id": "object-storage",
+    "name": "Oracle Cloud Object Storage",
+    "category": "Storage",
+    "regions": ["us-east-1", "us-west-1", "eu-frankfurt-1", "ap-singapore-1"],
+    "status": "GA",
+    "docsUrl": "https://docs.oracle.com/en-us/iaas/Content/Object/home.htm",
+    "pricingUrl": "https://www.oracle.com/cloud/storage/pricing.html"
+  },
+  {
+    "id": "autonomous-database",
+    "name": "Oracle Autonomous Database",
+    "category": "Database",
+    "regions": ["us-east-1", "us-west-1", "eu-frankfurt-1", "ap-singapore-1"],
+    "status": "GA",
+    "docsUrl": "https://docs.oracle.com/en-us/iaas/Content/Database/home.htm",
+    "pricingUrl": "https://www.oracle.com/cloud/database/pricing.html"
+  },
+  {
+    "id": "nosql",
+    "name": "Oracle Cloud NoSQL",
+    "category": "Database",
+    "regions": ["us-east-1", "us-west-1", "eu-frankfurt-1", "ap-singapore-1"],
+    "status": "GA",
+    "docsUrl": "https://docs.oracle.com/en-us/iaas/Content/NoSQL/home.htm",
+    "pricingUrl": "https://www.oracle.com/cloud/nosql/pricing.html"
+  },
+  {
+    "id": "virtual-cloud-network",
+    "name": "Oracle Virtual Cloud Network",
+    "category": "Networking",
+    "regions": ["us-east-1", "us-west-1", "eu-frankfurt-1", "ap-singapore-1"],
+    "status": "GA",
+    "docsUrl": "https://docs.oracle.com/en-us/iaas/Content/Network/home.htm",
+    "pricingUrl": "https://www.oracle.com/cloud/networking/pricing.html"
+  },
+  {
+    "id": "load-balancer",
+    "name": "Oracle Cloud Load Balancer",
+    "category": "Networking",
+    "regions": ["us-east-1", "us-west-1", "eu-frankfurt-1", "ap-singapore-1"],
+    "status": "GA",
+    "docsUrl": "https://docs.oracle.com/en-us/iaas/Content/Balance/home.htm",
+    "pricingUrl": "https://www.oracle.com/cloud/load-balancer/pricing.html"
+  },
+  {
+    "id": "ai-services",
+    "name": "Oracle AI Services",
+    "category": "AI/ML",
+    "regions": ["us-east-1", "us-west-1", "eu-frankfurt-1"],
+    "status": "GA",
+    "docsUrl": "https://docs.oracle.com/en-us/iaas/Content/ai/home.htm",
+    "pricingUrl": "https://www.oracle.com/cloud/ai/pricing.html"
+  },
+  {
+    "id": "machine-learning",
+    "name": "Oracle Machine Learning",
+    "category": "AI/ML",
+    "regions": ["us-east-1", "us-west-1", "eu-frankfurt-1", "ap-singapore-1"],
+    "status": "GA",
+    "docsUrl": "https://docs.oracle.com/en-us/iaas/Content/ml/home.htm",
+    "pricingUrl": "https://www.oracle.com/cloud/machine-learning/pricing.html"
+  },
+  {
+    "id": "identity",
+    "name": "Oracle Cloud Identity",
+    "category": "Security",
+    "regions": ["us-east-1", "us-west-1", "eu-frankfurt-1", "ap-singapore-1"],
+    "status": "GA",
+    "docsUrl": "https://docs.oracle.com/en-us/iaas/Content/Identity/home.htm",
+    "pricingUrl": "https://www.oracle.com/cloud/identity/pricing.html"
+  },
+  {
+    "id": "analytics-cloud",
+    "name": "Oracle Analytics Cloud",
+    "category": "Analytics",
+    "regions": ["us-east-1", "us-west-1", "eu-frankfurt-1", "ap-singapore-1"],
+    "status": "GA",
+    "docsUrl": "https://docs.oracle.com/en-us/iaas/Content/analytics/home.htm",
+    "pricingUrl": "https://www.oracle.com/cloud/analytics/pricing.html"
+  },
+  {
+    "id": "developer-services",
+    "name": "Oracle Developer Services",
+    "category": "DevTools",
+    "regions": ["us-east-1", "us-west-1", "eu-frankfurt-1", "ap-singapore-1"],
+    "status": "GA",
+    "docsUrl": "https://docs.oracle.com/en-us/iaas/Content/dev/home.htm",
+    "pricingUrl": "https://www.oracle.com/cloud/developer/pricing.html"
+  },
+  {
+    "id": "redis",
+    "name": "Oracle Cloud Redis",
+    "category": "Database",
+    "regions": ["us-east-1", "us-west-1", "eu-frankfurt-1", "ap-singapore-1"],
+    "status": "GA",
+    "docsUrl": "https://docs.oracle.com/en-us/iaas/Content/redis/home.htm",
+    "pricingUrl": "https://www.oracle.com/cloud/redis/pricing.html"
+  },
+  {
+    "id": "file-storage",
+    "name": "Oracle Cloud File Storage",
+    "category": "Storage",
+    "regions": ["us-east-1", "us-west-1", "eu-frankfurt-1", "ap-singapore-1"],
+    "status": "GA",
+    "docsUrl": "https://docs.oracle.com/en-us/iaas/Content/File/home.htm",
+    "pricingUrl": "https://www.oracle.com/cloud/file-storage/pricing.html"
+  },
+  {
+    "id": "container-engine",
+    "name": "Oracle Container Engine",
+    "category": "Compute",
+    "regions": ["us-east-1", "us-west-1", "eu-frankfurt-1", "ap-singapore-1"],
+    "status": "GA",
+    "docsUrl": "https://docs.oracle.com/en-us/iaas/Content/ContEng/home.htm",
+    "pricingUrl": "https://www.oracle.com/cloud/container-engine/pricing.html"
+  }
+]

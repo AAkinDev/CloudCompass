@@ -1,0 +1,137 @@
+[
+  {
+    "id": "compute-engine",
+    "name": "Compute Engine",
+    "category": "Compute",
+    "regions": ["us-east1", "us-west1", "europe-west1", "asia-southeast1"],
+    "status": "GA",
+    "docsUrl": "https://cloud.google.com/compute/docs",
+    "pricingUrl": "https://cloud.google.com/compute/pricing"
+  },
+  {
+    "id": "cloud-functions",
+    "name": "Cloud Functions",
+    "category": "Compute",
+    "regions": ["us-east1", "us-west1", "europe-west1", "asia-southeast1"],
+    "status": "GA",
+    "docsUrl": "https://cloud.google.com/functions/docs",
+    "pricingUrl": "https://cloud.google.com/functions/pricing"
+  },
+  {
+    "id": "cloud-storage",
+    "name": "Cloud Storage",
+    "category": "Storage",
+    "regions": ["us-east1", "us-west1", "europe-west1", "asia-southeast1"],
+    "status": "GA",
+    "docsUrl": "https://cloud.google.com/storage/docs",
+    "pricingUrl": "https://cloud.google.com/storage/pricing"
+  },
+  {
+    "id": "cloud-sql",
+    "name": "Cloud SQL",
+    "category": "Database",
+    "regions": ["us-east1", "us-west1", "europe-west1", "asia-southeast1"],
+    "status": "GA",
+    "docsUrl": "https://cloud.google.com/sql/docs",
+    "pricingUrl": "https://cloud.google.com/sql/pricing"
+  },
+  {
+    "id": "firestore",
+    "name": "Firestore",
+    "category": "Database",
+    "regions": ["us-east1", "us-west1", "europe-west1", "asia-southeast1"],
+    "status": "GA",
+    "docsUrl": "https://cloud.google.com/firestore/docs",
+    "pricingUrl": "https://cloud.google.com/firestore/pricing"
+  },
+  {
+    "id": "vpc",
+    "name": "Virtual Private Cloud",
+    "category": "Networking",
+    "regions": ["us-east1", "us-west1", "europe-west1", "asia-southeast1"],
+    "status": "GA",
+    "docsUrl": "https://cloud.google.com/vpc/docs",
+    "pricingUrl": "https://cloud.google.com/vpc/pricing"
+  },
+  {
+    "id": "cloud-cdn",
+    "name": "Cloud CDN",
+    "category": "Networking",
+    "regions": ["us-east1", "us-west1", "europe-west1", "asia-southeast1"],
+    "status": "GA",
+    "docsUrl": "https://cloud.google.com/cdn/docs",
+    "pricingUrl": "https://cloud.google.com/cdn/pricing"
+  },
+  {
+    "id": "vertex-ai",
+    "name": "Vertex AI",
+    "category": "AI/ML",
+    "regions": ["us-east1", "us-west1", "europe-west1", "asia-southeast1"],
+    "status": "GA",
+    "docsUrl": "https://cloud.google.com/vertex-ai/docs",
+    "pricingUrl": "https://cloud.google.com/vertex-ai/pricing"
+  },
+  {
+    "id": "ai-platform",
+    "name": "AI Platform",
+    "category": "AI/ML",
+    "regions": ["us-east1", "us-west1", "europe-west1", "asia-southeast1"],
+    "status": "GA",
+    "docsUrl": "https://cloud.google.com/ai-platform/docs",
+    "pricingUrl": "https://cloud.google.com/ai-platform/pricing"
+  },
+  {
+    "id": "identity-platform",
+    "name": "Identity Platform",
+    "category": "Security",
+    "regions": ["us-east1", "us-west1", "europe-west1", "asia-southeast1"],
+    "status": "GA",
+    "docsUrl": "https://cloud.google.com/identity-platform/docs",
+    "pricingUrl": "https://cloud.google.com/identity-platform/pricing"
+  },
+  {
+    "id": "bigquery",
+    "name": "BigQuery",
+    "category": "Analytics",
+    "regions": ["us-east1", "us-west1", "europe-west1", "asia-southeast1"],
+    "status": "GA",
+    "docsUrl": "https://cloud.google.com/bigquery/docs",
+    "pricingUrl": "https://cloud.google.com/bigquery/pricing"
+  },
+  {
+    "id": "cloud-build",
+    "name": "Cloud Build",
+    "category": "DevTools",
+    "regions": ["us-east1", "us-west1", "europe-west1", "asia-southeast1"],
+    "status": "GA",
+    "docsUrl": "https://cloud.google.com/build/docs",
+    "pricingUrl": "https://cloud.google.com/build/pricing"
+  },
+  {
+    "id": "memorystore",
+    "name": "Memorystore",
+    "category": "Database",
+    "regions": ["us-east1", "us-west1", "europe-west1", "asia-southeast1"],
+    "status": "GA",
+    "docsUrl": "https://cloud.google.com/memorystore/docs",
+    "pricingUrl": "https://cloud.google.com/memorystore/pricing"
+  },
+  {
+    "id": "filestore",
+    "name": "Filestore",
+    "category": "Storage",
+    "regions": ["us-east1", "us-west1", "europe-west1", "asia-southeast1"],
+    "status": "GA",
+    "docsUrl": "https://cloud.google.com/filestore/docs",
+    "pricingUrl": "https://cloud.google.com/filestore/pricing"
+  },
+  {
+    "id": "kubernetes-engine",
+    "name": "Kubernetes Engine",
+    "category": "Compute",
+    "regions": ["us-east1", "us-west1", "europe-west1", "asia-southeast1"],
+    "status": "GA",
+    "docsUrl": "https://cloud.google.com/kubernetes-engine/docs",
+    "pricingUrl": "https://cloud.google.com/kubernetes-engine/pricing"
+  }
+]

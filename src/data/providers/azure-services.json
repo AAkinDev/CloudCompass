@@ -1,0 +1,137 @@
+[
+  {
+    "id": "virtual-machines",
+    "name": "Azure Virtual Machines",
+    "category": "Compute",
+    "regions": ["eastus", "westus2", "westeurope", "southeastasia"],
+    "status": "GA",
+    "docsUrl": "https://docs.microsoft.com/azure/virtual-machines/",
+    "pricingUrl": "https://azure.microsoft.com/pricing/details/virtual-machines/"
+  },
+  {
+    "id": "functions",
+    "name": "Azure Functions",
+    "category": "Compute",
+    "regions": ["eastus", "westus2", "westeurope", "southeastasia"],
+    "status": "GA",
+    "docsUrl": "https://docs.microsoft.com/azure/azure-functions/",
+    "pricingUrl": "https://azure.microsoft.com/pricing/details/functions/"
+  },
+  {
+    "id": "storage",
+    "name": "Azure Storage",
+    "category": "Storage",
+    "regions": ["eastus", "westus2", "westeurope", "southeastasia"],
+    "status": "GA",
+    "docsUrl": "https://docs.microsoft.com/azure/storage/",
+    "pricingUrl": "https://azure.microsoft.com/pricing/details/storage/"
+  },
+  {
+    "id": "sql-database",
+    "name": "Azure SQL Database",
+    "category": "Database",
+    "regions": ["eastus", "westus2", "westeurope", "southeastasia"],
+    "status": "GA",
+    "docsUrl": "https://docs.microsoft.com/azure/azure-sql/",
+    "pricingUrl": "https://azure.microsoft.com/pricing/details/sql-database/"
+  },
+  {
+    "id": "cosmos-db",
+    "name": "Azure Cosmos DB",
+    "category": "Database",
+    "regions": ["eastus", "westus2", "westeurope", "southeastasia"],
+    "status": "GA",
+    "docsUrl": "https://docs.microsoft.com/azure/cosmos-db/",
+    "pricingUrl": "https://azure.microsoft.com/pricing/details/cosmos-db/"
+  },
+  {
+    "id": "virtual-network",
+    "name": "Azure Virtual Network",
+    "category": "Networking",
+    "regions": ["eastus", "westus2", "westeurope", "southeastasia"],
+    "status": "GA",
+    "docsUrl": "https://docs.microsoft.com/azure/virtual-network/",
+    "pricingUrl": "https://azure.microsoft.com/pricing/details/virtual-network/"
+  },
+  {
+    "id": "cdn",
+    "name": "Azure CDN",
+    "category": "Networking",
+    "regions": ["eastus", "westus2", "westeurope", "southeastasia"],
+    "status": "GA",
+    "docsUrl": "https://docs.microsoft.com/azure/cdn/",
+    "pricingUrl": "https://azure.microsoft.com/pricing/details/cdn/"
+  },
+  {
+    "id": "machine-learning",
+    "name": "Azure Machine Learning",
+    "category": "AI/ML",
+    "regions": ["eastus", "westus2", "westeurope", "southeastasia"],
+    "status": "GA",
+    "docsUrl": "https://docs.microsoft.com/azure/machine-learning/",
+    "pricingUrl": "https://azure.microsoft.com/pricing/details/machine-learning/"
+  },
+  {
+    "id": "openai",
+    "name": "Azure OpenAI Service",
+    "category": "AI/ML",
+    "regions": ["eastus", "westus2", "westeurope"],
+    "status": "GA",
+    "docsUrl": "https://docs.microsoft.com/azure/cognitive-services/openai/",
+    "pricingUrl": "https://azure.microsoft.com/pricing/details/cognitive-services/openai-service/"
+  },
+  {
+    "id": "active-directory",
+    "name": "Azure Active Directory",
+    "category": "Security",
+    "regions": ["eastus", "westus2", "westeurope", "southeastasia"],
+    "status": "GA",
+    "docsUrl": "https://docs.microsoft.com/azure/active-directory/",
+    "pricingUrl": "https://azure.microsoft.com/pricing/details/active-directory/"
+  },
+  {
+    "id": "application-insights",
+    "name": "Azure Application Insights",
+    "category": "Analytics",
+    "regions": ["eastus", "westus2", "westeurope", "southeastasia"],
+    "status": "GA",
+    "docsUrl": "https://docs.microsoft.com/azure/azure-monitor/app/app-insights-overview",
+    "pricingUrl": "https://azure.microsoft.com/pricing/details/monitor/"
+  },
+  {
+    "id": "devops",
+    "name": "Azure DevOps",
+    "category": "DevTools",
+    "regions": ["eastus", "westus2", "westeurope", "southeastasia"],
+    "status": "GA",
+    "docsUrl": "https://docs.microsoft.com/azure/devops/",
+    "pricingUrl": "https://azure.microsoft.com/pricing/details/devops/"
+  },
+  {
+    "id": "redis-cache",
+    "name": "Azure Cache for Redis",
+    "category": "Database",
+    "regions": ["eastus", "westus2", "westeurope", "southeastasia"],
+    "status": "GA",
+    "docsUrl": "https://docs.microsoft.com/azure/azure-cache-for-redis/",
+    "pricingUrl": "https://azure.microsoft.com/pricing/details/cache/"
+  },
+  {
+    "id": "file-storage",
+    "name": "Azure File Storage",
+    "category": "Storage",
+    "regions": ["eastus", "westus2", "westeurope", "southeastasia"],
+    "status": "GA",
+    "docsUrl": "https://docs.microsoft.com/azure/storage/files/",
+    "pricingUrl": "https://azure.microsoft.com/pricing/details/storage/files/"
+  },
+  {
+    "id": "container-instances",
+    "name": "Azure Container Instances",
+    "category": "Compute",
+    "regions": ["eastus", "westus2", "westeurope", "southeastasia"],
+    "status": "GA",
+    "docsUrl": "https://docs.microsoft.com/azure/container-instances/",
+    "pricingUrl": "https://azure.microsoft.com/pricing/details/container-instances/"
+  }
+]

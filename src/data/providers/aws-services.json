@@ -1,0 +1,137 @@
+[
+  {
+    "id": "ec2",
+    "name": "Amazon EC2",
+    "category": "Compute",
+    "regions": ["us-east-1", "us-west-2", "eu-west-1", "ap-southeast-1"],
+    "status": "GA",
+    "docsUrl": "https://docs.aws.amazon.com/ec2/",
+    "pricingUrl": "https://aws.amazon.com/ec2/pricing/"
+  },
+  {
+    "id": "lambda",
+    "name": "AWS Lambda",
+    "category": "Compute",
+    "regions": ["us-east-1", "us-west-2", "eu-west-1", "ap-southeast-1"],
+    "status": "GA",
+    "docsUrl": "https://docs.aws.amazon.com/lambda/",
+    "pricingUrl": "https://aws.amazon.com/lambda/pricing/"
+  },
+  {
+    "id": "s3",
+    "name": "Amazon S3",
+    "category": "Storage",
+    "regions": ["us-east-1", "us-west-2", "eu-west-1", "ap-southeast-1"],
+    "status": "GA",
+    "docsUrl": "https://docs.aws.amazon.com/s3/",
+    "pricingUrl": "https://aws.amazon.com/s3/pricing/"
+  },
+  {
+    "id": "rds",
+    "name": "Amazon RDS",
+    "category": "Database",
+    "regions": ["us-east-1", "us-west-2", "eu-west-1", "ap-southeast-1"],
+    "status": "GA",
+    "docsUrl": "https://docs.aws.amazon.com/rds/",
+    "pricingUrl": "https://aws.amazon.com/rds/pricing/"
+  },
+  {
+    "id": "dynamodb",
+    "name": "Amazon DynamoDB",
+    "category": "Database",
+    "regions": ["us-east-1", "us-west-2", "eu-west-1", "ap-southeast-1"],
+    "status": "GA",
+    "docsUrl": "https://docs.aws.amazon.com/dynamodb/",
+    "pricingUrl": "https://aws.amazon.com/dynamodb/pricing/"
+  },
+  {
+    "id": "vpc",
+    "name": "Amazon VPC",
+    "category": "Networking",
+    "regions": ["us-east-1", "us-west-2", "eu-west-1", "ap-southeast-1"],
+    "status": "GA",
+    "docsUrl": "https://docs.aws.amazon.com/vpc/",
+    "pricingUrl": "https://aws.amazon.com/vpc/pricing/"
+  },
+  {
+    "id": "cloudfront",
+    "name": "Amazon CloudFront",
+    "category": "Networking",
+    "regions": ["us-east-1", "us-west-2", "eu-west-1", "ap-southeast-1"],
+    "status": "GA",
+    "docsUrl": "https://docs.aws.amazon.com/cloudfront/",
+    "pricingUrl": "https://aws.amazon.com/cloudfront/pricing/"
+  },
+  {
+    "id": "sagemaker",
+    "name": "Amazon SageMaker",
+    "category": "AI/ML",
+    "regions": ["us-east-1", "us-west-2", "eu-west-1", "ap-southeast-1"],
+    "status": "GA",
+    "docsUrl": "https://docs.aws.amazon.com/sagemaker/",
+    "pricingUrl": "https://aws.amazon.com/sagemaker/pricing/"
+  },
+  {
+    "id": "bedrock",
+    "name": "Amazon Bedrock",
+    "category": "AI/ML",
+    "regions": ["us-east-1", "us-west-2"],
+    "status": "GA",
+    "docsUrl": "https://docs.aws.amazon.com/bedrock/",
+    "pricingUrl": "https://aws.amazon.com/bedrock/pricing/"
+  },
+  {
+    "id": "iam",
+    "name": "AWS IAM",
+    "category": "Security",
+    "regions": ["us-east-1", "us-west-2", "eu-west-1", "ap-southeast-1"],
+    "status": "GA",
+    "docsUrl": "https://docs.aws.amazon.com/iam/",
+    "pricingUrl": "https://aws.amazon.com/iam/pricing/"
+  },
+  {
+    "id": "cloudwatch",
+    "name": "Amazon CloudWatch",
+    "category": "Analytics",
+    "regions": ["us-east-1", "us-west-2", "eu-west-1", "ap-southeast-1"],
+    "status": "GA",
+    "docsUrl": "https://docs.aws.amazon.com/cloudwatch/",
+    "pricingUrl": "https://aws.amazon.com/cloudwatch/pricing/"
+  },
+  {
+    "id": "codebuild",
+    "name": "AWS CodeBuild",
+    "category": "DevTools",
+    "regions": ["us-east-1", "us-west-2", "eu-west-1", "ap-southeast-1"],
+    "status": "GA",
+    "docsUrl": "https://docs.aws.amazon.com/codebuild/",
+    "pricingUrl": "https://aws.amazon.com/codebuild/pricing/"
+  },
+  {
+    "id": "elasticache",
+    "name": "Amazon ElastiCache",
+    "category": "Database",
+    "regions": ["us-east-1", "us-west-2", "eu-west-1", "ap-southeast-1"],
+    "status": "GA",
+    "docsUrl": "https://docs.aws.amazon.com/elasticache/",
+    "pricingUrl": "https://aws.amazon.com/elasticache/pricing/"
+  },
+  {
+    "id": "efs",
+    "name": "Amazon EFS",
+    "category": "Storage",
+    "regions": ["us-east-1", "us-west-2", "eu-west-1", "ap-southeast-1"],
+    "status": "GA",
+    "docsUrl": "https://docs.aws.amazon.com/efs/",
+    "pricingUrl": "https://aws.amazon.com/efs/pricing/"
+  },
+  {
+    "id": "ecs",
+    "name": "Amazon ECS",
+    "category": "Compute",
+    "regions": ["us-east-1", "us-west-2", "eu-west-1", "ap-southeast-1"],
+    "status": "GA",
+    "docsUrl": "https://docs.aws.amazon.com/ecs/",
+    "pricingUrl": "https://aws.amazon.com/ecs/pricing/"
+  }
+]
