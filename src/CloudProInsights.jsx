@@ -2,6 +2,7 @@ import React, { useState, useMemo, useEffect, useCallback } from 'react';
 import { Search, Filter, BarChart3, Users, Zap, Database, Shield, Globe, Monitor, Brain, Calculator, Download, Star, ExternalLink, RotateCcw } from 'lucide-react';
 import CloudProInsightsLogo from './components/CloudProInsightsLogo';
 import { accurateCostData } from './data/accurateCostData';
+import { pricingReferences, generalDisclaimers } from './data/pricingReferences';
 
 const CloudProInsights = () => {
   const [activeView, setActiveView] = useState('home');
@@ -1739,10 +1740,13 @@ const CloudProInsights = () => {
                           </div>
                         </div>
                         
-                        {/* Cost savings tip */}
+                        {/* Provider-specific disclaimer */}
                         <div className="mt-3 pt-3 border-t border-gray-200">
-                          <div className="text-xs text-gray-500">
+                          <div className="text-xs text-gray-500 mb-1">
                             💡 Tip: Consider spot/preemptible instances for up to 70% savings on compute costs
+                          </div>
+                          <div className="text-xs text-gray-400">
+                            {pricingReferences[provider.id]?.disclaimer}
                           </div>
                         </div>
                       </div>
@@ -1751,12 +1755,47 @@ const CloudProInsights = () => {
                 </div>
               )}
               
-              {/* Cost comparison note */}
-              <div className="mt-4 p-3 bg-blue-50 rounded-lg">
-                <div className="text-sm text-blue-800">
-                  <strong>Note:</strong> Costs are estimates based on current pricing. Actual costs may vary based on region, usage patterns, and discounts. 
-                  <br />
-                  <span className="text-xs">Free tier allowances are not included in these calculations.</span>
+              {/* Pricing references and disclaimers */}
+              <div className="mt-4 space-y-3">
+                {/* Official pricing links */}
+                <div className="p-3 bg-gray-50 rounded-lg">
+                  <h4 className="text-sm font-semibold text-gray-800 mb-2">Official Pricing References</h4>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
+                    {Object.entries(pricingReferences).map(([providerId, provider]) => (
+                      <a
+                        key={providerId}
+                        href={provider.officialPricing}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex items-center gap-2 text-blue-600 hover:text-blue-800 hover:underline"
+                      >
+                        <ExternalLink className="w-3 h-3" />
+                        {provider.name} Pricing
+                      </a>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Important disclaimers */}
+                <div className="p-3 bg-yellow-50 rounded-lg">
+                  <h4 className="text-sm font-semibold text-yellow-800 mb-2">Important Disclaimers</h4>
+                  <div className="space-y-2 text-xs text-yellow-700">
+                    <div>• {generalDisclaimers.accuracy}</div>
+                    <div>• {generalDisclaimers.estimates}</div>
+                    <div>• {generalDisclaimers.regions}</div>
+                    <div>• {generalDisclaimers.freeTier}</div>
+                    <div>• {generalDisclaimers.commitments}</div>
+                  </div>
+                </div>
+
+                {/* Pricing models explanation */}
+                <div className="p-3 bg-green-50 rounded-lg">
+                  <h4 className="text-sm font-semibold text-green-800 mb-2">Pricing Models</h4>
+                  <div className="text-xs text-green-700 space-y-1">
+                    <div><strong>On-Demand:</strong> Pay-as-you-go with no upfront commitment (highest cost)</div>
+                    <div><strong>Reserved/Committed:</strong> 1-3 year commitments for up to 72% savings</div>
+                    <div><strong>Spot/Preemptible:</strong> Up to 90% savings but may be interrupted</div>
+                  </div>
                 </div>
               </div>
             </div>
