@@ -1,5 +1,5 @@
 import React, { useState, useMemo, useEffect, useCallback } from 'react';
-import { Search, Filter, BarChart3, Users, Zap, Database, Shield, Globe, Monitor, Brain, Calculator, Download, Star, ExternalLink, RotateCcw } from 'lucide-react';
+import { Search, Filter, BarChart3, Users, Zap, Database, Shield, Globe, Monitor, Brain, Calculator, Star, RotateCcw } from 'lucide-react';
 import CloudProInsightsLogo from './components/CloudProInsightsLogo';
 import { accurateCostData } from './data/accurateCostData';
 import { pricingReferences, generalDisclaimers } from './data/pricingReferences';
@@ -792,7 +792,7 @@ const CloudProInsights = () => {
                         className="text-blue-500 hover:text-blue-700"
                         title="View official pricing"
                       >
-                        <ExternalLink className="w-4 h-4" />
+                        <span className="text-xs">↗</span>
                       </a>
                     )}
                   </div>
@@ -1780,7 +1780,7 @@ const CloudProInsights = () => {
                         rel="noopener noreferrer"
                         className="flex items-center gap-2 text-blue-600 hover:text-blue-800 hover:underline"
                       >
-                        <ExternalLink className="w-3 h-3" />
+                        <span className="text-xs">↗</span>
                         {provider.name} Pricing
                       </a>
                     ))}
@@ -1891,7 +1891,7 @@ const CloudProInsights = () => {
       <footer className="bg-white border-t mt-8 sm:mt-12">
         <div className="max-w-7xl mx-auto px-3 sm:px-4 lg:px-8 py-4 sm:py-6">
           <div className="flex flex-col md:flex-row justify-between items-center gap-3 sm:gap-4">
-            <div className="flex items-center gap-2 sm:gap-3">
+            <div className="flex items-center justify-center gap-2 sm:gap-3">
               <button 
                 onClick={() => setActiveView('home')}
                 className="hover:opacity-80 transition-opacity"
@@ -1902,21 +1902,6 @@ const CloudProInsights = () => {
               <div className="text-xs sm:text-sm text-gray-600">
                 © 2025 by AAkinDev. Smarter Cloud Decisions Start Here.
               </div>
-            </div>
-            <div className="flex items-center gap-3 sm:gap-4">
-              <button className="flex items-center gap-1 sm:gap-2 text-xs sm:text-sm text-gray-600 hover:text-gray-900">
-                <Download className="w-3 h-3 sm:w-4 sm:h-4" />
-                <span className="hidden sm:inline">Export Data</span>
-              </button>
-              <a 
-                href="https://github.com/AAkinDev/CloudProInsights"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-1 sm:gap-2 text-xs sm:text-sm text-gray-600 hover:text-gray-900"
-              >
-                <ExternalLink className="w-3 h-3 sm:w-4 sm:h-4" />
-                <span className="hidden sm:inline">GitHub</span>
-              </a>
             </div>
           </div>
         </div>

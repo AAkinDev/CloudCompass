@@ -44,8 +44,6 @@ test('renders action buttons', () => {
 test('renders footer content', () => {
   render(<CloudProInsights />);
   const footerText = screen.getByText(/© 2025 by AAkinDev/i);
-  const githubLink = screen.getByRole('link', { name: /GitHub/i });
   
   expect(footerText).toBeInTheDocument();
-  expect(githubLink).toBeInTheDocument();
 }); 
