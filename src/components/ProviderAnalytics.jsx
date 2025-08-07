@@ -223,6 +223,85 @@ export default function ProviderAnalytics({ defaultSort = 'services' }) {
 function ProviderCard({ provider }) {
   const catalogUrl = PROVIDER_CATALOG_URLS[provider.id];
   
+  // Logo components for Provider Analytics cards
+  const AWSLogo = () => (
+    <img 
+      src="https://raw.githubusercontent.com/AAkinDev/CloudProInsights/main/public/assets/logos/aws-logo.png" 
+      alt="AWS" 
+      className="w-8 h-8 object-contain"
+      onError={(e) => {
+        e.target.style.display = 'none';
+        e.target.parentNode.innerHTML = '<div class="w-8 h-8 bg-orange-500 rounded flex items-center justify-center text-white text-xs font-bold">AWS</div>';
+      }}
+    />
+  );
+
+  const AzureLogo = () => (
+    <img 
+      src="https://raw.githubusercontent.com/AAkinDev/CloudProInsights/main/public/assets/logos/azure-logo.png" 
+      alt="Microsoft Azure" 
+      className="w-8 h-8 object-contain"
+      onError={(e) => {
+        e.target.style.display = 'none';
+        e.target.parentNode.innerHTML = '<div class="w-8 h-8 bg-blue-600 rounded flex items-center justify-center text-white text-xs font-bold">Az</div>';
+      }}
+    />
+  );
+
+  const GoogleCloudLogo = () => (
+    <img 
+      src="https://raw.githubusercontent.com/AAkinDev/CloudProInsights/main/public/assets/logos/gcp-logo.png" 
+      alt="Google Cloud Platform" 
+      className="w-8 h-8 object-contain"
+      onError={(e) => {
+        e.target.style.display = 'none';
+        e.target.parentNode.innerHTML = '<div class="w-8 h-8 bg-red-500 rounded flex items-center justify-center text-white text-xs font-bold">GCP</div>';
+      }}
+    />
+  );
+
+  const OracleLogo = () => (
+    <img 
+      src="https://raw.githubusercontent.com/AAkinDev/CloudProInsights/main/public/assets/logos/oracle-logo.png" 
+      alt="Oracle Cloud" 
+      className="w-8 h-8 object-contain"
+      onError={(e) => {
+        e.target.style.display = 'none';
+        e.target.parentNode.innerHTML = '<div class="w-8 h-8 bg-red-600 rounded flex items-center justify-center text-white text-xs font-bold">OCI</div>';
+      }}
+    />
+  );
+
+  const IBMCloudLogo = () => (
+    <img 
+      src="https://raw.githubusercontent.com/AAkinDev/CloudProInsights/main/public/assets/logos/ibm-logo.png" 
+      alt="IBM Cloud" 
+      className="w-8 h-8 object-contain"
+      onError={(e) => {
+        e.target.style.display = 'none';
+        e.target.parentNode.innerHTML = '<div class="w-8 h-8 bg-blue-800 rounded flex items-center justify-center text-white text-xs font-bold">IBM</div>';
+      }}
+    />
+  );
+
+  // Get the appropriate logo component
+  const getLogoComponent = () => {
+    switch (provider.id) {
+      case 'aws':
+        return <AWSLogo />;
+      case 'azure':
+        return <AzureLogo />;
+      case 'gcp':
+        return <GoogleCloudLogo />;
+      case 'oracle':
+        return <OracleLogo />;
+      case 'ibm':
+        return <IBMCloudLogo />;
+      default:
+        return <div className="w-8 h-8 bg-gray-200 rounded"></div>;
+    }
+  };
+  
   return (
     <a
       href={catalogUrl}
@@ -234,8 +313,7 @@ function ProviderCard({ provider }) {
       {/* Provider Logo and Name */}
       <div className="flex items-center gap-3 mb-4">
         <div className="w-10 h-10 flex items-center justify-center">
-          {/* Provider logo component would go here */}
-          <div className="w-8 h-8 bg-gray-200 rounded"></div>
+          {getLogoComponent()}
         </div>
         <h3 className="font-semibold text-gray-900">{provider.name}</h3>
       </div>
