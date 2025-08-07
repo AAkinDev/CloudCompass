@@ -996,24 +996,24 @@ const CloudProInsights = () => {
   const HomeView = () => (
     <div className="space-y-12">
       {/* Hero Section */}
-      <div className="text-center py-16">
-        <div className="max-w-4xl mx-auto">
-          <h1 className="text-5xl font-bold text-gray-900 mb-6">
+      <div className="text-center py-8 sm:py-16">
+        <div className="max-w-4xl mx-auto px-4">
+          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 mb-4 sm:mb-6">
             CloudProInsights™
           </h1>
-          <p className="text-xl text-gray-600 mb-8 leading-relaxed">
+          <p className="text-lg sm:text-xl text-gray-600 mb-6 sm:mb-8 leading-relaxed px-2">
             Smarter Cloud Decisions Start Here.
           </p>
-          <div className="flex flex-col sm:flex-row justify-center gap-4">
+          <div className="flex flex-col sm:flex-row justify-center gap-3 sm:gap-4 px-4">
             <button
               onClick={() => setActiveView('compare')}
-              className="bg-blue-600 text-white px-8 py-4 rounded-lg text-lg font-semibold hover:bg-blue-700 transition-colors shadow-lg"
+              className="bg-blue-600 text-white px-6 sm:px-8 py-3 sm:py-4 rounded-lg text-base sm:text-lg font-semibold hover:bg-blue-700 transition-colors shadow-lg"
             >
               Start Comparing Services
             </button>
             <button
               onClick={() => setActiveView('wizard')}
-              className="bg-white text-blue-600 border-2 border-blue-600 px-8 py-4 rounded-lg text-lg font-semibold hover:bg-blue-50 transition-colors"
+              className="bg-white text-blue-600 border-2 border-blue-600 px-6 sm:px-8 py-3 sm:py-4 rounded-lg text-base sm:text-lg font-semibold hover:bg-blue-50 transition-colors"
             >
               Get Recommendations
             </button>
@@ -1022,7 +1022,7 @@ const CloudProInsights = () => {
       </div>
 
       {/* Features Grid */}
-      <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 lg:gap-8">
         {[
           {
             icon: Filter,
@@ -1051,28 +1051,28 @@ const CloudProInsights = () => {
         ].map((feature, index) => {
           const Icon = feature.icon;
           return (
-            <div key={index} className="bg-white rounded-lg p-6 shadow-lg hover:shadow-xl transition-shadow">
-              <div className={`w-12 h-12 ${feature.color} rounded-lg flex items-center justify-center mb-4`}>
-                <Icon className="w-6 h-6 text-white" />
+            <div key={index} className="bg-white rounded-lg p-4 sm:p-6 shadow-lg hover:shadow-xl transition-shadow">
+              <div className={`w-10 h-10 sm:w-12 sm:h-12 ${feature.color} rounded-lg flex items-center justify-center mb-3 sm:mb-4`}>
+                <Icon className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
               </div>
-              <h3 className="text-xl font-semibold mb-2">{feature.title}</h3>
-              <p className="text-gray-600">{feature.description}</p>
+              <h3 className="text-lg sm:text-xl font-semibold mb-2">{feature.title}</h3>
+              <p className="text-sm sm:text-base text-gray-600">{feature.description}</p>
             </div>
           );
         })}
       </div>
 
       {/* Providers Section */}
-      <div className="bg-white rounded-xl p-8 shadow-lg">
-        <h2 className="text-3xl font-bold text-center mb-8">Supported Cloud Providers</h2>
-        <div className="grid md:grid-cols-5 gap-6">
+      <div className="bg-white rounded-xl p-4 sm:p-6 lg:p-8 shadow-lg">
+        <h2 className="text-2xl sm:text-3xl font-bold text-center mb-6 sm:mb-8">Supported Cloud Providers</h2>
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4 sm:gap-6">
           {providers.map(provider => (
             <div key={provider.id} className="text-center">
-              <div className="mb-4">
+              <div className="mb-3 sm:mb-4">
                 <provider.logo />
               </div>
-              <h3 className="font-semibold text-lg">{provider.name}</h3>
-              <p className="text-sm text-gray-600">{provider.fullName}</p>
+              <h3 className="font-semibold text-sm sm:text-lg">{provider.name}</h3>
+              <p className="text-xs sm:text-sm text-gray-600">{provider.fullName}</p>
             </div>
           ))}
         </div>
@@ -1784,21 +1784,21 @@ const CloudProInsights = () => {
     <div className="min-h-screen bg-gray-50">
       {/* Header */}
       <header className="bg-white shadow-sm border-b sticky top-0 z-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center py-4">
+        <div className="max-w-7xl mx-auto px-3 sm:px-4 lg:px-8">
+          <div className="flex justify-between items-center py-3 sm:py-4">
             {/* Logo and Brand Section */}
-            <div className="flex items-center">
+            <div className="flex items-center flex-1 min-w-0">
               <button 
                 onClick={() => setActiveView('home')}
                 className="flex-shrink-0 hover:opacity-80 transition-opacity"
                 title="Return to Home"
               >
-                <CloudProInsightsLogo size="default" />
+                <CloudProInsightsLogo size="small" />
               </button>
             </div>
             
             {/* Navigation */}
-            <nav className="flex items-center gap-2">
+            <nav className="flex items-center gap-1 sm:gap-2">
               {[
                 { id: 'home', label: 'Home', icon: Globe },
                 { id: 'compare', label: 'Compare', icon: Filter },
@@ -1811,14 +1811,14 @@ const CloudProInsights = () => {
                   <button
                     key={nav.id}
                     onClick={() => setActiveView(nav.id)}
-                    className={`flex items-center gap-2 px-4 py-2.5 rounded-lg transition-all duration-200 font-medium ${
+                    className={`flex items-center justify-center gap-1 sm:gap-2 px-2 sm:px-3 py-2 sm:py-2.5 rounded-lg transition-all duration-200 font-medium text-xs sm:text-sm ${
                       activeView === nav.id
                         ? 'bg-blue-500 text-white shadow-md transform scale-105' 
                         : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900 hover:shadow-sm'
                     }`}
                   >
-                    <Icon className="w-4 h-4" />
-                    <span className="hidden sm:inline text-sm">{nav.label}</span>
+                    <Icon className="w-3 h-3 sm:w-4 sm:h-4" />
+                    <span className="hidden sm:inline">{nav.label}</span>
                   </button>
                 );
               })}
@@ -1833,10 +1833,10 @@ const CloudProInsights = () => {
       </main>
 
       {/* Footer */}
-      <footer className="bg-white border-t mt-12">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-          <div className="flex flex-col md:flex-row justify-between items-center gap-4">
-            <div className="flex items-center gap-3">
+      <footer className="bg-white border-t mt-8 sm:mt-12">
+        <div className="max-w-7xl mx-auto px-3 sm:px-4 lg:px-8 py-4 sm:py-6">
+          <div className="flex flex-col md:flex-row justify-between items-center gap-3 sm:gap-4">
+            <div className="flex items-center gap-2 sm:gap-3">
               <button 
                 onClick={() => setActiveView('home')}
                 className="hover:opacity-80 transition-opacity"
@@ -1844,23 +1844,23 @@ const CloudProInsights = () => {
               >
                 <CloudProInsightsLogo size="small" />
               </button>
-              <div className="text-sm text-gray-600">
+              <div className="text-xs sm:text-sm text-gray-600">
                 © 2025 by AAkinDev. Smarter Cloud Decisions Start Here.
               </div>
             </div>
-            <div className="flex items-center gap-4">
-              <button className="flex items-center gap-2 text-sm text-gray-600 hover:text-gray-900">
-                <Download className="w-4 h-4" />
-                Export Data
+            <div className="flex items-center gap-3 sm:gap-4">
+              <button className="flex items-center gap-1 sm:gap-2 text-xs sm:text-sm text-gray-600 hover:text-gray-900">
+                <Download className="w-3 h-3 sm:w-4 sm:h-4" />
+                <span className="hidden sm:inline">Export Data</span>
               </button>
               <a 
                 href="https://github.com/AAkinDev/CloudProInsights"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-2 text-sm text-gray-600 hover:text-gray-900"
+                className="flex items-center gap-1 sm:gap-2 text-xs sm:text-sm text-gray-600 hover:text-gray-900"
               >
-                <ExternalLink className="w-4 h-4" />
-                GitHub
+                <ExternalLink className="w-3 h-3 sm:w-4 sm:h-4" />
+                <span className="hidden sm:inline">GitHub</span>
               </a>
             </div>
           </div>

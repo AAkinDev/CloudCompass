@@ -3,21 +3,21 @@ import { getAssetUrl } from '../utils/cacheBuster';
 
 const CloudProInsightsLogo = ({ className = "", size = "default", showText = true }) => {
   const sizeClasses = {
-    small: "w-32 h-32",      // was w-16 h-16 (doubled)
-    default: "w-48 h-32",    // was w-24 h-16 (doubled)
-    large: "w-64 h-48",      // was w-32 h-24 (doubled)
-    xl: "w-80 h-64"          // was w-40 h-32 (doubled)
+    small: "w-20 h-20 sm:w-24 h-24",      // Reduced for mobile
+    default: "w-24 h-16 sm:w-32 h-20",    // Reduced for mobile
+    large: "w-32 h-24 sm:w-40 h-28",      // Reduced for mobile
+    xl: "w-40 h-32 sm:w-48 h-36"          // Reduced for mobile
   };
 
   const textSizes = {
-    small: "text-sm",
-    default: "text-lg",
-    large: "text-xl", 
-    xl: "text-2xl"
+    small: "text-xs sm:text-sm",
+    default: "text-sm sm:text-base",
+    large: "text-base sm:text-lg", 
+    xl: "text-lg sm:text-xl"
   };
 
   return (
-    <div className={`flex items-center gap-2 ${className}`}>
+    <div className={`flex items-center gap-1 sm:gap-2 ${className}`}>
       <img 
         src={getAssetUrl('/public/assets/logos/logo.png')}
         alt="CloudProInsights"
@@ -44,11 +44,11 @@ const CloudProInsightsLogo = ({ className = "", size = "default", showText = tru
       />
       
       {showText && (
-        <div className="flex flex-col">
-          <span className={`font-bold text-gray-900 ${textSizes[size]}`}>
+        <div className="flex flex-col min-w-0">
+          <span className={`font-bold text-gray-900 ${textSizes[size]} truncate`}>
             CloudProInsights™
           </span>
-          <span className={`italic text-gray-500 ${size === 'small' ? 'text-xs' : 'text-sm'}`}>
+          <span className={`italic text-gray-500 ${size === 'small' ? 'text-xs' : 'text-xs sm:text-sm'} truncate`}>
             Smarter Cloud Decisions Start Here.
           </span>
         </div>
