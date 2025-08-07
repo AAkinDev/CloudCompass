@@ -22,13 +22,13 @@ test('renders navigation buttons', () => {
 
 test('renders main heading', () => {
   render(<CloudProInsights />);
-  const mainHeading = screen.getByRole('heading', { name: /Navigate Your Cloud Journey with Confidence/i });
+  const mainHeading = screen.getByRole('heading', { name: /CloudProInsights™/i });
   expect(mainHeading).toBeInTheDocument();
 });
 
 test('renders description text', () => {
   render(<CloudProInsights />);
-  const description = screen.getByText(/Compare cloud services, analyze costs, and make informed decisions across AWS, Azure, GCP, Oracle, and IBM Cloud/i);
+  const description = screen.getByText(/Smarter Cloud Decisions Start Here/i);
   expect(description).toBeInTheDocument();
 });
 
