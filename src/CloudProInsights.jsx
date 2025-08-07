@@ -1481,6 +1481,38 @@ const CloudProInsights = () => {
 
 
 
+  // Provider constants
+  const PROVIDER_LINKS = {
+    aws: 'https://aws.amazon.com/pricing/',
+    azure: 'https://azure.microsoft.com/pricing/',
+    gcp: 'https://cloud.google.com/pricing',
+    oracle: 'https://www.oracle.com/cloud/pricing/',
+    ibm: 'https://www.ibm.com/cloud/pricing'
+  };
+
+  const PROVIDER_BRAND_COLORS = {
+    aws: '#FF9900',
+    azure: '#0078D4',
+    gcp: '#4285F4',
+    oracle: '#F80000',
+    ibm: '#0F62FE'
+  };
+
+  const INSTANCE_TYPES = [
+    { value: 'general', label: 'General Purpose' },
+    { value: 'compute', label: 'Compute Optimized' },
+    { value: 'memory', label: 'Memory Optimized' },
+    { value: 'gpu', label: 'GPU' },
+    { value: 'storage', label: 'High Storage' },
+    { value: 'burstable', label: 'Burstable' }
+  ];
+
+  const CURRENCIES = [
+    { code: 'USD', symbol: '$', rate: 1 },
+    { code: 'EUR', symbol: '€', rate: 0.85 },
+    { code: 'GBP', symbol: '£', rate: 0.73 }
+  ];
+
   const CalculatorView = () => {
     const [calculatorState, setCalculatorState] = useState({
       compute: { instances: 2, hours: 730, type: 'general' },
@@ -1492,6 +1524,41 @@ const CloudProInsights = () => {
 
     const [selectedProviders, setSelectedProviders] = useState(['aws', 'azure', 'gcp', 'oracle', 'ibm']);
     const [monthlyCosts, setMonthlyCosts] = useState({});
+    const [selectedCurrency, setSelectedCurrency] = useState('USD');
+    const [sortBy, setSortBy] = useState('total');
+
+    // Helper functions
+    const getCurrencyRate = () => CURRENCIES.find(c => c.code === selectedCurrency)?.rate || 1;
+    const getCurrencySymbol = () => CURRENCIES.find(c => c.code === selectedCurrency)?.symbol || '$';
+    
+    const convertToCurrency = (amount) => {
+      const rate = getCurrencyRate();
+      return amount * rate;
+    };
+
+    const findBestPrice = () => {
+      const costs = Object.values(monthlyCosts);
+      if (costs.length === 0) return null;
+      return Math.min(...costs.map(cost => cost.total));
+    };
+
+    const getPercentageDiff = (total) => {
+      const bestPrice = findBestPrice();
+      if (!bestPrice || bestPrice === total) return null;
+      return ((total - bestPrice) / bestPrice * 100).toFixed(1);
+    };
+
+    const getSortedProviders = () => {
+      const providersWithCosts = providers.filter(provider => 
+        selectedProviders.includes(provider.id) && monthlyCosts[provider.id]
+      );
+      
+      return providersWithCosts.sort((a, b) => {
+        const aCost = monthlyCosts[a.id]?.[sortBy] || 0;
+        const bCost = monthlyCosts[b.id]?.[sortBy] || 0;
+        return aCost - bCost;
+      });
+    };
 
     const resetCalculator = () => {
       setCalculatorState({
@@ -1564,37 +1631,56 @@ const CloudProInsights = () => {
             </button>
           </div>
 
-          {/* Provider Filter - Optimized Layout */}
+          {/* Provider Cards - Refactored */}
           <div className="mb-8">
             <h3 className="text-xl font-semibold text-gray-900 mb-6 text-center">Select Providers to Compare</h3>
             <div className="flex justify-center">
-              <div className="flex flex-wrap justify-center gap-6 max-w-5xl">
-                {providers.map(provider => (
-                  <label
-                    key={provider.id}
-                    className={`flex flex-col items-center gap-4 p-6 rounded-xl border-2 cursor-pointer transition-all min-w-[140px] ${
-                      selectedProviders.includes(provider.id)
-                        ? 'border-blue-500 bg-blue-50 shadow-lg'
-                        : 'border-gray-200 hover:border-gray-300 hover:shadow-md'
-                    }`}
-                  >
-                    <input
-                      type="checkbox"
-                      checked={selectedProviders.includes(provider.id)}
-                      onChange={() => toggleProvider(provider.id)}
-                      className="w-5 h-5 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
-                    />
-                    <div className="flex items-center justify-center w-16 h-16">
-                      <provider.logo />
+              <div className="flex flex-wrap justify-center gap-4 max-w-6xl md:flex-wrap md:gap-6 overflow-x-auto md:overflow-visible">
+                {providers.map(provider => {
+                  const isSelected = selectedProviders.includes(provider.id);
+                  const brandColor = PROVIDER_BRAND_COLORS[provider.id];
+                  
+                  return (
+                    <div key={provider.id} className="flex-shrink-0">
+                      <label
+                        className={`flex items-center gap-3 rounded-xl border bg-white p-5 transition hover:shadow-md hover:scale-[1.02] focus-visible:outline-none focus-visible:ring-2 ${
+                          isSelected 
+                            ? 'border-2 shadow-lg' 
+                            : 'border-gray-200 hover:border-gray-300'
+                        }`}
+                        style={{
+                          borderColor: isSelected ? brandColor : undefined,
+                          boxShadow: isSelected ? `0 4px 6px -1px ${brandColor}20` : undefined
+                        }}
+                      >
+                        <input
+                          type="checkbox"
+                          checked={isSelected}
+                          onChange={() => toggleProvider(provider.id)}
+                          className="sr-only"
+                        />
+                        <a
+                          href={PROVIDER_LINKS[provider.id]}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="flex items-center gap-3 flex-1"
+                          title={`Go to ${provider.name} pricing`}
+                          onClick={(e) => e.preventDefault()}
+                        >
+                          <div className="w-12 h-12 flex items-center justify-center">
+                            <provider.logo />
+                          </div>
+                          <span className="font-semibold text-gray-900">{provider.name}</span>
+                        </a>
+                      </label>
                     </div>
-                    <span className="text-sm font-semibold text-center text-gray-900">{provider.name}</span>
-                  </label>
-                ))}
+                  );
+                })}
               </div>
             </div>
           </div>
 
-          {/* Infrastructure Configuration - Optimized */}
+          {/* Infrastructure Configuration - Refactored */}
           <div className="flex justify-center">
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-4xl w-full">
               <div className="space-y-3">
@@ -1622,9 +1708,11 @@ const CloudProInsights = () => {
                   }))}
                   className="w-full p-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-center text-lg"
                 >
-                  <option value="general">General Purpose</option>
-                  <option value="memory">Memory Optimized</option>
-                  <option value="compute">Compute Optimized</option>
+                  {INSTANCE_TYPES.map(type => (
+                    <option key={type.value} value={type.value}>
+                      {type.label}
+                    </option>
+                  ))}
                 </select>
               </div>
               
@@ -1644,7 +1732,12 @@ const CloudProInsights = () => {
               </div>
               
               <div className="space-y-3">
-                <label className="block text-sm font-semibold text-gray-700 text-center">Data Transfer (GB)</label>
+                <label className="block text-sm font-semibold text-gray-700 text-center">
+                  Data Transfer (GB)
+                  <span className="ml-1 text-gray-400 cursor-help" title="Monthly data transfer out of the cloud provider's network">
+                    ℹ️
+                  </span>
+                </label>
                 <input
                   type="number"
                   value={calculatorState.bandwidth.gb}
@@ -1661,23 +1754,54 @@ const CloudProInsights = () => {
           </div>
         </div>
 
-        {/* Cost Results - Optimized Layout */}
+        {/* Cost Results - Refactored */}
         {Object.keys(monthlyCosts).length > 0 && (
-          <div className="bg-white rounded-lg p-8 shadow-sm">
-            <h3 className="text-2xl font-bold text-gray-900 mb-8 text-center">Monthly Cost Estimate</h3>
+          <div className="bg-white rounded-lg p-8 shadow-sm" data-results-section>
+            <div className="flex justify-between items-center mb-8">
+              <h3 className="text-2xl font-bold text-gray-900">Monthly Cost Estimate</h3>
+              <div className="flex items-center gap-4">
+                <select
+                  value={sortBy}
+                  onChange={(e) => setSortBy(e.target.value)}
+                  className="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                >
+                  <option value="total">Sort by Total</option>
+                  <option value="compute">Sort by Compute</option>
+                  <option value="storage">Sort by Storage</option>
+                  <option value="database">Sort by Database</option>
+                  <option value="bandwidth">Sort by Bandwidth</option>
+                </select>
+                <select
+                  value={selectedCurrency}
+                  onChange={(e) => setSelectedCurrency(e.target.value)}
+                  className="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                >
+                  {CURRENCIES.map(currency => (
+                    <option key={currency.code} value={currency.code}>
+                      {currency.code}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            </div>
+            
             <div className="flex justify-center">
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6 max-w-7xl w-full">
-                {providers.map(provider => {
+                {getSortedProviders().map(provider => {
                   const costs = monthlyCosts[provider.id];
                   if (!costs) return null;
                   
+                  const convertedTotal = convertToCurrency(costs.total);
+                  const isBestPrice = costs.total === findBestPrice();
+                  const percentageDiff = getPercentageDiff(costs.total);
+                  
                   return (
                     <div key={provider.id} className="bg-white border border-gray-200 rounded-xl p-6 shadow-lg hover:shadow-xl transition-all duration-300">
-                      {/* Provider Header with Hyperlinked Logo */}
+                      {/* Provider Header */}
                       <div className="flex items-center justify-between mb-6">
                         <div className="flex items-center gap-4">
                           <a
-                            href={pricingReferences[provider.id]?.officialPricing}
+                            href={PROVIDER_LINKS[provider.id]}
                             target="_blank"
                             rel="noopener noreferrer"
                             className="hover:opacity-80 transition-opacity"
@@ -1689,28 +1813,42 @@ const CloudProInsights = () => {
                           </a>
                           <span className="font-bold text-gray-900 text-lg">{provider.name}</span>
                         </div>
-                        <span className="text-2xl font-bold text-blue-600">
-                          ${costs.total.toFixed(2)}
-                        </span>
+                        <div className="text-right">
+                          <div className="flex items-center">
+                            <span className="text-2xl font-bold text-blue-600">
+                              {getCurrencySymbol()}{convertedTotal.toFixed(2)}
+                            </span>
+                            {isBestPrice && (
+                              <span className="ml-2 rounded-full bg-emerald-50 px-2 py-0.5 text-xs font-medium text-emerald-700">
+                                Best Price
+                              </span>
+                            )}
+                          </div>
+                          {percentageDiff && (
+                            <span className="ml-2 text-sm text-gray-500">
+                              +{percentageDiff}%
+                            </span>
+                          )}
+                        </div>
                       </div>
                       
                       {/* Cost Breakdown */}
                       <div className="space-y-4 text-base">
                         <div className="flex justify-between items-center">
-                          <span className="text-gray-600 font-medium">Compute:</span>
-                          <span className="font-bold text-gray-900">${costs.compute.toFixed(2)}</span>
+                          <span className="text-gray-600 font-medium">💻 Compute:</span>
+                          <span className="font-bold text-gray-900">{getCurrencySymbol()}{convertToCurrency(costs.compute).toFixed(2)}</span>
                         </div>
                         <div className="flex justify-between items-center">
-                          <span className="text-gray-600 font-medium">Storage:</span>
-                          <span className="font-bold text-gray-900">${costs.storage.toFixed(2)}</span>
+                          <span className="text-gray-600 font-medium">💾 Storage:</span>
+                          <span className="font-bold text-gray-900">{getCurrencySymbol()}{convertToCurrency(costs.storage).toFixed(2)}</span>
                         </div>
                         <div className="flex justify-between items-center">
-                          <span className="text-gray-600 font-medium">Database:</span>
-                          <span className="font-bold text-gray-900">${costs.database.toFixed(2)}</span>
+                          <span className="text-gray-600 font-medium">🗄️ Database:</span>
+                          <span className="font-bold text-gray-900">{getCurrencySymbol()}{convertToCurrency(costs.database).toFixed(2)}</span>
                         </div>
                         <div className="flex justify-between items-center">
-                          <span className="text-gray-600 font-medium">Bandwidth:</span>
-                          <span className="font-bold text-gray-900">${costs.bandwidth.toFixed(2)}</span>
+                          <span className="text-gray-600 font-medium">🌐 Bandwidth:</span>
+                          <span className="font-bold text-gray-900">{getCurrencySymbol()}{convertToCurrency(costs.bandwidth).toFixed(2)}</span>
                         </div>
                       </div>
                       
@@ -1724,6 +1862,49 @@ const CloudProInsights = () => {
                   );
                 })}
               </div>
+            </div>
+            
+            <div className="mt-6 text-center text-sm text-gray-500">
+              Last updated: {new Date().toISOString().split('T')[0]}
+            </div>
+          </div>
+        )}
+
+        {/* Mobile Sticky Bottom Bar */}
+        {Object.keys(monthlyCosts).length > 0 && (
+          <div className="md:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 p-4 shadow-lg z-50">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-3">
+                {(() => {
+                  const cheapestProvider = getSortedProviders()[0];
+                  if (!cheapestProvider) return null;
+                  const costs = monthlyCosts[cheapestProvider.id];
+                  return (
+                    <>
+                      <div className="w-8 h-8 flex items-center justify-center">
+                        <cheapestProvider.logo />
+                      </div>
+                      <div>
+                        <div className="text-sm font-medium text-gray-900">{cheapestProvider.name}</div>
+                        <div className="text-lg font-bold text-emerald-600">
+                          {getCurrencySymbol()}{convertToCurrency(costs.total).toFixed(2)}
+                        </div>
+                      </div>
+                    </>
+                  );
+                })()}
+              </div>
+              <button
+                onClick={() => {
+                  const resultsSection = document.querySelector('[data-results-section]');
+                  if (resultsSection) {
+                    resultsSection.scrollIntoView({ behavior: 'smooth' });
+                  }
+                }}
+                className="px-4 py-2 bg-blue-600 text-white rounded-lg font-medium hover:bg-blue-700 transition-colors"
+              >
+                View Details
+              </button>
             </div>
           </div>
         )}
