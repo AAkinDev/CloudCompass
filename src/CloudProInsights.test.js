@@ -1,14 +1,14 @@
 import { render, screen } from '@testing-library/react';
-import CloudCompass from './CloudCompass';
+import CloudProInsights from './CloudProInsights';
 
 test('renders CloudProInsights header', () => {
-  render(<CloudCompass />);
+  render(<CloudProInsights />);
   const headerElements = screen.getAllByText(/CloudProInsights/i);
   expect(headerElements.length).toBeGreaterThan(0);
 });
 
 test('renders navigation buttons', () => {
-  render(<CloudCompass />);
+  render(<CloudProInsights />);
   const compareButton = screen.getByRole('button', { name: /Compare/i });
   const decideButton = screen.getByRole('button', { name: /Decide/i });
   const analyticsButton = screen.getByRole('button', { name: /Analytics/i });
@@ -21,19 +21,19 @@ test('renders navigation buttons', () => {
 });
 
 test('renders main heading', () => {
-  render(<CloudCompass />);
+  render(<CloudProInsights />);
   const mainHeading = screen.getByRole('heading', { name: /Navigate Your Cloud Journey with Confidence/i });
   expect(mainHeading).toBeInTheDocument();
 });
 
 test('renders description text', () => {
-  render(<CloudCompass />);
+  render(<CloudProInsights />);
   const description = screen.getByText(/Compare cloud services, analyze costs, and make informed decisions across AWS, Azure, GCP, Oracle, and IBM Cloud/i);
   expect(description).toBeInTheDocument();
 });
 
 test('renders action buttons', () => {
-  render(<CloudCompass />);
+  render(<CloudProInsights />);
   const startComparingButton = screen.getByRole('button', { name: /Start Comparing Services/i });
   const getRecommendationsButton = screen.getByRole('button', { name: /Get Recommendations/i });
   
@@ -42,7 +42,7 @@ test('renders action buttons', () => {
 });
 
 test('renders footer content', () => {
-  render(<CloudCompass />);
+  render(<CloudProInsights />);
   const footerText = screen.getByText(/© 2025 CloudProInsights by AAkinDev/i);
   const githubLink = screen.getByRole('link', { name: /GitHub/i });
   
