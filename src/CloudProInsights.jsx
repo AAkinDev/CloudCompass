@@ -1890,17 +1890,20 @@ const CloudProInsights = () => {
       {/* Footer */}
       <footer className="bg-white border-t mt-8 sm:mt-12">
         <div className="max-w-7xl mx-auto px-3 sm:px-4 lg:px-8 py-4 sm:py-6">
-          <div className="flex flex-col md:flex-row justify-between items-center gap-3 sm:gap-4">
-            <div className="flex items-center justify-center gap-2 sm:gap-3">
-              <button 
-                onClick={() => setActiveView('home')}
-                className="hover:opacity-80 transition-opacity"
-                title="Return to Home"
-              >
-                <CloudProInsightsLogo size="small" />
-              </button>
-              <div className="text-xs sm:text-sm text-gray-600">
-                © 2025 by AAkinDev. Smarter Cloud Decisions Start Here.
+          <div className="flex flex-col sm:flex-row justify-center items-center gap-4 sm:gap-6">
+            <button 
+              onClick={() => setActiveView('home')}
+              className="hover:opacity-80 transition-opacity"
+              title="Return to Home"
+            >
+              <CloudProInsightsLogo size="small" />
+            </button>
+            <div className="text-center sm:text-left">
+              <div className="text-sm sm:text-base text-gray-600 font-medium">
+                © 2025 by AAkinDev
+              </div>
+              <div className="text-xs sm:text-sm text-gray-500 mt-1">
+                Smarter Cloud Decisions Start Here.
               </div>
             </div>
           </div>
