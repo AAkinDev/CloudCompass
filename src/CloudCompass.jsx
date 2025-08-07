@@ -1,8 +1,8 @@
 import React, { useState, useMemo, useEffect, useCallback } from 'react';
 import { Search, Filter, BarChart3, Users, Zap, Database, Shield, Globe, Monitor, Brain, Calculator, Download, Star, ExternalLink } from 'lucide-react';
-import CloudCompassLogo from './components/CloudCompassLogo';
+import CloudProInsightsLogo from './components/CloudProInsightsLogo';
 
-const CloudCompass = () => {
+const CloudProInsights = () => {
   const [activeView, setActiveView] = useState('home');
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedProviders, setSelectedProviders] = useState(['aws', 'azure', 'gcp']);
@@ -21,7 +21,7 @@ const CloudCompass = () => {
       title="Visit Amazon Web Services platform"
     >
       <img 
-        src="https://raw.githubusercontent.com/AAkinDev/CloudCompass/main/public/assets/logos/aws-logo.png" 
+        src="https://raw.githubusercontent.com/AAkinDev/CloudProInsights/main/public/assets/logos/aws-logo.png" 
         alt="AWS" 
         className="w-16 h-12 object-contain"
         onError={(e) => {
@@ -41,7 +41,7 @@ const CloudCompass = () => {
       title="Visit Microsoft Azure platform"
     >
       <img 
-        src="https://raw.githubusercontent.com/AAkinDev/CloudCompass/main/public/assets/logos/azure-logo.png" 
+        src="https://raw.githubusercontent.com/AAkinDev/CloudProInsights/main/public/assets/logos/azure-logo.png" 
         alt="Microsoft Azure" 
         className="w-12 h-12 object-contain"
         onError={(e) => {
@@ -61,7 +61,7 @@ const CloudCompass = () => {
       title="Visit Google Cloud Platform"
     >
       <img 
-        src="https://raw.githubusercontent.com/AAkinDev/CloudCompass/main/public/assets/logos/gcp-logo.png" 
+        src="https://raw.githubusercontent.com/AAkinDev/CloudProInsights/main/public/assets/logos/gcp-logo.png" 
         alt="Google Cloud Platform" 
         className="w-12 h-12 object-contain"
         onError={(e) => {
@@ -81,7 +81,7 @@ const CloudCompass = () => {
       title="Visit Oracle Cloud platform"
     >
       <img 
-        src="https://raw.githubusercontent.com/AAkinDev/CloudCompass/main/public/assets/logos/oracle-logo.png" 
+        src="https://raw.githubusercontent.com/AAkinDev/CloudProInsights/main/public/assets/logos/oracle-logo.png" 
         alt="Oracle Cloud" 
         className="w-16 h-12 object-contain"
         onError={(e) => {
@@ -101,7 +101,7 @@ const CloudCompass = () => {
       title="Visit IBM Cloud platform"
     >
       <img 
-        src="https://raw.githubusercontent.com/AAkinDev/CloudCompass/main/public/assets/logos/ibm-logo.png" 
+        src="https://raw.githubusercontent.com/AAkinDev/CloudProInsights/main/public/assets/logos/ibm-logo.png" 
         alt="IBM Cloud" 
         className="w-16 h-12 object-contain"
         onError={(e) => {
@@ -115,7 +115,7 @@ const CloudCompass = () => {
   // Non-clickable logo components for filter cards
   const AWSLogoFilter = () => (
     <img 
-      src="https://raw.githubusercontent.com/AAkinDev/CloudCompass/main/public/assets/logos/aws-logo.png" 
+      src="https://raw.githubusercontent.com/AAkinDev/CloudProInsights/main/public/assets/logos/aws-logo.png" 
       alt="AWS" 
       className="w-8 h-6 object-contain"
       onError={(e) => {
@@ -127,7 +127,7 @@ const CloudCompass = () => {
 
   const AzureLogoFilter = () => (
     <img 
-      src="https://raw.githubusercontent.com/AAkinDev/CloudCompass/main/public/assets/logos/azure-logo.png" 
+      src="https://raw.githubusercontent.com/AAkinDev/CloudProInsights/main/public/assets/logos/azure-logo.png" 
       alt="Microsoft Azure" 
       className="w-8 h-6 object-contain"
       onError={(e) => {
@@ -139,7 +139,7 @@ const CloudCompass = () => {
 
   const GoogleCloudLogoFilter = () => (
     <img 
-      src="https://raw.githubusercontent.com/AAkinDev/CloudCompass/main/public/assets/logos/gcp-logo.png" 
+      src="https://raw.githubusercontent.com/AAkinDev/CloudProInsights/main/public/assets/logos/gcp-logo.png" 
       alt="Google Cloud Platform" 
       className="w-8 h-6 object-contain"
       onError={(e) => {
@@ -151,7 +151,7 @@ const CloudCompass = () => {
 
   const OracleLogoFilter = () => (
     <img 
-      src="https://raw.githubusercontent.com/AAkinDev/CloudCompass/main/public/assets/logos/oracle-logo.png" 
+      src="https://raw.githubusercontent.com/AAkinDev/CloudProInsights/main/public/assets/logos/oracle-logo.png" 
       alt="Oracle Cloud" 
       className="w-8 h-6 object-contain"
       onError={(e) => {
@@ -163,7 +163,7 @@ const CloudCompass = () => {
 
   const IBMCloudLogoFilter = () => (
     <img 
-      src="https://raw.githubusercontent.com/AAkinDev/CloudCompass/main/public/assets/logos/ibm-logo.png" 
+      src="https://raw.githubusercontent.com/AAkinDev/CloudProInsights/main/public/assets/logos/ibm-logo.png" 
       alt="IBM Cloud" 
       className="w-8 h-6 object-contain"
       onError={(e) => {
@@ -1787,7 +1787,7 @@ const CloudCompass = () => {
       <header className="bg-white shadow-sm border-b">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center py-4">
-            <CloudCompassLogo size="default" className="flex-shrink-0" />
+            <CloudProInsightsLogo size="default" className="flex-shrink-0" />
             <div>
               <p className="text-sm text-gray-600">Navigate Your Cloud Journey</p>
             </div>
@@ -1831,9 +1831,9 @@ const CloudCompass = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
             <div className="flex items-center gap-3">
-              <CloudCompassLogo size="small" />
+              <CloudProInsightsLogo size="small" />
               <div className="text-sm text-gray-600">
-                © 2025 CloudCompass by AAkinDev. Navigate your cloud journey with confidence.
+                © 2025 CloudProInsights by AAkinDev. Navigate your cloud journey with confidence.
               </div>
             </div>
             <div className="flex items-center gap-4">
@@ -1842,7 +1842,7 @@ const CloudCompass = () => {
                 Export Data
               </button>
               <a 
-                href="https://github.com/AAkinDev/CloudCompass"
+                href="https://github.com/AAkinDev/CloudProInsights"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center gap-2 text-sm text-gray-600 hover:text-gray-900"
@@ -1858,4 +1858,4 @@ const CloudCompass = () => {
   );
 };
 
-export default CloudCompass; 
+export default CloudProInsights; 

@@ -1,6 +1,6 @@
-# Contributing to CloudCompass
+# Contributing to CloudProInsights
 
-Thank you for your interest in contributing to CloudCompass! We welcome contributions from the community to help make cloud service comparison better for everyone.
+Thank you for your interest in contributing to CloudProInsights! We welcome contributions from the community to help make cloud service comparison better for everyone.
 
 ## 🤝 How to Contribute
 
@@ -22,7 +22,7 @@ We're always looking to expand our service coverage! To add a new service:
 
 1. **Research the service** across all providers
 2. **Gather pricing information** from official sources
-3. **Add to serviceData array** in `src/CloudCompass.jsx`
+3. **Add to serviceData array** in `src/CloudProInsights.jsx`
 4. **Include pricing links** to official documentation
 5. **Test the integration** thoroughly
 
@@ -42,8 +42,8 @@ Cloud pricing changes frequently. To update pricing:
 1. **Fork the repository**
 2. **Clone your fork:**
    ```bash
-   git clone https://github.com/YourUsername/CloudCompass.git
-   cd CloudCompass
+   git clone https://github.com/YourUsername/CloudProInsights.git
+   cd CloudProInsights
    ```
 3. **Install dependencies:**
    ```bash
@@ -186,6 +186,6 @@ Contributors are recognized in:
 
 ---
 
-**Ready to contribute?** Start by browsing our [good first issues](https://github.com/AAkinDev/CloudCompass/labels/good%20first%20issue) or checking our [roadmap](https://github.com/AAkinDev/CloudCompass/projects) for upcoming features!
+**Ready to contribute?** Start by browsing our [good first issues](https://github.com/AAkinDev/CloudProInsights/labels/good%20first%20issue) or checking our [roadmap](https://github.com/AAkinDev/CloudProInsights/projects) for upcoming features!
 
-Thank you for helping make CloudCompass better! 🧭✨ 
+Thank you for helping make CloudProInsights better! 🧭✨ 

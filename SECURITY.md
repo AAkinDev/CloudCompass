@@ -11,7 +11,7 @@ Use this section to tell people about which versions of your project are current
 
 ## Reporting a Vulnerability
 
-We take the security of CloudCompass seriously. If you believe you have found a security vulnerability, please report it to us as described below.
+We take the security of CloudProInsights seriously. If you believe you have found a security vulnerability, please report it to us as described below.
 
 **Please do not report security vulnerabilities through public GitHub issues.**
 
@@ -37,4 +37,4 @@ We prefer all communications to be in English.
 
 ## Policy
 
-CloudCompass follows the principle of [Responsible Disclosure](https://en.wikipedia.org/wiki/Responsible_disclosure). 
+CloudProInsights follows the principle of [Responsible Disclosure](https://en.wikipedia.org/wiki/Responsible_disclosure). 

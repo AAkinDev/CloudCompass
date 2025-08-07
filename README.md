@@ -1,4 +1,4 @@
-# CloudCompass
+# CloudProInsights
 
 A comprehensive cloud service comparison and recommendation platform.
 
@@ -20,8 +20,8 @@ A comprehensive cloud service comparison and recommendation platform.
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/AAkinDev/CloudCompass.git
-cd CloudCompass
+git clone https://github.com/AAkinDev/CloudProInsights.git
+cd CloudProInsights
 ```
 
 2. Install dependencies:
@@ -36,7 +36,7 @@ npm start
 
 ## Usage
 
-CloudCompass provides an intuitive interface for comparing cloud services across different providers including AWS, Azure, Google Cloud, and more.
+CloudProInsights provides an intuitive interface for comparing cloud services across different providers including AWS, Azure, Google Cloud, and more.
 
 ## Contributing
 

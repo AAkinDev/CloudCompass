@@ -1,6 +1,6 @@
 import React from 'react';
 
-const CloudCompassLogo = ({ className = "", size = "default", showText = true }) => {
+const CloudProInsightsLogo = ({ className = "", size = "default", showText = true }) => {
   const sizeClasses = {
     small: "w-16 h-16",      // was w-8 h-8
     default: "w-24 h-16",    // was w-12 h-8
@@ -18,8 +18,8 @@ const CloudCompassLogo = ({ className = "", size = "default", showText = true })
   return (
     <div className={`flex items-center gap-2 ${className}`}>
       <img 
-        src="https://raw.githubusercontent.com/AAkinDev/CloudCompass/main/public/assets/logos/cloudcompass-logo.png"
-        alt="CloudCompass"
+        src="https://raw.githubusercontent.com/AAkinDev/CloudProInsights/main/public/assets/logos/cloudproinsights-logo.png"
+        alt="CloudProInsights"
         className={`${sizeClasses[size]} flex-shrink-0 object-contain`}
         onError={(e) => {
           // Fallback to SVG if image fails to load
@@ -44,11 +44,11 @@ const CloudCompassLogo = ({ className = "", size = "default", showText = true })
       
       {showText && (
         <span className={`font-bold text-gray-900 ${textSizes[size]}`}>
-          CloudCompass
+          CloudProInsights
         </span>
       )}
     </div>
   );
 };
 
-export default CloudCompassLogo; 
+export default CloudProInsightsLogo; 
