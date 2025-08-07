@@ -999,11 +999,10 @@ const CloudProInsights = () => {
       <div className="text-center py-16">
         <div className="max-w-4xl mx-auto">
           <h1 className="text-5xl font-bold text-gray-900 mb-6">
-            Navigate Your Cloud Journey with <span className="text-blue-600">Confidence</span>
+            CloudProInsights™
           </h1>
           <p className="text-xl text-gray-600 mb-8 leading-relaxed">
-            Compare cloud services, analyze costs, and make informed decisions across AWS, Azure, GCP, Oracle, and IBM Cloud. 
-            Your comprehensive guide to cloud service selection.
+            Smarter Cloud Decisions Start Here.
           </p>
           <div className="flex flex-col sm:flex-row justify-center gap-4">
             <button
