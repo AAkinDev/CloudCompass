@@ -21,43 +21,8 @@ const PROVIDER_DISPLAY_NAMES = {
   ibm: 'IBM Cloud'
 };
 
-// Mock service data for now (in real app, this would come from the fetchers)
-const mockServices = {
-  aws: [
-    { id: 'ec2', name: 'Amazon EC2', category: 'Compute', regions: ['us-east-1', 'us-west-2'] },
-    { id: 'lambda', name: 'AWS Lambda', category: 'Compute', regions: ['us-east-1', 'us-west-2'] },
-    { id: 's3', name: 'Amazon S3', category: 'Storage', regions: ['us-east-1', 'us-west-2'] },
-    { id: 'rds', name: 'Amazon RDS', category: 'Database', regions: ['us-east-1', 'us-west-2'] },
-    { id: 'sagemaker', name: 'Amazon SageMaker', category: 'AI/ML', regions: ['us-east-1', 'us-west-2'] }
-  ],
-  azure: [
-    { id: 'vm', name: 'Azure Virtual Machines', category: 'Compute', regions: ['eastus', 'westus2'] },
-    { id: 'functions', name: 'Azure Functions', category: 'Compute', regions: ['eastus', 'westus2'] },
-    { id: 'storage', name: 'Azure Storage', category: 'Storage', regions: ['eastus', 'westus2'] },
-    { id: 'sql', name: 'Azure SQL Database', category: 'Database', regions: ['eastus', 'westus2'] },
-    { id: 'ml', name: 'Azure Machine Learning', category: 'AI/ML', regions: ['eastus', 'westus2'] }
-  ],
-  gcp: [
-    { id: 'compute', name: 'Compute Engine', category: 'Compute', regions: ['us-east1', 'us-west1'] },
-    { id: 'functions', name: 'Cloud Functions', category: 'Compute', regions: ['us-east1', 'us-west1'] },
-    { id: 'storage', name: 'Cloud Storage', category: 'Storage', regions: ['us-east1', 'us-west1'] },
-    { id: 'sql', name: 'Cloud SQL', category: 'Database', regions: ['us-east1', 'us-west1'] },
-    { id: 'vertex', name: 'Vertex AI', category: 'AI/ML', regions: ['us-east1', 'us-west1'] }
-  ],
-  oracle: [
-    { id: 'compute', name: 'Oracle Cloud Compute', category: 'Compute', regions: ['us-east-1', 'us-west-1'] },
-    { id: 'storage', name: 'Oracle Cloud Object Storage', category: 'Storage', regions: ['us-east-1', 'us-west-1'] },
-    { id: 'database', name: 'Oracle Autonomous Database', category: 'Database', regions: ['us-east-1', 'us-west-1'] },
-    { id: 'ai', name: 'Oracle AI Services', category: 'AI/ML', regions: ['us-east-1', 'us-west-1'] }
-  ],
-  ibm: [
-    { id: 'vsi', name: 'IBM Cloud Virtual Servers', category: 'Compute', regions: ['us-south', 'us-east'] },
-    { id: 'functions', name: 'IBM Cloud Functions', category: 'Compute', regions: ['us-south', 'us-east'] },
-    { id: 'storage', name: 'IBM Cloud Object Storage', category: 'Storage', regions: ['us-south', 'us-east'] },
-    { id: 'cloudant', name: 'IBM Cloudant', category: 'Database', regions: ['us-south', 'us-east'] },
-    { id: 'watson', name: 'IBM Watson', category: 'AI/ML', regions: ['us-south', 'us-east'] }
-  ]
-};
+// Utility function for formatting dates
+const formatISO = (d) => (typeof d === 'string' ? d : d.toISOString()).slice(0, 10);
 
 export default function ProviderAnalytics({ defaultSort = 'services' }) {
   const [providers, setProviders] = useState([]);
@@ -67,46 +32,35 @@ export default function ProviderAnalytics({ defaultSort = 'services' }) {
   const [searchTerm, setSearchTerm] = useState('');
   const [sortBy, setSortBy] = useState(defaultSort);
 
-  // Load provider data
+  // Load provider data from JSON file
   const loadProviderData = useCallback(async (forceRefresh = false) => {
     try {
-      // Simulate API call delay
-      await new Promise(resolve => setTimeout(resolve, 500));
+      // Fetch analytics data from JSON file
+      const response = await fetch('/data/provider-analytics.json', { 
+        cache: forceRefresh ? 'no-store' : 'default' 
+      });
       
-      const providerData = [];
-
-      for (const [providerId, services] of Object.entries(mockServices)) {
-        // Calculate category counts
-        const categories = {};
-        const regions = new Set();
-        
-        services.forEach(service => {
-          categories[service.category] = (categories[service.category] || 0) + 1;
-          service.regions?.forEach(region => regions.add(region));
-        });
-
-        // Get top 3 categories by count
-        const topCategories = Object.entries(categories)
-          .sort(([, a], [, b]) => b - a)
-          .slice(0, 3)
-          .map(([category]) => category);
-
-        providerData.push({
-          id: providerId,
-          name: PROVIDER_DISPLAY_NAMES[providerId],
-          services,
-          serviceCount: services.length,
-          categories,
-          topCategories,
-          regionCount: regions.size,
-          lastSynced: new Date()
-        });
+      if (!response.ok) {
+        throw new Error('Failed to fetch analytics data');
       }
+      
+      const data = await response.json();
+      
+      // Transform data for UI
+      const providerData = Object.entries(data).map(([providerId, analytics]) => ({
+        id: providerId,
+        name: PROVIDER_DISPLAY_NAMES[providerId],
+        serviceCount: analytics.services,
+        regionCount: analytics.regions.length,
+        lastSynced: analytics.lastSynced
+      }));
 
       setProviders(providerData);
       setLastSynced(new Date());
     } catch (error) {
       console.error('Failed to load provider data:', error);
+      // Fallback to empty data
+      setProviders([]);
     }
   }, []);
 
@@ -119,8 +73,27 @@ export default function ProviderAnalytics({ defaultSort = 'services' }) {
   // Refresh data
   const handleRefresh = async () => {
     setIsRefreshing(true);
-    await loadProviderData(true);
-    setIsRefreshing(false);
+    try {
+      // Call the refresh API
+      const response = await fetch('/api/analytics/refresh', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ provider: 'all' })
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to refresh analytics');
+      }
+
+      // Reload the data
+      await loadProviderData(true);
+    } catch (error) {
+      console.error('Failed to refresh analytics:', error);
+    } finally {
+      setIsRefreshing(false);
+    }
   };
 
   // Filter and sort providers
@@ -130,18 +103,13 @@ export default function ProviderAnalytics({ defaultSort = 'services' }) {
       
       const searchLower = searchTerm.toLowerCase();
       const nameMatch = provider.name.toLowerCase().includes(searchLower);
-      const categoryMatch = provider.topCategories.some(cat => 
-        cat.toLowerCase().includes(searchLower)
-      );
       
-      return nameMatch || categoryMatch;
+      return nameMatch;
     })
     .sort((a, b) => {
       switch (sortBy) {
         case 'services':
           return b.serviceCount - a.serviceCount;
-        case 'ai':
-          return (b.categories['AI/ML'] || 0) - (a.categories['AI/ML'] || 0);
         case 'regions':
           return b.regionCount - a.regionCount;
         case 'az':
@@ -181,7 +149,6 @@ export default function ProviderAnalytics({ defaultSort = 'services' }) {
             className="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
           >
             <option value="services">By Services</option>
-            <option value="ai">By AI/ML</option>
             <option value="regions">By Regions</option>
             <option value="az">A-Z</option>
           </select>
@@ -213,7 +180,7 @@ export default function ProviderAnalytics({ defaultSort = 'services' }) {
 
       {/* Last Synced */}
       <div className="text-center text-sm text-gray-500">
-        Last synced: {lastSynced.toISOString().slice(0, 10)}
+        Last synced: {formatISO(lastSynced)}
       </div>
     </div>
   );
@@ -322,28 +289,17 @@ function ProviderCard({ provider }) {
       <div className="mb-4">
         <div 
           className="text-2xl font-semibold text-blue-600"
-          title="Count of distinct first-party services we track. Click to view catalog."
+          title="Distinct first-party services tracked. Source: official catalogs/APIs."
+          aria-live="polite"
         >
           {provider.serviceCount}
         </div>
         <div className="text-sm text-gray-600">services available</div>
       </div>
 
-      {/* Category Chips */}
-      <div className="flex flex-wrap gap-1 mb-3">
-        {provider.topCategories.map(category => (
-          <span
-            key={category}
-            className="rounded-full bg-slate-100 px-2 py-0.5 text-xs text-slate-700"
-          >
-            {category}
-          </span>
-        ))}
-      </div>
-
-      {/* Regions Tooltip */}
+      {/* Regions Count */}
       {provider.regionCount > 0 && (
-        <div className="text-xs text-gray-500" title={`${provider.regionCount} regions covered across services`}>
+        <div className="text-xs text-gray-500 mb-3" title={`${provider.regionCount} regions covered across services`}>
           {provider.regionCount} regions
         </div>
       )}
