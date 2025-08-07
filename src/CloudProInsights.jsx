@@ -20,16 +20,16 @@ const CloudProInsights = () => {
       href="https://aws.amazon.com/"
       target="_blank"
       rel="noopener noreferrer"
-      className="hover:opacity-80 transition-opacity"
+      className="hover:opacity-80 transition-opacity flex items-center justify-center"
       title="Visit Amazon Web Services platform"
     >
       <img 
         src="https://raw.githubusercontent.com/AAkinDev/CloudProInsights/main/public/assets/logos/aws-logo.png" 
         alt="AWS" 
-        className="w-16 h-12 object-contain"
+        className="w-16 h-12 sm:w-20 sm:h-16 object-contain"
         onError={(e) => {
           e.target.style.display = 'none';
-          e.target.parentNode.innerHTML = '<div class="w-16 h-12 bg-orange-500 rounded flex items-center justify-center text-white text-sm font-bold">AWS</div>';
+          e.target.parentNode.innerHTML = '<div class="w-16 h-12 sm:w-20 sm:h-16 bg-orange-500 rounded flex items-center justify-center text-white text-sm font-bold">AWS</div>';
         }}
       />
     </a>
@@ -40,16 +40,16 @@ const CloudProInsights = () => {
       href="https://azure.microsoft.com/"
       target="_blank"
       rel="noopener noreferrer"
-      className="hover:opacity-80 transition-opacity"
+      className="hover:opacity-80 transition-opacity flex items-center justify-center"
       title="Visit Microsoft Azure platform"
     >
       <img 
         src="https://raw.githubusercontent.com/AAkinDev/CloudProInsights/main/public/assets/logos/azure-logo.png" 
         alt="Microsoft Azure" 
-        className="w-12 h-12 object-contain"
+        className="w-16 h-12 sm:w-20 sm:h-16 object-contain"
         onError={(e) => {
           e.target.style.display = 'none';
-          e.target.parentNode.innerHTML = '<div class="w-12 h-12 bg-blue-600 rounded flex items-center justify-center text-white text-sm font-bold">Az</div>';
+          e.target.parentNode.innerHTML = '<div class="w-16 h-12 sm:w-20 sm:h-16 bg-blue-600 rounded flex items-center justify-center text-white text-sm font-bold">Az</div>';
         }}
       />
     </a>
@@ -60,16 +60,16 @@ const CloudProInsights = () => {
       href="https://cloud.google.com/"
       target="_blank"
       rel="noopener noreferrer"
-      className="hover:opacity-80 transition-opacity"
+      className="hover:opacity-80 transition-opacity flex items-center justify-center"
       title="Visit Google Cloud Platform"
     >
       <img 
         src="https://raw.githubusercontent.com/AAkinDev/CloudProInsights/main/public/assets/logos/gcp-logo.png" 
         alt="Google Cloud Platform" 
-        className="w-12 h-12 object-contain"
+        className="w-16 h-12 sm:w-20 sm:h-16 object-contain"
         onError={(e) => {
           e.target.style.display = 'none';
-          e.target.parentNode.innerHTML = '<div class="w-12 h-12 bg-red-500 rounded flex items-center justify-center text-white text-sm font-bold">GCP</div>';
+          e.target.parentNode.innerHTML = '<div class="w-16 h-12 sm:w-20 sm:h-16 bg-red-500 rounded flex items-center justify-center text-white text-sm font-bold">GCP</div>';
         }}
       />
     </a>
@@ -80,16 +80,16 @@ const CloudProInsights = () => {
       href="https://www.oracle.com/cloud/"
       target="_blank"
       rel="noopener noreferrer"
-      className="hover:opacity-80 transition-opacity"
+      className="hover:opacity-80 transition-opacity flex items-center justify-center"
       title="Visit Oracle Cloud platform"
     >
       <img 
         src="https://raw.githubusercontent.com/AAkinDev/CloudProInsights/main/public/assets/logos/oracle-logo.png" 
         alt="Oracle Cloud" 
-        className="w-16 h-12 object-contain"
+        className="w-16 h-12 sm:w-20 sm:h-16 object-contain"
         onError={(e) => {
           e.target.style.display = 'none';
-          e.target.parentNode.innerHTML = '<div class="w-16 h-12 bg-red-600 rounded flex items-center justify-center text-white text-sm font-bold">OCI</div>';
+          e.target.parentNode.innerHTML = '<div class="w-16 h-12 sm:w-20 sm:h-16 bg-red-600 rounded flex items-center justify-center text-white text-sm font-bold">OCI</div>';
         }}
       />
     </a>
@@ -100,16 +100,16 @@ const CloudProInsights = () => {
       href="https://www.ibm.com/cloud/"
       target="_blank"
       rel="noopener noreferrer"
-      className="hover:opacity-80 transition-opacity"
+      className="hover:opacity-80 transition-opacity flex items-center justify-center"
       title="Visit IBM Cloud platform"
     >
       <img 
         src="https://raw.githubusercontent.com/AAkinDev/CloudProInsights/main/public/assets/logos/ibm-logo.png" 
         alt="IBM Cloud" 
-        className="w-16 h-12 object-contain"
+        className="w-16 h-12 sm:w-20 sm:h-16 object-contain"
         onError={(e) => {
           e.target.style.display = 'none';
-          e.target.parentNode.innerHTML = '<div class="w-16 h-12 bg-blue-800 rounded flex items-center justify-center text-white text-sm font-bold">IBM</div>';
+          e.target.parentNode.innerHTML = '<div class="w-16 h-12 sm:w-20 sm:h-16 bg-blue-800 rounded flex items-center justify-center text-white text-sm font-bold">IBM</div>';
         }}
       />
     </a>
@@ -1068,14 +1068,18 @@ const CloudProInsights = () => {
       {/* Providers Section */}
       <div className="bg-white rounded-xl p-4 sm:p-6 lg:p-8 shadow-lg">
         <h2 className="text-2xl sm:text-3xl font-bold text-center mb-6 sm:mb-8">Supported Cloud Providers</h2>
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4 sm:gap-6">
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-6 sm:gap-8">
           {providers.map(provider => (
-            <div key={provider.id} className="text-center">
-              <div className="mb-3 sm:mb-4">
+            <div key={provider.id} className="flex flex-col items-center justify-center space-y-3 sm:space-y-4">
+              {/* Logo Container - Fixed height for consistent alignment */}
+              <div className="flex items-center justify-center h-16 sm:h-20 w-full">
                 <provider.logo />
               </div>
-              <h3 className="font-semibold text-sm sm:text-lg">{provider.name}</h3>
-              <p className="text-xs sm:text-sm text-gray-600">{provider.fullName}</p>
+              {/* Text Content - Perfectly aligned below logo */}
+              <div className="text-center space-y-1 sm:space-y-2">
+                <h3 className="font-bold text-sm sm:text-lg text-gray-900">{provider.name}</h3>
+                <p className="text-xs sm:text-sm text-gray-600 leading-tight">{provider.fullName}</p>
+              </div>
             </div>
           ))}
         </div>
