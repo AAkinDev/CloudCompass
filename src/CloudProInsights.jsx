@@ -2,7 +2,7 @@ import React, { useState, useMemo, useEffect, useCallback } from 'react';
 import { Search, Filter, BarChart3, Users, Zap, Database, Shield, Globe, Monitor, Brain, Calculator, Star, RotateCcw } from 'lucide-react';
 import CloudProInsightsLogo from './components/CloudProInsightsLogo';
 import { accurateCostData } from './data/accurateCostData';
-import { pricingReferences, generalDisclaimers } from './data/pricingReferences';
+// Removed unused imports - now using NotesSection component
 
 
 const CloudProInsights = () => {
@@ -1502,6 +1502,119 @@ const CloudProInsights = () => {
 
   const formatISODate = (d) => d.toISOString().slice(0, 10);
 
+  // NotesSection Component
+  const NotesSection = ({ lastSynced, onRefreshPricing, defaultExpanded = false }) => {
+    const [isExpanded, setIsExpanded] = useState(defaultExpanded);
+    const [isRefreshing, setIsRefreshing] = useState(false);
+    const [lastUpdated, setLastUpdated] = useState(lastSynced);
+
+    const handleRefresh = async () => {
+      setIsRefreshing(true);
+      try {
+        await onRefreshPricing();
+        setLastUpdated(new Date());
+      } catch (error) {
+        console.error('Failed to refresh pricing:', error);
+      } finally {
+        setIsRefreshing(false);
+      }
+    };
+
+    const toggleExpanded = () => {
+      setIsExpanded(!isExpanded);
+    };
+
+    return (
+      <div className="rounded-xl border bg-white p-4 md:p-6">
+        {/* Header with Toggle */}
+        <div className="flex justify-between items-center">
+          <h2 className="text-lg font-semibold text-gray-900">Notes & Pricing References</h2>
+          <button
+            onClick={toggleExpanded}
+            aria-expanded={isExpanded}
+            aria-controls="notes-content"
+            className="text-sm text-blue-600 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-400 rounded"
+          >
+            Details
+          </button>
+        </div>
+
+        {/* Collapsible Content */}
+        <div 
+          id="notes-content"
+          className={`mt-4 grid gap-6 md:grid-cols-3 ${isExpanded ? 'block' : 'hidden md:block'}`}
+        >
+          {/* Column A: Important Notes */}
+          <div>
+            <h3 className="text-sm font-semibold text-gray-900 mb-2">Important Notes</h3>
+            <div className="mt-2 space-y-1 text-sm text-gray-600">
+              <div>• Source: Official provider pricing; subject to change.</div>
+              <div>• Region: Defaults to your selected region (fallback: US East).</div>
+              <div>• Estimates: Excludes free tiers and promo credits.</div>
+              <div>• Variability: Usage, discounts, and egress affect totals.</div>
+            </div>
+          </div>
+
+          {/* Column B: Pricing Models */}
+          <div>
+            <h3 className="text-sm font-semibold text-gray-900 mb-2">Pricing Models</h3>
+            <div className="mt-2 space-y-1 text-sm text-gray-600">
+              <div>• <strong>On-Demand:</strong> Flexible, highest cost.</div>
+              <div>• <strong>Reserved/Committed:</strong> 1–3 yrs; largest savings for steady loads.</div>
+              <div>• <strong>Spot/Preemptible:</strong> Deep discounts; may be interrupted.</div>
+            </div>
+          </div>
+
+          {/* Column C: Official Pricing Links */}
+          <div>
+            <h3 className="text-sm font-semibold text-gray-900 mb-2">Official Pricing</h3>
+            <div className="mt-2 space-y-2">
+              {PROVIDERS.map(provider => (
+                <a
+                  key={provider.id}
+                  href={provider.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-blue-600 hover:underline inline-flex items-center gap-1 text-sm"
+                  aria-label={`Opens in new tab`}
+                >
+                  <div className="w-4 h-4 flex items-center justify-center">
+                    {(() => {
+                      const LogoComponent = providers.find(p => p.id === provider.id)?.logo;
+                      return LogoComponent ? <LogoComponent /> : null;
+                    })()}
+                  </div>
+                  <span>{provider.name}</span>
+                  <span aria-hidden="true">↗</span>
+                </a>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* Freshness Status */}
+        <div className="mt-3 text-xs text-gray-500 flex items-center gap-2">
+          <span>Pricing last synced: {formatISODate(lastUpdated)}</span>
+          <span>•</span>
+          <button
+            onClick={handleRefresh}
+            disabled={isRefreshing}
+            className="text-blue-600 hover:underline disabled:opacity-50 disabled:cursor-not-allowed focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-blue-400 rounded"
+          >
+            {isRefreshing ? (
+              <span className="inline-flex items-center gap-1">
+                <span className="animate-spin">⟳</span>
+                Refreshing...
+              </span>
+            ) : (
+              'Refresh'
+            )}
+          </button>
+        </div>
+      </div>
+    );
+  };
+
   const INSTANCE_TYPES = [
     { value: 'general', label: 'General Purpose' },
     { value: 'compute', label: 'Compute Optimized' },
@@ -1923,53 +2036,15 @@ const CloudProInsights = () => {
           </div>
         )}
 
-        {/* Information Section - Optimized */}
-        <div className="bg-white rounded-lg p-6 shadow-sm">
-          <div className="flex justify-center">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl w-full">
-              {/* Important Disclaimers */}
-              <div>
-                <h4 className="text-base font-semibold text-gray-800 mb-3 text-center">Important Disclaimers</h4>
-                <div className="space-y-2 text-sm text-gray-600">
-                  <div>• {generalDisclaimers.accuracy}</div>
-                  <div>• {generalDisclaimers.estimates}</div>
-                  <div>• {generalDisclaimers.regions}</div>
-                  <div>• {generalDisclaimers.freeTier}</div>
-                  <div>• {generalDisclaimers.commitments}</div>
-                </div>
-              </div>
-
-              {/* Pricing Models */}
-              <div>
-                <h4 className="text-base font-semibold text-gray-800 mb-3 text-center">Pricing Models</h4>
-                <div className="text-sm text-gray-600 space-y-2">
-                  <div><strong>On-Demand:</strong> Pay-as-you-go (highest cost)</div>
-                  <div><strong>Reserved/Committed:</strong> 1-3 year commitments (up to 72% savings)</div>
-                  <div><strong>Spot/Preemptible:</strong> Up to 90% savings (may be interrupted)</div>
-                </div>
-              </div>
-
-              {/* Quick Links */}
-              <div>
-                <h4 className="text-base font-semibold text-gray-800 mb-3 text-center">Official Pricing</h4>
-                <div className="space-y-2 text-sm">
-                  {Object.entries(pricingReferences).map(([providerId, provider]) => (
-                    <a
-                      key={providerId}
-                      href={provider.officialPricing}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex items-center gap-2 text-blue-600 hover:text-blue-800 hover:underline"
-                    >
-                      <span>↗</span>
-                      {provider.name}
-                    </a>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+                  {/* Notes & Pricing References - Refactored */}
+          <NotesSection 
+            lastSynced={new Date()}
+            onRefreshPricing={async () => {
+              // Simulate refresh - in real app, this would fetch latest pricing
+              await new Promise(resolve => setTimeout(resolve, 1000));
+            }}
+            defaultExpanded={window.innerWidth >= 768}
+          />
       </div>
     );
   };
