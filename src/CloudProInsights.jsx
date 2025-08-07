@@ -1564,29 +1564,33 @@ const CloudProInsights = () => {
             </button>
           </div>
 
-          {/* Provider Filter */}
+          {/* Provider Filter - Centralized */}
           <div className="mb-6">
-            <h3 className="text-lg font-semibold text-gray-900 mb-4">Select Providers to Compare</h3>
-            <div className="flex flex-wrap gap-3">
-              {providers.map(provider => (
-                <label
-                  key={provider.id}
-                  className={`flex items-center gap-3 p-3 rounded-lg border-2 cursor-pointer transition-all ${
-                    selectedProviders.includes(provider.id)
-                      ? 'border-blue-500 bg-blue-50'
-                      : 'border-gray-200 hover:border-gray-300'
-                  }`}
-                >
-                  <input
-                    type="checkbox"
-                    checked={selectedProviders.includes(provider.id)}
-                    onChange={() => toggleProvider(provider.id)}
-                    className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
-                  />
-                  <provider.logo />
-                  <span className="text-sm font-medium">{provider.name}</span>
-                </label>
-              ))}
+            <h3 className="text-lg font-semibold text-gray-900 mb-6 text-center">Select Providers to Compare</h3>
+            <div className="flex justify-center">
+              <div className="flex flex-wrap justify-center gap-4 max-w-4xl">
+                {providers.map(provider => (
+                  <label
+                    key={provider.id}
+                    className={`flex flex-col items-center gap-3 p-4 rounded-lg border-2 cursor-pointer transition-all min-w-[120px] ${
+                      selectedProviders.includes(provider.id)
+                        ? 'border-blue-500 bg-blue-50 shadow-md'
+                        : 'border-gray-200 hover:border-gray-300 hover:shadow-sm'
+                    }`}
+                  >
+                    <input
+                      type="checkbox"
+                      checked={selectedProviders.includes(provider.id)}
+                      onChange={() => toggleProvider(provider.id)}
+                      className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+                    />
+                    <div className="flex items-center justify-center w-12 h-12">
+                      <provider.logo />
+                    </div>
+                    <span className="text-sm font-medium text-center">{provider.name}</span>
+                  </label>
+                ))}
+              </div>
             </div>
           </div>
 
