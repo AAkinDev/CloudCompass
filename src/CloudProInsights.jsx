@@ -1787,7 +1787,7 @@ const CloudProInsights = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center py-4">
             {/* Logo and Brand Section */}
-            <div className="flex items-center gap-4">
+            <div className="flex items-center">
               <button 
                 onClick={() => setActiveView('home')}
                 className="flex-shrink-0 hover:opacity-80 transition-opacity"
@@ -1795,9 +1795,6 @@ const CloudProInsights = () => {
               >
                 <CloudProInsightsLogo size="default" />
               </button>
-              <div className="hidden md:block">
-                <p className="text-sm text-gray-500 font-medium">Smarter Cloud Decisions Start Here.</p>
-              </div>
             </div>
             
             {/* Navigation */}

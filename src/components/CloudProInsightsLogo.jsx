@@ -43,9 +43,14 @@ const CloudProInsightsLogo = ({ className = "", size = "default", showText = tru
       />
       
       {showText && (
-        <span className={`font-bold text-gray-900 ${textSizes[size]}`}>
-          CloudProInsights
-        </span>
+        <div className="flex flex-col">
+          <span className={`font-bold text-gray-900 ${textSizes[size]}`}>
+            CloudProInsights
+          </span>
+          <span className={`italic text-gray-500 ${size === 'small' ? 'text-xs' : 'text-sm'}`}>
+            Smarter Cloud Decisions Start Here.
+          </span>
+        </div>
       )}
     </div>
   );
