@@ -48,7 +48,9 @@ jobs:
         pwd
         
     - name: Install dependencies
-      run: npm ci --prefer-offline --no-audit
+      run: |
+        npm ci --prefer-offline --no-audit
+        npm list react-scripts || npm install --save-dev react-scripts@5.0.1
       
     - name: Verify public files exist
       run: |
@@ -79,7 +81,12 @@ jobs:
       run: npm test -- --watchAll=false --passWithNoTests
       
     - name: Build application
-      run: npm run build
+      env:
+        CI: false
+        PUBLIC_URL: /CloudProInsights
+      run: |
+        echo "Building with PUBLIC_URL=$PUBLIC_URL"
+        npm run build
       
     - name: Verify build output
       run: |
