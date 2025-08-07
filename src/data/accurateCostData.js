@@ -122,11 +122,11 @@ export const accurateCostData = {
 
   // Bandwidth costs per GB (USD) - Data transfer out
   bandwidth: {
-    aws: 0.09,              // First 1TB/month
-    azure: 0.087,           // First 5TB/month
-    gcp: 0.12,              // First 1TB/month
-    oracle: 0.0085,         // First 10TB/month
-    ibm: 0.09               // First 1TB/month
+    aws: 0.09,              // First 1TB/month (US East)
+    azure: 0.087,           // First 5TB/month (US East)
+    gcp: 0.12,              // First 1TB/month (us-east1)
+    oracle: 0.085,           // First 10TB/month (US East)
+    ibm: 0.09               // First 1TB/month (US South)
   },
 
   // Additional costs
