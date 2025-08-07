@@ -1,6 +1,6 @@
 import React, { useState, useMemo, useEffect, useCallback } from 'react';
 import { Search, Filter, BarChart3, Users, Zap, Database, Shield, Globe, Monitor, Brain, Calculator, Download, Star, ExternalLink } from 'lucide-react';
-import CloudProInsightsLogo from './components/CloudProInsightsLogo';
+import CloudProInsightsLogo from './components/CloudCompassLogo';
 
 const CloudProInsights = () => {
   const [activeView, setActiveView] = useState('home');

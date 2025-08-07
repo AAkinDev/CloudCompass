@@ -1,11 +1,11 @@
 import React from 'react';
-import CloudProInsights from './CloudProInsights';
+import CloudCompass from './CloudCompass';
 import './App.css';
 
 function App() {
   return (
     <div className="App">
-      <CloudProInsights />
+      <CloudCompass />
     </div>
   );
 }
