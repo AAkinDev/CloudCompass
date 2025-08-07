@@ -3,6 +3,7 @@ import { Search, Filter, BarChart3, Users, Zap, Database, Shield, Globe, Monitor
 import CloudProInsightsLogo from './components/CloudProInsightsLogo';
 import { accurateCostData } from './data/accurateCostData';
 import ProviderAnalytics from './components/ProviderAnalytics';
+import DecideWizard from './components/decide/DecideWizard.jsx';
 // Removed unused imports - now using NotesSection component
 
 
@@ -1412,105 +1413,7 @@ const CloudProInsights = () => {
     );
   };
 
-  const WizardView = () => (
-    <div className="max-w-2xl mx-auto">
-      <div className="bg-white rounded-lg p-8 shadow-lg">
-        <h2 className="text-2xl font-bold text-center mb-8">Get Personalized Recommendations</h2>
-        
-        {quizStep < quizQuestions.length ? (
-          <div>
-            <h3 className="text-lg font-semibold mb-4">{quizQuestions[quizStep].question}</h3>
-            <div className="space-y-3">
-              {quizQuestions[quizStep].options.map(option => (
-                <button
-                  key={option.value}
-                  onClick={() => {
-                    setQuizAnswers(prev => ({
-                      ...prev,
-                      [quizQuestions[quizStep].question]: option.value
-                    }));
-                    setQuizStep(prev => prev + 1);
-                  }}
-                  className="w-full p-4 text-left border-2 border-gray-200 rounded-lg hover:border-blue-500 hover:bg-blue-50 transition-colors"
-                >
-                  {option.label}
-                </button>
-              ))}
-            </div>
-          </div>
-        ) : (
-          <div>
-            <h3 className="text-lg font-semibold mb-4">Your Personalized Recommendations</h3>
-            <div className="mb-6 p-4 bg-blue-50 rounded-lg">
-              <h4 className="font-semibold text-blue-800 mb-2">Based on your profile:</h4>
-              <div className="text-sm text-blue-700">
-                <p>• Use Case: {quizAnswers["What's your primary use case?"]}</p>
-                <p>• Scale: {quizAnswers["What's your expected scale?"]}</p>
-                <p>• Budget: {quizAnswers["What's your budget preference?"]}</p>
-              </div>
-            </div>
-            
-            <div className="space-y-4">
-              {getRecommendations().map((service, index) => (
-                <div key={service.id} className="p-4 border border-gray-200 rounded-lg hover:shadow-md transition-shadow">
-                  <div className="flex justify-between items-start mb-2">
-                    <h4 className="font-semibold text-lg">{service.name}</h4>
-                    <span className={`px-2 py-1 rounded text-xs font-medium ${
-                      service.priority === 'High' ? 'bg-red-100 text-red-800' :
-                      service.priority === 'Medium' ? 'bg-yellow-100 text-yellow-800' :
-                      'bg-green-100 text-green-800'
-                    }`}>
-                      {service.priority} Priority
-                    </span>
-                  </div>
-                  <p className="text-sm text-gray-600 mb-3">{service.description}</p>
-                  <div className="bg-gray-50 p-3 rounded">
-                    <p className="text-sm font-medium text-gray-700 mb-1">Why this service?</p>
-                    <p className="text-sm text-gray-600">{service.reason}</p>
-                  </div>
-                  
-                  {/* Show provider options */}
-                  <div className="mt-3">
-                    <p className="text-xs font-medium text-gray-500 mb-2">Available on:</p>
-                    <div className="flex gap-2">
-                      {selectedProviders.map(providerId => {
-                        const provider = providers.find(p => p.id === providerId);
-                        const serviceName = service[providerId];
-                        return serviceName ? (
-                          <div key={providerId} className="flex items-center gap-1 text-xs">
-                            <provider.logo />
-                            <span className="text-gray-600">{serviceName}</span>
-                          </div>
-                        ) : null;
-                      })}
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-            
-            <div className="mt-6 space-y-3">
-              <button
-                onClick={() => setActiveView('compare')}
-                className="w-full bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 transition-colors font-medium"
-              >
-                Compare These Services
-              </button>
-              <button
-                onClick={() => {
-                  setQuizStep(0);
-                  setQuizAnswers({});
-                }}
-                className="w-full bg-gray-200 text-gray-700 py-2 rounded-lg hover:bg-gray-300 transition-colors"
-              >
-                Start Over
-              </button>
-            </div>
-          </div>
-        )}
-      </div>
-    </div>
-  );
+
 
   const AnalyticsView = () => (
     <div className="space-y-6">
@@ -2097,7 +2000,7 @@ const CloudProInsights = () => {
       case 'compare':
         return <CompareView />;
       case 'wizard':
-        return <WizardView />;
+        return <DecideWizard />;
       case 'analytics':
         return <AnalyticsView />;
       case 'calculator':
