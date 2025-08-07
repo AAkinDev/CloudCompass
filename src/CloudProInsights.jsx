@@ -1025,7 +1025,7 @@ const CloudProInsights = () => {
       </div>
 
       {/* Features Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 lg:gap-8">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
         {[
           {
             icon: Filter,
@@ -1054,12 +1054,16 @@ const CloudProInsights = () => {
         ].map((feature, index) => {
           const Icon = feature.icon;
           return (
-            <div key={index} className="bg-white rounded-lg p-4 sm:p-6 shadow-lg hover:shadow-xl transition-shadow">
-              <div className={`w-10 h-10 sm:w-12 sm:h-12 ${feature.color} rounded-lg flex items-center justify-center mb-3 sm:mb-4`}>
-                <Icon className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
+            <div key={index} className="bg-white rounded-lg p-6 sm:p-8 shadow-lg hover:shadow-xl transition-shadow flex flex-col items-center text-center">
+              {/* Icon Container - Fixed height for consistent alignment */}
+              <div className={`w-12 h-12 sm:w-16 sm:h-16 ${feature.color} rounded-lg flex items-center justify-center mb-4 sm:mb-6`}>
+                <Icon className="w-6 h-6 sm:w-8 sm:h-8 text-white" />
               </div>
-              <h3 className="text-lg sm:text-xl font-semibold mb-2">{feature.title}</h3>
-              <p className="text-sm sm:text-base text-gray-600">{feature.description}</p>
+              {/* Text Content - Perfectly aligned below icon */}
+              <div className="space-y-2 sm:space-y-3 flex-1 flex flex-col justify-center">
+                <h3 className="text-lg sm:text-xl font-bold text-gray-900 leading-tight">{feature.title}</h3>
+                <p className="text-sm sm:text-base text-gray-600 leading-relaxed">{feature.description}</p>
+              </div>
             </div>
           );
         })}
