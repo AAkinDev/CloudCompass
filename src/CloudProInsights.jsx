@@ -3,7 +3,7 @@ import { Search, Filter, BarChart3, Users, Zap, Database, Shield, Globe, Monitor
 import CloudProInsightsLogo from './components/CloudProInsightsLogo';
 import { accurateCostData } from './data/accurateCostData';
 import { pricingReferences, generalDisclaimers } from './data/pricingReferences';
-import { operatingSystemSupport } from './data/operatingSystemSupport';
+import { operatingSystemSupport } from './data/operatingSystemSupport.js';
 
 const CloudProInsights = () => {
   const [activeView, setActiveView] = useState('home');
@@ -1488,7 +1488,9 @@ const CloudProInsights = () => {
 
     const getSupportLevel = (providerId, osId) => {
       const provider = operatingSystemSupport.providers[providerId];
-      if (!provider || !provider.supportMatrix[osId]) return 'none';
+      if (!provider || !provider.supportMatrix[osId]) {
+        return 'none';
+      }
       return provider.supportMatrix[osId].support;
     };
 
