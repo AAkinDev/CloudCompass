@@ -1475,7 +1475,7 @@ const CloudProInsights = () => {
     const [selectedOS, setSelectedOS] = useState('windows');
     
     const operatingSystems = [
-      { id: 'windows', name: 'Windows', icon: '🪟' },
+      { id: 'windows', name: 'Windows Server', icon: '🪟' },
       { id: 'centos', name: 'CentOS', icon: '🐧' },
       { id: 'cloudlinux', name: 'CloudLinux', icon: '🐧' },
       { id: 'ubuntu', name: 'Ubuntu', icon: '🐧' },
@@ -1483,7 +1483,10 @@ const CloudProInsights = () => {
       { id: 'rhel', name: 'Red Hat Enterprise Linux', icon: '🐧' },
       { id: 'suse', name: 'SUSE Linux', icon: '🐧' },
       { id: 'debian', name: 'Debian', icon: '🐧' },
-      { id: 'amazon', name: 'Amazon Linux', icon: '🐧' }
+      { id: 'amazon', name: 'Amazon Linux', icon: '🐧' },
+      { id: 'macos', name: 'macOS', icon: '🍎' },
+      { id: 'freebsd', name: 'FreeBSD', icon: '🦊' },
+      { id: 'raspberrypi', name: 'Raspberry Pi OS', icon: '📱' }
     ];
 
     const getSupportLevel = (providerId, osId) => {

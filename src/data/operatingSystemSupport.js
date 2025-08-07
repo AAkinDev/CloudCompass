@@ -9,10 +9,10 @@ export const operatingSystemSupport = {
       description: "AWS provides extensive OS support with custom AMIs and marketplace images",
       supportMatrix: {
         windows: {
-          name: "Windows",
-          versions: ["Windows Server 2019", "Windows Server 2022", "Windows 11", "Windows 10"],
+          name: "Windows Server",
+          versions: ["Windows Server 2012", "Windows Server 2016", "Windows Server 2019", "Windows Server 2022", "Windows Server 2008 (legacy, limited)"],
           support: "Full",
-          notes: "Official Microsoft Windows Server images, custom AMIs available"
+          notes: "Various versions supported, SSM agent requirements noted, official Microsoft Windows Server images"
         },
         centos: {
           name: "CentOS",
@@ -36,7 +36,7 @@ export const operatingSystemSupport = {
           name: "Oracle Linux",
           versions: ["Oracle Linux 7", "Oracle Linux 8", "Oracle Linux 9"],
           support: "Full",
-          notes: "Oracle-optimized images with enhanced performance"
+          notes: "Oracle-optimized images with enhanced performance, supported via AMS"
         },
         rhel: {
           name: "Red Hat Enterprise Linux",
@@ -61,6 +61,24 @@ export const operatingSystemSupport = {
           versions: ["Amazon Linux 2", "Amazon Linux 2023"],
           support: "Full",
           notes: "AWS-optimized Linux distribution with enhanced security"
+        },
+        macos: {
+          name: "macOS",
+          versions: ["Mojave", "Catalina", "Big Sur", "Monterey", "Ventura", "Sonoma"],
+          support: "Full",
+          notes: "Via EC2 Mac instances, specialized Apple hardware required"
+        },
+        freebsd: {
+          name: "FreeBSD",
+          versions: ["FreeBSD 12", "FreeBSD 13", "FreeBSD 14"],
+          support: "Full",
+          notes: "Officially supported as EC2 AMI since 2012"
+        },
+        raspberrypi: {
+          name: "Raspberry Pi OS",
+          versions: ["Raspberry Pi OS ARM"],
+          support: "Limited",
+          notes: "AWS SSM supports Raspberry Pi OS on ARM via Systems Manager targeting devices"
         }
       }
     },
@@ -70,10 +88,10 @@ export const operatingSystemSupport = {
       description: "Azure provides comprehensive OS support with Microsoft-first approach",
       supportMatrix: {
         windows: {
-          name: "Windows",
-          versions: ["Windows Server 2019", "Windows Server 2022", "Windows 11", "Windows 10"],
+          name: "Windows Server",
+          versions: ["Windows Server 2012", "Windows Server 2016", "Windows Server 2019", "Windows Server 2022"],
           support: "Full",
-          notes: "Native Microsoft support with Azure-optimized images"
+          notes: "Strong support for Windows Server through VM infrastructure, native Microsoft support"
         },
         centos: {
           name: "CentOS",
@@ -122,6 +140,24 @@ export const operatingSystemSupport = {
           versions: ["Amazon Linux 2", "Amazon Linux 2023"],
           support: "None",
           notes: "AWS-specific distribution, not available on Azure"
+        },
+        macos: {
+          name: "macOS",
+          versions: ["Not available"],
+          support: "None",
+          notes: "Not supported on Azure"
+        },
+        freebsd: {
+          name: "FreeBSD",
+          versions: ["FreeBSD 12", "FreeBSD 13", "FreeBSD 14"],
+          support: "Limited",
+          notes: "Not standard, possible via custom images"
+        },
+        raspberrypi: {
+          name: "Raspberry Pi OS",
+          versions: ["Raspberry Pi OS ARM"],
+          support: "Limited",
+          notes: "Rare support, possible via custom configurations"
         }
       }
     },
@@ -131,16 +167,16 @@ export const operatingSystemSupport = {
       description: "GCP provides extensive OS support with Google-optimized images",
       supportMatrix: {
         windows: {
-          name: "Windows",
-          versions: ["Windows Server 2019", "Windows Server 2022", "Windows 11", "Windows 10"],
+          name: "Windows Server",
+          versions: ["Windows Server 2012", "Windows Server 2016", "Windows Server 2019", "Windows Server 2022"],
           support: "Full",
-          notes: "Microsoft partnership with Google-optimized Windows images"
+          notes: "Standard Windows Server offerings available in Compute Engine environments"
         },
         centos: {
           name: "CentOS",
           versions: ["CentOS 7", "CentOS 8", "CentOS Stream"],
           support: "Full",
-          notes: "Community support with Google Cloud marketplace"
+          notes: "Community support with Google Cloud marketplace, migrate-to-VM supports CentOS"
         },
         cloudlinux: {
           name: "CloudLinux",
@@ -152,7 +188,7 @@ export const operatingSystemSupport = {
           name: "Ubuntu",
           versions: ["Ubuntu 20.04 LTS", "Ubuntu 22.04 LTS", "Ubuntu 24.04 LTS"],
           support: "Full",
-          notes: "Canonical partnership with Google-optimized Ubuntu images"
+          notes: "Canonical partnership with Google-optimized Ubuntu images, migrate-to-VM supports Ubuntu"
         },
         oracle: {
           name: "Oracle Linux",
@@ -164,7 +200,7 @@ export const operatingSystemSupport = {
           name: "Red Hat Enterprise Linux",
           versions: ["RHEL 7", "RHEL 8", "RHEL 9"],
           support: "Full",
-          notes: "Red Hat partnership with Google Cloud support"
+          notes: "Red Hat partnership with Google Cloud support, migrate-to-VM supports RHEL"
         },
         suse: {
           name: "SUSE Linux",
@@ -176,13 +212,31 @@ export const operatingSystemSupport = {
           name: "Debian",
           versions: ["Debian 11", "Debian 12"],
           support: "Full",
-          notes: "Community Linux with Google Cloud optimization"
+          notes: "Community Linux with Google Cloud optimization, migrate-to-VM supports Debian"
         },
         amazon: {
           name: "Amazon Linux",
           versions: ["Amazon Linux 2", "Amazon Linux 2023"],
           support: "None",
           notes: "AWS-specific distribution, not available on GCP"
+        },
+        macos: {
+          name: "macOS",
+          versions: ["Not available"],
+          support: "None",
+          notes: "Not available on Google Cloud Platform"
+        },
+        freebsd: {
+          name: "FreeBSD",
+          versions: ["FreeBSD 12", "FreeBSD 13", "FreeBSD 14"],
+          support: "Limited",
+          notes: "Not standard, possible via custom images (not formally documented)"
+        },
+        raspberrypi: {
+          name: "Raspberry Pi OS",
+          versions: ["Raspberry Pi OS ARM"],
+          support: "Limited",
+          notes: "Rare or custom support"
         }
       }
     },
@@ -192,10 +246,10 @@ export const operatingSystemSupport = {
       description: "Oracle Cloud provides comprehensive OS support with Oracle-optimized images",
       supportMatrix: {
         windows: {
-          name: "Windows",
-          versions: ["Windows Server 2019", "Windows Server 2022", "Windows 11", "Windows 10"],
+          name: "Windows Server",
+          versions: ["Windows Server 2012", "Windows Server 2016", "Windows Server 2019", "Windows Server 2022"],
           support: "Full",
-          notes: "Microsoft partnership with Oracle Cloud optimization"
+          notes: "Windows OS support available, especially via hybrid setups"
         },
         centos: {
           name: "CentOS",
@@ -244,6 +298,24 @@ export const operatingSystemSupport = {
           versions: ["Amazon Linux 2", "Amazon Linux 2023"],
           support: "None",
           notes: "AWS-specific distribution, not available on Oracle Cloud"
+        },
+        macos: {
+          name: "macOS",
+          versions: ["Not available"],
+          support: "None",
+          notes: "Not supported on Oracle Cloud"
+        },
+        freebsd: {
+          name: "FreeBSD",
+          versions: ["FreeBSD 12", "FreeBSD 13", "FreeBSD 14"],
+          support: "Limited",
+          notes: "Not standard, possible via custom configurations"
+        },
+        raspberrypi: {
+          name: "Raspberry Pi OS",
+          versions: ["Raspberry Pi OS ARM"],
+          support: "Limited",
+          notes: "Rare support, possible via custom configurations"
         }
       }
     },
@@ -253,10 +325,10 @@ export const operatingSystemSupport = {
       description: "IBM Cloud provides enterprise-focused OS support with IBM-optimized images",
       supportMatrix: {
         windows: {
-          name: "Windows",
-          versions: ["Windows Server 2019", "Windows Server 2022", "Windows 11", "Windows 10"],
+          name: "Windows Server",
+          versions: ["Windows Server 2012", "Windows Server 2016", "Windows Server 2019", "Windows Server 2022"],
           support: "Full",
-          notes: "Microsoft partnership with IBM Cloud optimization"
+          notes: "Windows Server available via Hyper-V and bare-metal offerings"
         },
         centos: {
           name: "CentOS",
@@ -305,6 +377,24 @@ export const operatingSystemSupport = {
           versions: ["Amazon Linux 2", "Amazon Linux 2023"],
           support: "None",
           notes: "AWS-specific distribution, not available on IBM Cloud"
+        },
+        macos: {
+          name: "macOS",
+          versions: ["Not available"],
+          support: "None",
+          notes: "Not supported on IBM Cloud"
+        },
+        freebsd: {
+          name: "FreeBSD",
+          versions: ["FreeBSD 12", "FreeBSD 13", "FreeBSD 14"],
+          support: "Limited",
+          notes: "Not standard, possible via custom configurations"
+        },
+        raspberrypi: {
+          name: "Raspberry Pi OS",
+          versions: ["Raspberry Pi OS ARM"],
+          support: "Limited",
+          notes: "Rare support, possible via custom configurations"
         }
       }
     }
@@ -353,6 +443,21 @@ export const operatingSystemSupport = {
       name: "Community",
       description: "Community-driven operating systems",
       icon: "👥"
+    },
+    apple: {
+      name: "Apple",
+      description: "Apple macOS operating systems",
+      icon: "🍎"
+    },
+    bsd: {
+      name: "BSD",
+      description: "Berkeley Software Distribution variants",
+      icon: "🦊"
+    },
+    embedded: {
+      name: "Embedded",
+      description: "Embedded and IoT operating systems",
+      icon: "📱"
     }
   }
 };
