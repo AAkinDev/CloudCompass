@@ -3,7 +3,7 @@ import { Search, Filter, BarChart3, Users, Zap, Database, Shield, Globe, Monitor
 import CloudProInsightsLogo from './components/CloudProInsightsLogo';
 import { accurateCostData } from './data/accurateCostData';
 import { pricingReferences, generalDisclaimers } from './data/pricingReferences';
-import { operatingSystemSupport } from './data/operatingSystemSupport.js';
+
 
 const CloudProInsights = () => {
   const [activeView, setActiveView] = useState('home');
@@ -1471,149 +1471,7 @@ const CloudProInsights = () => {
     </div>
   );
 
-  const OSSupportView = () => {
-    const [selectedOS, setSelectedOS] = useState('windows');
-    
-    const operatingSystems = [
-      { id: 'linux', name: 'Linux (Various Distros)', icon: '🐧' },
-      { id: 'windows', name: 'Windows Server', icon: '🪟' },
-      { id: 'macos', name: 'macOS', icon: '🍎' },
-      { id: 'freebsd', name: 'FreeBSD', icon: '🦊' },
-      { id: 'raspberrypi', name: 'Others (e.g., Raspberry Pi OS)', icon: '📱' }
-    ];
 
-    const getSupportLevel = (providerId, osId) => {
-      const provider = operatingSystemSupport.providers[providerId];
-      if (!provider || !provider.supportMatrix[osId]) {
-        return 'no';
-      }
-      return provider.supportMatrix[osId].support;
-    };
-
-    const getSupportLevelInfo = (level) => {
-      return operatingSystemSupport.supportLevels[level] || operatingSystemSupport.supportLevels.no;
-    };
-
-    return (
-      <div className="space-y-6">
-        <div className="bg-white rounded-lg p-6 shadow-sm">
-          <h2 className="text-2xl font-bold mb-4">Operating System Support</h2>
-          <p className="text-gray-600 mb-6">Compare operating system support across cloud providers</p>
-          
-          {/* OS Selection */}
-          <div className="mb-6">
-            <h3 className="text-lg font-semibold mb-3">Select Operating System</h3>
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3">
-              {operatingSystems.map(os => (
-                <button
-                  key={os.id}
-                  onClick={() => setSelectedOS(os.id)}
-                  className={`p-3 rounded-lg border-2 transition-all ${
-                    selectedOS === os.id
-                      ? 'border-blue-500 bg-blue-50'
-                      : 'border-gray-200 hover:border-gray-300'
-                  }`}
-                >
-                  <div className="text-2xl mb-2">{os.icon}</div>
-                  <div className="text-sm font-medium">{os.name}</div>
-                </button>
-              ))}
-            </div>
-          </div>
-
-          {/* Support Matrix */}
-          <div className="space-y-4">
-            <h3 className="text-lg font-semibold">Support Matrix</h3>
-            
-            {/* Provider Support Table */}
-            <div className="overflow-x-auto">
-              <table className="w-full border-collapse border border-gray-200">
-                <thead>
-                  <tr className="bg-gray-50">
-                    <th className="border border-gray-200 p-3 text-left font-semibold">Operating System</th>
-                    {providers.map(provider => (
-                      <th key={provider.id} className="border border-gray-200 p-3 text-center font-semibold">
-                        {provider.name}
-                      </th>
-                    ))}
-                  </tr>
-                </thead>
-                <tbody>
-                  {operatingSystems.map(os => {
-                    return (
-                      <tr key={os.id} className={`${selectedOS === os.id ? 'bg-blue-50' : 'hover:bg-gray-50'}`}>
-                        <td className="border border-gray-200 p-3">
-                          <div className="flex items-center gap-2">
-                            <span className="text-lg">{os.icon}</span>
-                            <span className="font-medium">{os.name}</span>
-                          </div>
-                        </td>
-                        {providers.map(provider => {
-                          const providerSupport = getSupportLevel(provider.id, os.id);
-                          const providerSupportInfo = getSupportLevelInfo(providerSupport);
-                          
-                          return (
-                            <td key={provider.id} className="border border-gray-200 p-3 text-center">
-                              <div className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium ${providerSupportInfo.bgColor} ${providerSupportInfo.color}`}>
-                                {providerSupportInfo.label}
-                              </div>
-                            </td>
-                          );
-                        })}
-                      </tr>
-                    );
-                  })}
-                </tbody>
-              </table>
-            </div>
-
-            {/* Support Level Legend */}
-            <div className="mt-4 p-4 bg-gray-50 rounded-lg">
-              <h4 className="text-sm font-semibold mb-2">Support Level Definitions</h4>
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                {Object.entries(operatingSystemSupport.supportLevels).map(([key, level]) => (
-                  <div key={key} className="flex items-center gap-2">
-                    <div className={`w-3 h-3 rounded-full ${level.bgColor.replace('bg-', 'bg-').replace('-50', '-500')}`}></div>
-                    <span className="text-sm font-medium">{level.label}</span>
-                    <span className="text-xs text-gray-500">- {level.description}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            {/* Detailed OS Information */}
-            {selectedOS && (
-              <div className="mt-6 p-4 bg-blue-50 rounded-lg">
-                <h4 className="text-sm font-semibold mb-3">Detailed Information</h4>
-                <div className="space-y-3">
-                  {providers.map(provider => {
-                    const osInfo = operatingSystemSupport.providers[provider.id]?.supportMatrix[selectedOS];
-                    if (!osInfo) return null;
-                    
-                    const supportInfo = getSupportLevelInfo(osInfo.support);
-                    
-                    return (
-                      <div key={provider.id} className="border-l-4 border-blue-200 pl-4">
-                        <div className="flex items-center justify-between mb-2">
-                          <h5 className="font-medium">{provider.name}</h5>
-                          <div className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium ${supportInfo.bgColor} ${supportInfo.color}`}>
-                            {supportInfo.label}
-                          </div>
-                        </div>
-                        <div className="text-sm text-gray-600">
-                          <div><strong>Notes:</strong> {osInfo.notes}</div>
-                        </div>
-                      </div>
-                    );
-                  })}
-                </div>
-              </div>
-            )}
-          </div>
-        </div>
-      </div>
-    );
-  };
 
   const CalculatorView = () => {
     const [calculatorState, setCalculatorState] = useState({
@@ -1962,8 +1820,7 @@ const CloudProInsights = () => {
         return <AnalyticsView />;
       case 'calculator':
         return <CalculatorView />;
-      case 'os-support':
-        return <OSSupportView />;
+      
       default:
         return <HomeView />;
     }
@@ -1994,7 +1851,7 @@ const CloudProInsights = () => {
                 { id: 'wizard', label: 'Decide', icon: Users },
                 { id: 'analytics', label: 'Analytics', icon: BarChart3 },
                 { id: 'calculator', label: 'Calculate', icon: Calculator },
-                { id: 'os-support', label: 'OS Support', icon: Monitor },
+                
               ].map(nav => {
                 const Icon = nav.icon;
                 return (
