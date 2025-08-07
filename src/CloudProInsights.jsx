@@ -1731,7 +1731,7 @@ const CloudProInsights = () => {
         {/* Header Section - Left Aligned */}
         <div className="bg-white rounded-lg p-6 shadow-sm">
           <div className="flex justify-between items-start mb-8">
-            <div>
+            <div className="text-left">
               <h2 className="text-3xl font-bold text-gray-900 mb-2">Cost Calculator</h2>
               <p className="text-gray-600 text-lg">Calculate estimated monthly costs for your cloud infrastructure.</p>
             </div>
