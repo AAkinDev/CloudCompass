@@ -19,7 +19,7 @@ const CloudProInsightsLogo = ({ className = "", size = "default", showText = tru
   return (
     <div className={`flex items-center gap-2 ${className}`}>
       <img 
-        src={getAssetUrl('/public/assets/logos/Updated_CPI-logo.png')}
+        src={getAssetUrl('/public/assets/logos/logo.png')}
         alt="CloudProInsights"
         className={`${sizeClasses[size]} flex-shrink-0 object-contain`}
         onError={(e) => {
