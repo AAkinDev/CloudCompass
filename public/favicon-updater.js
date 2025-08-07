@@ -25,7 +25,7 @@
     shortcutLink.href = faviconUrl;
     document.head.appendChild(shortcutLink);
     
-    console.log('Favicon updated with timestamp:', timestamp);
+
   }
   
   // Update favicon when DOM is ready
