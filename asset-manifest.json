@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/CloudProInsights/static/css/main.042b10ec.css",
+    "main.js": "/CloudProInsights/static/js/main.d9a541cd.js",
+    "static/js/453.f392b652.chunk.js": "/CloudProInsights/static/js/453.f392b652.chunk.js",
+    "index.html": "/CloudProInsights/index.html",
+    "main.042b10ec.css.map": "/CloudProInsights/static/css/main.042b10ec.css.map",
+    "main.d9a541cd.js.map": "/CloudProInsights/static/js/main.d9a541cd.js.map",
+    "453.f392b652.chunk.js.map": "/CloudProInsights/static/js/453.f392b652.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.042b10ec.css",
+    "static/js/main.d9a541cd.js"
+  ]
+}
