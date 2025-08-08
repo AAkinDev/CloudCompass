@@ -13,7 +13,9 @@ const CloudProInsights = () => {
   const [selectedProviders, setSelectedProviders] = useState(['aws', 'azure', 'gcp']);
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [compareList, setCompareList] = useState([]);
+  // eslint-disable-next-line no-unused-vars
   const [quizStep, setQuizStep] = useState(0);
+  // eslint-disable-next-line no-unused-vars
   const [quizAnswers, setQuizAnswers] = useState({});
 
   // Logo components using actual logo images from GitHub repo
@@ -496,6 +498,7 @@ const CloudProInsights = () => {
     { id: 'monitoring', name: 'Monitoring', icon: Monitor, color: 'bg-indigo-500' },
   ];
 
+  // eslint-disable-next-line no-unused-vars
   const quizQuestions = [
     {
       question: "What's your primary use case?",
@@ -560,6 +563,7 @@ const CloudProInsights = () => {
     setSearchTerm('');
   };
 
+  // eslint-disable-next-line no-unused-vars
   const getRecommendations = () => {
     const { useCase, scale, budget } = quizAnswers;
     let recommendations = [];
