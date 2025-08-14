@@ -27,6 +27,8 @@ export const useAnalytics = () => {
       }
       
       const basePath = getBasePath();
+      console.log('Fetching analytics from:', `${basePath}/data/provider-analytics.json`);
+      
       const response = await fetch(`${basePath}/data/provider-analytics.json`, {
         cache: 'no-store'
       });
@@ -36,6 +38,7 @@ export const useAnalytics = () => {
       }
       
       const data: AnalyticsMap = await response.json();
+      console.log('Analytics data loaded:', data);
       setAnalytics(data);
       
       // Calculate the earliest lastSynced timestamp
@@ -43,6 +46,7 @@ export const useAnalytics = () => {
       const earliest = new Date(Math.min(...timestamps.map(t => t.getTime())));
       setLastSynced(earliest.toISOString());
     } catch (err) {
+      console.error('Error fetching analytics:', err);
       setError(err instanceof Error ? err.message : 'Failed to load analytics');
     } finally {
       setIsLoading(false);

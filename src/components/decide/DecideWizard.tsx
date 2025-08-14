@@ -81,6 +81,16 @@ const DecideWizard: React.FC = () => {
   const rankings = analytics && state.useCase ? 
     rankProviders(providerFacts, analytics, state.weights, state.constraints) : [];
 
+  // Debug logging
+  useEffect(() => {
+    console.log('DecideWizard state:', {
+      step: state.step,
+      useCase: state.useCase,
+      analytics: !!analytics,
+      rankingsLength: rankings.length
+    });
+  }, [state.step, state.useCase, analytics, rankings.length]);
+
   const canProceed = () => {
     switch (state.step) {
       case 1:

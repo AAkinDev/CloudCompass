@@ -47,7 +47,7 @@ const PreviewPane: React.FC<PreviewPaneProps> = ({
           <Info className="w-12 h-12 mx-auto mb-3 text-gray-300" />
           <h3 className="font-medium text-gray-900 mb-2">No Inputs Yet</h3>
           <p className="text-sm">
-            Add at least one priority and one constraint to see tailored suggestions.
+            Select a use case to see tailored suggestions.
           </p>
         </div>
       </div>
