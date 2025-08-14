@@ -1,11 +1,12 @@
 import React from 'react';
 import { TrendingUp, ExternalLink } from 'lucide-react';
 import { providerFacts } from '../../data/providerFacts';
+import { getAssetUrl } from '../../utils/cacheBuster';
 
 const providerLogos = {
   aws: () => (
     <img 
-      src="https://raw.githubusercontent.com/AAkinDev/CloudProInsights/main/public/assets/logos/aws-logo.png" 
+      src={getAssetUrl('/assets/logos/aws-logo.png')}
       alt="AWS" 
       className="w-8 h-8 object-contain"
       onError={(e) => {
@@ -16,7 +17,7 @@ const providerLogos = {
   ),
   azure: () => (
     <img 
-      src="https://raw.githubusercontent.com/AAkinDev/CloudProInsights/main/public/assets/logos/azure-logo.png" 
+      src={getAssetUrl('/assets/logos/azure-logo.png')}
       alt="Azure" 
       className="w-8 h-8 object-contain"
       onError={(e) => {
@@ -27,7 +28,7 @@ const providerLogos = {
   ),
   gcp: () => (
     <img 
-      src="https://raw.githubusercontent.com/AAkinDev/CloudProInsights/main/public/assets/logos/gcp-logo.png" 
+      src={getAssetUrl('/assets/logos/gcp-logo.png')}
       alt="GCP" 
       className="w-8 h-8 object-contain"
       onError={(e) => {
@@ -38,7 +39,7 @@ const providerLogos = {
   ),
   oracle: () => (
     <img 
-      src="https://raw.githubusercontent.com/AAkinDev/CloudProInsights/main/public/assets/logos/oracle-logo.png" 
+      src={getAssetUrl('/assets/logos/oracle-logo.png')}
       alt="Oracle" 
       className="w-8 h-8 object-contain"
       onError={(e) => {
@@ -49,7 +50,7 @@ const providerLogos = {
   ),
   ibm: () => (
     <img 
-      src="https://raw.githubusercontent.com/AAkinDev/CloudProInsights/main/public/assets/logos/ibm-logo.png" 
+      src={getAssetUrl('/assets/logos/ibm-logo.png')}
       alt="IBM" 
       className="w-8 h-8 object-contain"
       onError={(e) => {

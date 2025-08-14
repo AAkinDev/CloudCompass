@@ -4,6 +4,7 @@ import CloudProInsightsLogo from './components/CloudProInsightsLogo';
 import { accurateCostData } from './data/accurateCostData';
 import ProviderAnalytics from './components/ProviderAnalytics';
 import DecideWizard from './components/decide/DecideWizard.jsx';
+import { getAssetUrl } from './utils/cacheBuster';
 // Removed unused imports - now using NotesSection component
 
 
@@ -28,7 +29,7 @@ const CloudProInsights = () => {
       title="Visit Amazon Web Services platform"
     >
       <img 
-        src="https://raw.githubusercontent.com/AAkinDev/CloudProInsights/main/public/assets/logos/aws-logo.png" 
+        src={getAssetUrl('/assets/logos/aws-logo.png')}
         alt="AWS" 
         className="w-16 h-12 sm:w-20 sm:h-16 object-contain"
         onError={(e) => {
@@ -48,7 +49,7 @@ const CloudProInsights = () => {
       title="Visit Microsoft Azure platform"
     >
       <img 
-        src="https://raw.githubusercontent.com/AAkinDev/CloudProInsights/main/public/assets/logos/azure-logo.png" 
+        src={getAssetUrl('/assets/logos/azure-logo.png')}
         alt="Microsoft Azure" 
         className="w-16 h-12 sm:w-20 sm:h-16 object-contain"
         onError={(e) => {
@@ -68,7 +69,7 @@ const CloudProInsights = () => {
       title="Visit Google Cloud Platform"
     >
       <img 
-        src="https://raw.githubusercontent.com/AAkinDev/CloudProInsights/main/public/assets/logos/gcp-logo.png" 
+        src={getAssetUrl('/assets/logos/gcp-logo.png')}
         alt="Google Cloud Platform" 
         className="w-16 h-12 sm:w-20 sm:h-16 object-contain"
         onError={(e) => {
@@ -88,7 +89,7 @@ const CloudProInsights = () => {
       title="Visit Oracle Cloud platform"
     >
       <img 
-        src="https://raw.githubusercontent.com/AAkinDev/CloudProInsights/main/public/assets/logos/oracle-logo.png" 
+        src={getAssetUrl('/assets/logos/oracle-logo.png')}
         alt="Oracle Cloud" 
         className="w-16 h-12 sm:w-20 sm:h-16 object-contain"
         onError={(e) => {
@@ -108,7 +109,7 @@ const CloudProInsights = () => {
       title="Visit IBM Cloud platform"
     >
       <img 
-        src="https://raw.githubusercontent.com/AAkinDev/CloudProInsights/main/public/assets/logos/ibm-logo.png" 
+        src={getAssetUrl('/assets/logos/ibm-logo.png')}
         alt="IBM Cloud" 
         className="w-16 h-12 sm:w-20 sm:h-16 object-contain"
         onError={(e) => {
@@ -122,7 +123,7 @@ const CloudProInsights = () => {
   // Non-clickable logo components for filter cards
   const AWSLogoFilter = () => (
     <img 
-      src="https://raw.githubusercontent.com/AAkinDev/CloudProInsights/main/public/assets/logos/aws-logo.png" 
+      src={getAssetUrl('/assets/logos/aws-logo.png')}
       alt="AWS" 
       className="w-8 h-6 object-contain"
       onError={(e) => {
@@ -134,7 +135,7 @@ const CloudProInsights = () => {
 
   const AzureLogoFilter = () => (
     <img 
-      src="https://raw.githubusercontent.com/AAkinDev/CloudProInsights/main/public/assets/logos/azure-logo.png" 
+      src={getAssetUrl('/assets/logos/azure-logo.png')}
       alt="Microsoft Azure" 
       className="w-8 h-6 object-contain"
       onError={(e) => {
@@ -146,7 +147,7 @@ const CloudProInsights = () => {
 
   const GoogleCloudLogoFilter = () => (
     <img 
-      src="https://raw.githubusercontent.com/AAkinDev/CloudProInsights/main/public/assets/logos/gcp-logo.png" 
+      src={getAssetUrl('/assets/logos/gcp-logo.png')}
       alt="Google Cloud Platform" 
       className="w-8 h-6 object-contain"
       onError={(e) => {
@@ -158,7 +159,7 @@ const CloudProInsights = () => {
 
   const OracleLogoFilter = () => (
     <img 
-      src="https://raw.githubusercontent.com/AAkinDev/CloudProInsights/main/public/assets/logos/oracle-logo.png" 
+      src={getAssetUrl('/assets/logos/oracle-logo.png')}
       alt="Oracle Cloud" 
       className="w-8 h-6 object-contain"
       onError={(e) => {
@@ -170,7 +171,7 @@ const CloudProInsights = () => {
 
   const IBMCloudLogoFilter = () => (
     <img 
-      src="https://raw.githubusercontent.com/AAkinDev/CloudProInsights/main/public/assets/logos/ibm-logo.png" 
+      src={getAssetUrl('/assets/logos/ibm-logo.png')}
       alt="IBM Cloud" 
       className="w-8 h-6 object-contain"
       onError={(e) => {

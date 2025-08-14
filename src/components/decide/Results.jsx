@@ -1,66 +1,67 @@
 import React from 'react';
-import { CheckCircle, XCircle, ExternalLink, Download, RotateCcw } from 'lucide-react';
+import { ExternalLink, CheckCircle, XCircle, RotateCcw, Download } from 'lucide-react';
+import { getAssetUrl } from '../../utils/cacheBuster';
 import { providerFacts } from '../../data/providerFacts';
 
 const providerLogos = {
   aws: () => (
     <img 
-      src="https://raw.githubusercontent.com/AAkinDev/CloudProInsights/main/public/assets/logos/aws-logo.png" 
+      src={getAssetUrl('/assets/logos/aws-logo.png')}
       alt="AWS" 
-      className="w-12 h-10 object-contain"
+      className="w-8 h-8 object-contain"
       onError={(e) => {
         e.target.style.display = 'none';
-        e.target.parentNode.innerHTML = '<div class="w-12 h-10 bg-orange-500 rounded flex items-center justify-center text-white text-sm font-bold">AWS</div>';
+        e.target.parentNode.innerHTML = '<div class="w-8 h-8 bg-orange-500 rounded flex items-center justify-center text-white text-xs font-bold">AWS</div>';
       }}
     />
   ),
   azure: () => (
     <img 
-      src="https://raw.githubusercontent.com/AAkinDev/CloudProInsights/main/public/assets/logos/azure-logo.png" 
+      src={getAssetUrl('/assets/logos/azure-logo.png')}
       alt="Azure" 
-      className="w-12 h-10 object-contain"
+      className="w-8 h-8 object-contain"
       onError={(e) => {
         e.target.style.display = 'none';
-        e.target.parentNode.innerHTML = '<div class="w-12 h-10 bg-blue-600 rounded flex items-center justify-center text-white text-sm font-bold">Az</div>';
+        e.target.parentNode.innerHTML = '<div class="w-8 h-8 bg-blue-600 rounded flex items-center justify-center text-white text-xs font-bold">Az</div>';
       }}
     />
   ),
   gcp: () => (
     <img 
-      src="https://raw.githubusercontent.com/AAkinDev/CloudProInsights/main/public/assets/logos/gcp-logo.png" 
+      src={getAssetUrl('/assets/logos/gcp-logo.png')}
       alt="GCP" 
-      className="w-12 h-10 object-contain"
+      className="w-8 h-8 object-contain"
       onError={(e) => {
         e.target.style.display = 'none';
-        e.target.parentNode.innerHTML = '<div class="w-12 h-10 bg-red-500 rounded flex items-center justify-center text-white text-sm font-bold">GCP</div>';
+        e.target.parentNode.innerHTML = '<div class="w-8 h-8 bg-red-500 rounded flex items-center justify-center text-white text-xs font-bold">GCP</div>';
       }}
     />
   ),
   oracle: () => (
     <img 
-      src="https://raw.githubusercontent.com/AAkinDev/CloudProInsights/main/public/assets/logos/oracle-logo.png" 
+      src={getAssetUrl('/assets/logos/oracle-logo.png')}
       alt="Oracle" 
-      className="w-12 h-10 object-contain"
+      className="w-8 h-8 object-contain"
       onError={(e) => {
         e.target.style.display = 'none';
-        e.target.parentNode.innerHTML = '<div class="w-12 h-10 bg-red-600 rounded flex items-center justify-center text-white text-sm font-bold">OCI</div>';
+        e.target.parentNode.innerHTML = '<div class="w-8 h-8 bg-red-600 rounded flex items-center justify-center text-white text-xs font-bold">OCI</div>';
       }}
     />
   ),
   ibm: () => (
     <img 
-      src="https://raw.githubusercontent.com/AAkinDev/CloudProInsights/main/public/assets/logos/ibm-logo.png" 
+      src={getAssetUrl('/assets/logos/ibm-logo.png')}
       alt="IBM" 
-      className="w-12 h-10 object-contain"
+      className="w-8 h-8 object-contain"
       onError={(e) => {
         e.target.style.display = 'none';
-        e.target.parentNode.innerHTML = '<div class="w-12 h-10 bg-blue-500 rounded flex items-center justify-center text-white text-sm font-bold">IBM</div>';
+        e.target.parentNode.innerHTML = '<div class="w-8 h-8 bg-blue-500 rounded flex items-center justify-center text-white text-xs font-bold">IBM</div>';
       }}
     />
   )
 };
 
-const getSuggestedStack = (providerId: string, useCase: UseCase | null): string => {
+const getSuggestedStack = (providerId, useCase) => {
   const stacks = {
     'web-app': {
       aws: 'ALB + ECS Fargate + RDS + CloudFront',
@@ -110,7 +111,7 @@ const getSuggestedStack = (providerId: string, useCase: UseCase | null): string 
   return stacks[useCaseId]?.[providerId] || stacks.other[providerId];
 };
 
-const getProviderName = (providerId: string): string => {
+const getProviderName = (providerId) => {
   const names = {
     aws: 'AWS',
     azure: 'Azure',
@@ -121,7 +122,7 @@ const getProviderName = (providerId: string): string => {
   return names[providerId] || providerId.toUpperCase();
 };
 
-const getConfidenceColor = (confidence: string): string => {
+const getConfidenceColor = (confidence) => {
   switch (confidence) {
     case 'High': return 'text-green-600 bg-green-100';
     case 'Medium': return 'text-yellow-600 bg-yellow-100';
@@ -130,7 +131,7 @@ const getConfidenceColor = (confidence: string): string => {
   }
 };
 
-const getProsAndCons = (providerId: string): { pros: string[]; cons: string[] } => {
+const getProsAndCons = (providerId) => {
   const data = {
     aws: {
       pros: ['Largest service ecosystem', 'Excellent documentation', 'Strong enterprise features'],
@@ -156,7 +157,7 @@ const getProsAndCons = (providerId: string): { pros: string[]; cons: string[] } 
   return data[providerId] || { pros: [], cons: [] };
 };
 
-const estimateCost = (providerId: string, budget?: number, scale?: any): string => {
+const estimateCost = (providerId, budget, scale) => {
   if (!budget) return 'Contact provider for pricing';
   
   const fact = providerFacts.find(f => f.id === providerId);

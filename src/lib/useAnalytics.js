@@ -6,11 +6,21 @@ export const useAnalytics = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
 
+  // Helper function to get the correct base path
+  const getBasePath = () => {
+    // Check if we're on GitHub Pages (has /CloudProInsights/ in the path)
+    if (window.location.pathname.includes('/CloudProInsights/')) {
+      return '/CloudProInsights';
+    }
+    return '';
+  };
+
   const fetchAnalytics = useCallback(async () => {
     try {
       setIsLoading(true);
       setError(null);
-      const response = await fetch('/CloudProInsights/data/provider-analytics.json', {
+      const basePath = getBasePath();
+      const response = await fetch(`${basePath}/data/provider-analytics.json`, {
         cache: 'no-store'
       });
       
@@ -34,15 +44,8 @@ export const useAnalytics = () => {
 
   const refresh = useCallback(async () => {
     try {
-      const response = await fetch('/api/analytics/refresh', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' }
-      });
-      
-      if (!response.ok) {
-        throw new Error('Failed to refresh analytics');
-      }
-      
+      // For GitHub Pages, we can't call the API, so we'll just refetch the data
+      // This provides a better user experience than showing an error
       await fetchAnalytics();
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Failed to refresh analytics');

@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
+import { getAssetUrl } from '../utils/cacheBuster';
 
 // Provider Analytics component with real service data
 // Shows provider cards with service counts, categories, and metadata
@@ -297,7 +298,7 @@ function ProviderCard({ provider }) {
   // Logo components for Provider Analytics cards
   const AWSLogo = () => (
     <img 
-      src="https://raw.githubusercontent.com/AAkinDev/CloudProInsights/main/public/assets/logos/aws-logo.png" 
+              src={getAssetUrl('/assets/logos/aws-logo.png')} 
       alt="AWS" 
       className="w-8 h-8 object-contain"
       onError={(e) => {
@@ -309,7 +310,7 @@ function ProviderCard({ provider }) {
 
   const AzureLogo = () => (
     <img 
-      src="https://raw.githubusercontent.com/AAkinDev/CloudProInsights/main/public/assets/logos/azure-logo.png" 
+              src={getAssetUrl('/assets/logos/azure-logo.png')} 
       alt="Microsoft Azure" 
       className="w-8 h-8 object-contain"
       onError={(e) => {
@@ -321,7 +322,7 @@ function ProviderCard({ provider }) {
 
   const GoogleCloudLogo = () => (
     <img 
-      src="https://raw.githubusercontent.com/AAkinDev/CloudProInsights/main/public/assets/logos/gcp-logo.png" 
+              src={getAssetUrl('/assets/logos/gcp-logo.png')} 
       alt="Google Cloud Platform" 
       className="w-8 h-8 object-contain"
       onError={(e) => {
@@ -333,7 +334,7 @@ function ProviderCard({ provider }) {
 
   const OracleLogo = () => (
     <img 
-      src="https://raw.githubusercontent.com/AAkinDev/CloudProInsights/main/public/assets/logos/oracle-logo.png" 
+              src={getAssetUrl('/assets/logos/oracle-logo.png')} 
       alt="Oracle Cloud" 
       className="w-8 h-8 object-contain"
       onError={(e) => {
@@ -345,7 +346,7 @@ function ProviderCard({ provider }) {
 
   const IBMCloudLogo = () => (
     <img 
-      src="https://raw.githubusercontent.com/AAkinDev/CloudProInsights/main/public/assets/logos/ibm-logo.png" 
+              src={getAssetUrl('/assets/logos/ibm-logo.png')} 
       alt="IBM Cloud" 
       className="w-8 h-8 object-contain"
       onError={(e) => {

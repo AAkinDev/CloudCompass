@@ -6,10 +6,12 @@ const getCacheBuster = () => {
 };
 
 export const getAssetUrl = (path) => {
-  const baseUrl = 'https://raw.githubusercontent.com/AAkinDev/CloudProInsights/main';
+  // Use PUBLIC_URL for the base path, fallback to empty string for local development
+  const baseUrl = process.env.PUBLIC_URL || '';
   return `${baseUrl}${path}${getCacheBuster()}`;
 };
 
 export const getLocalAssetUrl = (path) => {
   return `${process.env.PUBLIC_URL}${path}${getCacheBuster()}`;
 };
+
