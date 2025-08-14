@@ -1,112 +1,97 @@
+'use client';
+
 import React from 'react';
-import { DollarSign, Zap, Globe, Shield, HelpCircle } from 'lucide-react';
-import { Weights } from '../../lib/recommend/score';
+import { Weights } from '@/types/provider';
+import { DollarSign, Zap, Globe, Shield } from 'lucide-react';
 
 interface PrioritiesStepProps {
   weights: Weights;
   onUpdate: (weights: Weights) => void;
 }
 
-const priorities = [
-  {
-    key: 'cost' as const,
-    name: 'Cost',
-    icon: DollarSign,
-    description: 'How important it is to minimize ongoing monthly cost.',
-    color: 'bg-green-500'
-  },
-  {
-    key: 'performance' as const,
-    name: 'Performance',
-    icon: Zap,
-    description: 'Throughput and latency under load.',
-    color: 'bg-blue-500'
-  },
-  {
-    key: 'availability' as const,
-    name: 'Availability',
-    icon: Globe,
-    description: 'Region coverage and multi-AZ options.',
-    color: 'bg-purple-500'
-  },
-  {
-    key: 'compliance' as const,
-    name: 'Compliance',
-    icon: Shield,
-    description: 'Fit for regulatory requirements like HIPAA, PCI, or GDPR.',
-    color: 'bg-orange-500'
-  }
-];
-
 const PrioritiesStep: React.FC<PrioritiesStepProps> = ({ weights, onUpdate }) => {
-  const handleSliderChange = (key: keyof Weights, value: number) => {
+  const handleWeightChange = (key: keyof Weights, value: number) => {
     onUpdate({ ...weights, [key]: value });
   };
 
-  const getTotalWeight = () => {
-    return Object.values(weights).reduce((sum, weight) => sum + weight, 0);
-  };
-
-  const getWeightPercentage = (weight: number) => {
-    const total = getTotalWeight();
-    return total > 0 ? Math.round((weight / total) * 100) : 0;
-  };
+  const priorityItems = [
+    {
+      key: 'cost' as keyof Weights,
+      label: 'Cost',
+      icon: DollarSign,
+      description: 'How important it is to minimize ongoing monthly cost.',
+      color: 'text-green-600'
+    },
+    {
+      key: 'performance' as keyof Weights,
+      label: 'Performance',
+      icon: Zap,
+      description: 'Throughput and latency under load.',
+      color: 'text-yellow-600'
+    },
+    {
+      key: 'availability' as keyof Weights,
+      label: 'Availability',
+      icon: Globe,
+      description: 'Region coverage and multi-AZ options.',
+      color: 'text-blue-600'
+    },
+    {
+      key: 'compliance' as keyof Weights,
+      label: 'Compliance',
+      icon: Shield,
+      description: 'Fit for regulatory requirements like HIPAA, PCI, or GDPR.',
+      color: 'text-purple-600'
+    }
+  ];
 
   return (
     <div className="space-y-8">
-      <div className="text-center mb-8">
-        <h3 className="text-lg font-medium text-gray-900 mb-2">
+      <div className="text-center">
+        <h2 className="text-2xl font-bold text-gray-900 mb-2">
           Set Your Priorities
-        </h3>
-        <p className="text-sm text-gray-600">
-          Adjust the sliders to indicate how important each factor is for your use case
+        </h2>
+        <p className="text-gray-600">
+          Adjust the sliders to indicate how important each factor is for your decision. Higher values mean higher priority.
         </p>
       </div>
 
       <div className="space-y-6">
-        {priorities.map((priority) => {
-          const Icon = priority.icon;
-          const weight = weights[priority.key];
-          const percentage = getWeightPercentage(weight);
+        {priorityItems.map((item) => {
+          const Icon = item.icon;
+          const value = weights[item.key];
           
           return (
-            <div key={priority.key} className="space-y-3">
+            <div key={item.key} className="space-y-3">
               <div className="flex items-center justify-between">
-                <div className="flex items-center gap-3">
-                  <div className={`w-10 h-10 rounded-lg ${priority.color} flex items-center justify-center`}>
-                    <Icon className="w-5 h-5 text-white" />
+                <div className="flex items-center space-x-3">
+                  <div className={`p-2 rounded-lg bg-gray-100 ${item.color}`}>
+                    <Icon className="w-5 h-5" />
                   </div>
                   <div>
-                    <h4 className="font-semibold text-gray-900">{priority.name}</h4>
-                    <p className="text-sm text-gray-600">{priority.description}</p>
+                    <h3 className="font-semibold text-gray-900">{item.label}</h3>
+                    <p className="text-sm text-gray-500">{item.description}</p>
                   </div>
                 </div>
-                <div className="flex items-center gap-2">
-                  <span className="text-sm font-medium text-gray-900">{weight}</span>
-                  <span className="text-xs text-gray-500">({percentage}%)</span>
-                  <div className="relative group">
-                    <HelpCircle className="w-4 h-4 text-gray-400" />
-                    <div className="absolute bottom-full right-0 mb-2 px-3 py-2 bg-gray-900 text-white text-xs rounded-lg opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap z-10">
-                      {priority.description}
-                      <div className="absolute top-full right-2 w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent border-t-gray-900"></div>
-                    </div>
-                  </div>
+                <div className="text-right">
+                  <span className="text-2xl font-bold text-gray-900">{value}</span>
+                  <span className="text-sm text-gray-500 ml-1">%</span>
                 </div>
               </div>
               
-              <div className="space-y-2">
+              <div className="relative">
                 <input
                   type="range"
                   min="0"
                   max="100"
-                  value={weight}
-                  onChange={(e) => handleSliderChange(priority.key, parseInt(e.target.value))}
+                  value={value}
+                  onChange={(e) => handleWeightChange(item.key, parseInt(e.target.value))}
                   className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer slider"
                   style={{
-                    background: `linear-gradient(to right, ${priority.color.replace('bg-', '')} 0%, ${priority.color.replace('bg-', '')} ${weight}%, #e5e7eb ${weight}%, #e5e7eb 100%)`
+                    background: `linear-gradient(to right, ${item.color.replace('text-', '')} 0%, ${item.color.replace('text-', '')} ${value}%, #e5e7eb ${value}%, #e5e7eb 100%)`
                   }}
                 />
-                <div className="flex justify-between text-xs text-gray-500">
+                <div className="flex justify-between text-xs text-gray-500 mt-1">
                   <span>Not Important</span>
                   <span>Very Important</span>
                 </div>
@@ -119,29 +104,21 @@ const PrioritiesStep: React.FC<PrioritiesStepProps> = ({ weights, onUpdate }) =>
       {/* Summary */}
       <div className="mt-8 p-4 bg-gray-50 rounded-lg">
         <h4 className="font-medium text-gray-900 mb-3">Priority Summary</h4>
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-          {priorities.map((priority) => {
-            const weight = weights[priority.key];
-            const percentage = getWeightPercentage(weight);
-            
-            return (
-              <div key={priority.key} className="text-center">
-                <div className="text-lg font-semibold text-gray-900">{weight}</div>
-                <div className="text-xs text-gray-600">{priority.name}</div>
-                <div className="text-xs text-gray-500">{percentage}% of total</div>
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+          {priorityItems.map((item) => (
+            <div key={item.key} className="text-center">
+              <div className={`text-lg font-semibold ${item.color}`}>
+                {weights[item.key]}%
               </div>
-            );
-          })}
+              <div className="text-sm text-gray-600">{item.label}</div>
+            </div>
+          ))}
         </div>
-        <div className="mt-3 pt-3 border-t border-gray-200">
-          <div className="flex justify-between text-sm">
-            <span className="text-gray-600">Total Weight:</span>
-            <span className="font-medium text-gray-900">{getTotalWeight()}</span>
-          </div>
+        <div className="mt-3 text-sm text-gray-500 text-center">
+          Total: {Object.values(weights).reduce((sum, weight) => sum + weight, 0)}%
         </div>
       </div>
 
-      {/* CSS for custom slider styling */}
       <style jsx>{`
         .slider::-webkit-slider-thumb {
           appearance: none;
@@ -150,6 +127,7 @@ const PrioritiesStep: React.FC<PrioritiesStepProps> = ({ weights, onUpdate }) =>
           border-radius: 50%;
           background: #3b82f6;
           cursor: pointer;
+          border: 2px solid #ffffff;
           box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
         
@@ -159,7 +137,7 @@ const PrioritiesStep: React.FC<PrioritiesStepProps> = ({ weights, onUpdate }) =>
           border-radius: 50%;
           background: #3b82f6;
           cursor: pointer;
-          border: none;
+          border: 2px solid #ffffff;
           box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
       `}</style>
@@ -168,3 +146,5 @@ const PrioritiesStep: React.FC<PrioritiesStepProps> = ({ weights, onUpdate }) =>
 };
 
 export default PrioritiesStep;
+
+

@@ -1,12 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
-
-export type AnalyticsMap = {
-  aws: { services: number; regions: string[]; lastSynced: string };
-  azure: { services: number; regions: string[]; lastSynced: string };
-  gcp: { services: number; regions: string[]; lastSynced: string };
-  oracle: { services: number; regions: string[]; lastSynced: string };
-  ibm: { services: number; regions: string[]; lastSynced: string };
-};
+import { AnalyticsMap } from '@/types/provider';
 
 export const useAnalytics = () => {
   const [analytics, setAnalytics] = useState<AnalyticsMap | null>(null);
@@ -14,11 +7,21 @@ export const useAnalytics = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
+  // Helper function to get the correct base path
+  const getBasePath = () => {
+    // Check if we're on GitHub Pages (has /CloudProInsights/ in the path)
+    if (typeof window !== 'undefined' && window.location.pathname.includes('/CloudProInsights/')) {
+      return '/CloudProInsights';
+    }
+    return '';
+  };
+
   const fetchAnalytics = useCallback(async () => {
     try {
       setIsLoading(true);
       setError(null);
-      const response = await fetch('/CloudProInsights/data/provider-analytics.json', {
+      const basePath = getBasePath();
+      const response = await fetch(`${basePath}/data/provider-analytics.json`, {
         cache: 'no-store'
       });
       
@@ -26,7 +29,7 @@ export const useAnalytics = () => {
         throw new Error(`Failed to fetch analytics: ${response.status}`);
       }
       
-      const data = await response.json();
+      const data: AnalyticsMap = await response.json();
       setAnalytics(data);
       
       // Calculate the earliest lastSynced timestamp
@@ -42,15 +45,8 @@ export const useAnalytics = () => {
 
   const refresh = useCallback(async () => {
     try {
-      const response = await fetch('/api/analytics/refresh', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' }
-      });
-      
-      if (!response.ok) {
-        throw new Error('Failed to refresh analytics');
-      }
-      
+      // For GitHub Pages, we can't call the API, so we'll just refetch the data
+      // This provides a better user experience than showing an error
       await fetchAnalytics();
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Failed to refresh analytics');
@@ -69,3 +65,5 @@ export const useAnalytics = () => {
     refresh
   };
 };
+
+

@@ -7,3 +7,5 @@ export type ProviderAnalytics = {
 };
 
 export type AnalyticsMap = Record<ProviderId, ProviderAnalytics>;
+
+

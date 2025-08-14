@@ -1,266 +1,191 @@
+'use client';
+
 import React from 'react';
-import { TrendingUp, ExternalLink } from 'lucide-react';
-import { ScoreOut } from '../../lib/recommend/score';
-import { UseCase } from './DecideWizard';
-import { Weights, Constraints } from '../../lib/recommend/score';
-import { providerFacts } from '../../data/providerFacts';
+import { ExternalLink, TrendingUp, Info } from 'lucide-react';
+import { ScoreOut, UseCase, Weights, Constraints } from '@/types/provider';
+import { getSuggestedStack } from '@/data/useCases';
+import ProviderLogo from '@/components/ProviderLogos';
+import { formatNumber } from '@/lib/string';
 
 interface PreviewPaneProps {
   rankings: ScoreOut[];
-  currentStep: number;
   useCase: UseCase | null;
   weights: Weights;
   constraints: Constraints;
+  isLoading: boolean;
 }
 
-const providerLogos = {
-  aws: () => (
-    <img 
-      src="https://raw.githubusercontent.com/AAkinDev/CloudProInsights/main/public/assets/logos/aws-logo.png" 
-      alt="AWS" 
-      className="w-8 h-8 object-contain"
-      onError={(e) => {
-        e.target.style.display = 'none';
-        e.target.parentNode.innerHTML = '<div class="w-8 h-8 bg-orange-500 rounded flex items-center justify-center text-white text-xs font-bold">AWS</div>';
-      }}
-    />
-  ),
-  azure: () => (
-    <img 
-      src="https://raw.githubusercontent.com/AAkinDev/CloudProInsights/main/public/assets/logos/azure-logo.png" 
-      alt="Azure" 
-      className="w-8 h-8 object-contain"
-      onError={(e) => {
-        e.target.style.display = 'none';
-        e.target.parentNode.innerHTML = '<div class="w-8 h-8 bg-blue-600 rounded flex items-center justify-center text-white text-xs font-bold">Az</div>';
-      }}
-    />
-  ),
-  gcp: () => (
-    <img 
-      src="https://raw.githubusercontent.com/AAkinDev/CloudProInsights/main/public/assets/logos/gcp-logo.png" 
-      alt="GCP" 
-      className="w-8 h-8 object-contain"
-      onError={(e) => {
-        e.target.style.display = 'none';
-        e.target.parentNode.innerHTML = '<div class="w-8 h-8 bg-red-500 rounded flex items-center justify-center text-white text-xs font-bold">GCP</div>';
-      }}
-    />
-  ),
-  oracle: () => (
-    <img 
-      src="https://raw.githubusercontent.com/AAkinDev/CloudProInsights/main/public/assets/logos/oracle-logo.png" 
-      alt="Oracle" 
-      className="w-8 h-8 object-contain"
-      onError={(e) => {
-        e.target.style.display = 'none';
-        e.target.parentNode.innerHTML = '<div class="w-8 h-8 bg-red-600 rounded flex items-center justify-center text-white text-xs font-bold">OCI</div>';
-      }}
-    />
-  ),
-  ibm: () => (
-    <img 
-      src="https://raw.githubusercontent.com/AAkinDev/CloudProInsights/main/public/assets/logos/ibm-logo.png" 
-      alt="IBM" 
-      className="w-8 h-8 object-contain"
-      onError={(e) => {
-        e.target.style.display = 'none';
-        e.target.parentNode.innerHTML = '<div class="w-8 h-8 bg-blue-500 rounded flex items-center justify-center text-white text-xs font-bold">IBM</div>';
-      }}
-    />
-  )
-};
-
-const getSuggestedStack = (providerId: string, useCase: UseCase | null): string => {
-  const stacks = {
-    'web-app': {
-      aws: 'ALB + ECS Fargate + RDS + CloudFront',
-      azure: 'Application Gateway + App Service + Azure SQL + CDN',
-      gcp: 'Load Balancer + Cloud Run + Cloud SQL + Cloud CDN',
-      oracle: 'Load Balancer + Container Engine + Autonomous DB + CDN',
-      ibm: 'Load Balancer + Code Engine + Db2 + CDN'
-    },
-    'mobile-backend': {
-      aws: 'API Gateway + Lambda + DynamoDB + S3',
-      azure: 'API Management + Functions + Cosmos DB + Blob Storage',
-      gcp: 'Cloud Endpoints + Cloud Functions + Firestore + Cloud Storage',
-      oracle: 'API Gateway + Functions + NoSQL + Object Storage',
-      ibm: 'API Connect + Cloud Functions + Cloudant + Object Storage'
-    },
-    'data-analytics': {
-      aws: 'EMR + Redshift + S3 + QuickSight',
-      azure: 'HDInsight + Synapse + Data Lake + Power BI',
-      gcp: 'Dataproc + BigQuery + Cloud Storage + Looker',
-      oracle: 'Big Data Service + Autonomous Data Warehouse + Object Storage + Analytics Cloud',
-      ibm: 'Cloud Pak for Data + Db2 Warehouse + Object Storage + Cognos'
-    },
-    'machine-learning': {
-      aws: 'SageMaker + ECS + RDS + S3',
-      azure: 'Machine Learning + Container Instances + Azure SQL + Blob Storage',
-      gcp: 'Vertex AI + Cloud Run + Cloud SQL + Cloud Storage',
-      oracle: 'Data Science + Container Engine + Autonomous DB + Object Storage',
-      ibm: 'Watson Studio + Code Engine + Db2 + Object Storage'
-    },
-    'enterprise-migration': {
-      aws: 'Migration Hub + EC2 + RDS + Direct Connect',
-      azure: 'Azure Migrate + Virtual Machines + Azure SQL + ExpressRoute',
-      gcp: 'Migrate for Compute + Compute Engine + Cloud SQL + Cloud Interconnect',
-      oracle: 'Cloud Migrations + Compute + Autonomous DB + FastConnect',
-      ibm: 'Cloud Migration + Virtual Servers + Db2 + Direct Link'
-    },
-    'other': {
-      aws: 'EC2 + RDS + S3 + CloudWatch',
-      azure: 'Virtual Machines + Azure SQL + Blob Storage + Monitor',
-      gcp: 'Compute Engine + Cloud SQL + Cloud Storage + Monitoring',
-      oracle: 'Compute + Autonomous DB + Object Storage + Monitoring',
-      ibm: 'Virtual Servers + Db2 + Object Storage + Monitoring'
-    }
-  };
-
-  const useCaseId = useCase?.id || 'other';
-  return stacks[useCaseId]?.[providerId] || stacks.other[providerId];
-};
-
-const getProviderName = (providerId: string): string => {
-  const names = {
-    aws: 'AWS',
-    azure: 'Azure',
-    gcp: 'Google Cloud',
-    oracle: 'Oracle Cloud',
-    ibm: 'IBM Cloud'
-  };
-  return names[providerId] || providerId.toUpperCase();
-};
-
-const getConfidenceColor = (confidence: string): string => {
-  switch (confidence) {
-    case 'High': return 'text-green-600 bg-green-100';
-    case 'Medium': return 'text-yellow-600 bg-yellow-100';
-    case 'Low': return 'text-red-600 bg-red-100';
-    default: return 'text-gray-600 bg-gray-100';
-  }
-};
-
-const PreviewPane: React.FC<PreviewPaneProps> = ({ 
-  rankings, 
-  currentStep, 
-  useCase, 
-  weights, 
-  constraints 
+const PreviewPane: React.FC<PreviewPaneProps> = ({
+  rankings,
+  useCase,
+  weights,
+  constraints,
+  isLoading
 }) => {
   const hasInputs = useCase || Object.values(weights).some(w => w > 0) || 
     constraints.regions.length > 0 || constraints.compliance.length > 0;
 
-  if (currentStep === 4) {
-    return null; // Results view handles this
+  if (isLoading) {
+    return (
+      <div className="bg-white rounded-xl border shadow-sm p-6 sticky top-24">
+        <div className="animate-pulse space-y-4">
+          <div className="h-4 bg-gray-200 rounded w-3/4"></div>
+          <div className="space-y-3">
+            {[1, 2, 3].map((i) => (
+              <div key={i} className="h-20 bg-gray-200 rounded"></div>
+            ))}
+          </div>
+        </div>
+      </div>
+    );
   }
 
-  return (
-    <div className="lg:sticky lg:top-8">
-      <div className="bg-white rounded-xl shadow-sm border p-6">
-        <div className="flex items-center gap-2 mb-4">
-          <TrendingUp className="w-5 h-5 text-blue-600" />
-          <h3 className="font-semibold text-gray-900">Live Preview</h3>
+  if (!hasInputs) {
+    return (
+      <div className="bg-white rounded-xl border shadow-sm p-6 sticky top-24">
+        <div className="text-center text-gray-500">
+          <Info className="w-12 h-12 mx-auto mb-3 text-gray-300" />
+          <h3 className="font-medium text-gray-900 mb-2">No Inputs Yet</h3>
+          <p className="text-sm">
+            Add at least one priority and one constraint to see tailored suggestions.
+          </p>
         </div>
+      </div>
+    );
+  }
 
-        {!hasInputs ? (
-          <div className="text-center py-8">
-            <p className="text-sm text-gray-600">
-              Add at least one priority and one constraint to see tailored suggestions.
-            </p>
-          </div>
-        ) : (
-          <div className="space-y-4" aria-live="polite">
-            {rankings.slice(0, 3).map((ranking, index) => {
-              const Logo = providerLogos[ranking.id];
-              const fact = providerFacts.find(f => f.id === ranking.id);
-              const suggestedStack = getSuggestedStack(ranking.id, useCase);
-              
-              return (
-                <div
-                  key={ranking.id}
-                  className="p-4 rounded-lg border border-gray-200 hover:border-gray-300 transition-colors"
-                >
-                  <div className="flex items-center justify-between mb-3">
-                    <div className="flex items-center gap-3">
-                      <div className="flex items-center gap-2">
-                        <Logo />
-                        <span className="font-semibold text-gray-900">
-                          {getProviderName(ranking.id)}
-                        </span>
-                      </div>
-                      {index === 0 && (
-                        <span className="text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded">
-                          Top Pick
-                        </span>
-                      )}
-                    </div>
-                    <div className="text-right">
-                      <div className="text-lg font-bold text-gray-900">
-                        {Math.round(ranking.score * 100)}
-                      </div>
-                      <div className="text-xs text-gray-500">score</div>
-                    </div>
-                  </div>
+  if (rankings.length === 0) {
+    return (
+      <div className="bg-white rounded-xl border shadow-sm p-6 sticky top-24">
+        <div className="text-center text-gray-500">
+          <TrendingUp className="w-12 h-12 mx-auto mb-3 text-gray-300" />
+          <h3 className="font-medium text-gray-900 mb-2">Calculating...</h3>
+          <p className="text-sm">
+            Complete the form to see your personalized recommendations.
+          </p>
+        </div>
+      </div>
+    );
+  }
 
-                  <div className="space-y-2">
-                    <div className="text-xs">
-                      <span className={`px-2 py-1 rounded ${getConfidenceColor(ranking.confidence)}`}>
-                        {ranking.confidence} Confidence
-                      </span>
-                    </div>
-                    
-                    {ranking.reasons.length > 0 && (
-                      <div className="text-xs text-gray-600">
-                        <div className="font-medium mb-1">Why this provider:</div>
-                        <ul className="space-y-1">
-                          {ranking.reasons.slice(0, 2).map((reason, i) => (
-                            <li key={i} className="flex items-start gap-1">
-                              <span className="text-blue-500">•</span>
-                              <span>{reason}</span>
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-                    )}
+  const topProvider = rankings[0];
+  const suggestedStack = getSuggestedStack(topProvider.id, useCase?.id || null);
 
-                    {suggestedStack && (
-                      <div className="text-xs">
-                        <div className="font-medium text-gray-700 mb-1">Suggested stack:</div>
-                        <div className="text-gray-600 bg-gray-50 px-2 py-1 rounded">
-                          {suggestedStack}
-                        </div>
-                      </div>
-                    )}
-                  </div>
+  return (
+    <div className="bg-white rounded-xl border shadow-sm p-6 sticky top-24" aria-live="polite">
+      <div className="mb-6">
+        <h3 className="text-lg font-semibold text-gray-900 mb-2">Live Preview</h3>
+        <p className="text-sm text-gray-600">
+          Top provider: <span className="font-medium">{topProvider.id.toUpperCase()}</span>, 
+          score <span className="font-medium">{Math.round(topProvider.score * 100)}</span>
+        </p>
+      </div>
 
-                  <div className="mt-3 pt-3 border-t border-gray-100">
-                    <a
-                      href={fact?.catalogs.docs}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex items-center gap-1 text-xs text-blue-600 hover:text-blue-800 transition-colors"
-                    >
-                      <span>View Documentation</span>
-                      <ExternalLink className="w-3 h-3" />
-                    </a>
+      {/* Top 3 Providers */}
+      <div className="space-y-4">
+        {rankings.slice(0, 3).map((ranking, index) => (
+          <div
+            key={ranking.id}
+            className={`p-4 rounded-lg border transition-all hover:shadow-md ${
+              index === 0 ? 'border-blue-200 bg-blue-50' : 'border-gray-200 bg-white'
+            }`}
+          >
+            <div className="flex items-center justify-between mb-3">
+              <div className="flex items-center space-x-3">
+                <ProviderLogo providerId={ranking.id} size="sm" />
+                <div>
+                  <h4 className="font-semibold text-gray-900">
+                    {ranking.id.toUpperCase()}
+                  </h4>
+                  <div className="flex items-center space-x-2">
+                    <span className="text-sm text-gray-500">Rank #{index + 1}</span>
+                    <span className="text-xs px-2 py-1 rounded-full bg-gray-100 text-gray-600">
+                      {ranking.confidence} Confidence
+                    </span>
                   </div>
                 </div>
-              );
-            })}
-          </div>
-        )}
+              </div>
+              <div className="text-right">
+                <div className="text-2xl font-bold text-blue-600">
+                  {Math.round(ranking.score * 100)}
+                </div>
+                <div className="text-xs text-gray-500">score</div>
+              </div>
+            </div>
 
-        {rankings.length > 0 && (
-          <div className="mt-4 pt-4 border-t border-gray-200">
-            <p className="text-xs text-gray-500 text-center">
-              Rankings update in real-time as you adjust your preferences
-            </p>
+            {/* Top Reasons */}
+            {ranking.reasons.length > 0 && (
+              <div className="mb-3">
+                <h5 className="text-sm font-medium text-gray-700 mb-2">Why this provider:</h5>
+                <ul className="space-y-1">
+                  {ranking.reasons.slice(0, 2).map((reason, i) => (
+                    <li key={i} className="text-xs text-gray-600 flex items-start">
+                      <span className="text-blue-500 mr-2">•</span>
+                      {reason}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+
+            {/* Suggested Stack */}
+            {index === 0 && suggestedStack && (
+              <div className="mb-3 p-3 bg-white rounded border border-gray-200">
+                <h5 className="text-xs font-medium text-gray-700 mb-1">Suggested Stack:</h5>
+                <p className="text-xs text-gray-600">{suggestedStack}</p>
+              </div>
+            )}
+
+            {/* Provider Links */}
+            <div className="flex space-x-2">
+              <a
+                href={`https://${ranking.id}.com`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex-1 flex items-center justify-center px-3 py-2 text-xs font-medium text-gray-700 bg-white border border-gray-300 rounded hover:bg-gray-50 transition-colors"
+              >
+                <ExternalLink className="w-3 h-3 mr-1" />
+                Visit
+              </a>
+            </div>
           </div>
-        )}
+        ))}
       </div>
+
+      {/* Summary Stats */}
+      {useCase && (
+        <div className="mt-6 p-4 bg-gray-50 rounded-lg">
+          <h4 className="text-sm font-medium text-gray-900 mb-2">Best for {useCase.name}</h4>
+          <div className="grid grid-cols-2 gap-4 text-xs">
+            <div>
+              <div className="text-gray-500">Top Score</div>
+              <div className="font-semibold text-gray-900">
+                {Math.round(topProvider.score * 100)}
+              </div>
+            </div>
+            <div>
+              <div className="text-gray-500">Confidence</div>
+              <div className="font-semibold text-gray-900">
+                {topProvider.confidence}
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Scale Info */}
+      {constraints.scale && (
+        <div className="mt-4 p-3 bg-blue-50 rounded-lg">
+          <h4 className="text-xs font-medium text-blue-900 mb-2">Your Scale</h4>
+          <div className="text-xs text-blue-800 space-y-1">
+            <div>• {formatNumber(constraints.scale.monthlyRequests)} requests/month</div>
+            <div>• {constraints.scale.storedGB} GB storage</div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
 
 export default PreviewPane;
+

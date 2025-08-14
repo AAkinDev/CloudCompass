@@ -19,11 +19,16 @@ const CloudProInsightsLogo = ({ className = "", size = "default", showText = tru
   return (
     <div className={`flex items-center gap-1 sm:gap-2 ${className}`}>
       <img 
-        src={getAssetUrl('/public/assets/logos/logo.png')}
+        src={getAssetUrl('/assets/logos/logo.png')}
         alt="CloudProInsights"
         className={`${sizeClasses[size]} flex-shrink-0 object-contain`}
         onError={(e) => {
-          // Fallback to SVG if image fails to load
+          // Try CPI-logo.png as fallback first
+          if (e.target.src !== getAssetUrl('/assets/logos/CPI-logo.png')) {
+            e.target.src = getAssetUrl('/assets/logos/CPI-logo.png');
+            return;
+          }
+          // Final fallback to SVG if both images fail
           e.target.style.display = 'none';
           e.target.parentNode.innerHTML = `
             <svg class="${sizeClasses[size]} flex-shrink-0" viewBox="0 0 120 80" xmlns="http://www.w3.org/2000/svg">

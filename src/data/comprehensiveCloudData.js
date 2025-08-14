@@ -5,7 +5,7 @@ export const comprehensiveCloudData = {
   providers: {
     aws: {
       name: "Amazon Web Services (AWS)",
-      logo: "https://raw.githubusercontent.com/AAkinDev/CloudProInsights/main/public/assets/logos/aws-logo.png",
+      logo: "/assets/logos/aws-logo.png",
       website: "https://aws.amazon.com/",
       marketShare: "31%",
       position: "Market Leader",
@@ -53,7 +53,7 @@ export const comprehensiveCloudData = {
     },
     gcp: {
       name: "Google Cloud Platform",
-      logo: "https://raw.githubusercontent.com/AAkinDev/CloudProInsights/main/public/assets/logos/gcp-logo.png",
+      logo: "/assets/logos/gcp-logo.png",
       website: "https://cloud.google.com/",
       marketShare: "11%",
       position: "AI/ML Leader",
@@ -101,7 +101,7 @@ export const comprehensiveCloudData = {
     },
     azure: {
       name: "Microsoft Azure",
-      logo: "https://raw.githubusercontent.com/AAkinDev/CloudProInsights/main/public/assets/logos/azure-logo.png",
+      logo: "/assets/logos/azure-logo.png",
       website: "https://azure.microsoft.com/en-us/",
       marketShare: "25%",
       position: "Enterprise Focus",
@@ -149,7 +149,7 @@ export const comprehensiveCloudData = {
     },
     oracle: {
       name: "Oracle Cloud Infrastructure",
-      logo: "https://raw.githubusercontent.com/AAkinDev/CloudProInsights/main/public/assets/logos/oracle-logo.png",
+      logo: "/assets/logos/oracle-logo.png",
       website: "https://www.oracle.com/cloud/",
       marketShare: "3%",
       position: "Database Specialist",
@@ -197,7 +197,7 @@ export const comprehensiveCloudData = {
     },
     ibm: {
       name: "IBM Cloud",
-      logo: "https://raw.githubusercontent.com/AAkinDev/CloudProInsights/main/public/assets/logos/ibm-logo.png",
+      logo: "/assets/logos/ibm-logo.png"
       website: "https://www.ibm.com/cloud/",
       marketShare: "2%",
       position: "Enterprise Solutions",
@@ -348,3 +348,4 @@ export const comprehensiveCloudData = {
 };
 
 export default comprehensiveCloudData;
+

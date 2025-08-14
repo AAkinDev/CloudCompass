@@ -1,197 +1,81 @@
+'use client';
+
 import React from 'react';
-import { CheckCircle, XCircle, ExternalLink, Download, RotateCcw } from 'lucide-react';
-import { ScoreOut } from '../../lib/recommend/score';
-import { UseCase } from './DecideWizard';
-import { Weights, Constraints } from '../../lib/recommend/score';
-import { providerFacts } from '../../data/providerFacts';
+import { CheckCircle, XCircle, ExternalLink, Download, RotateCcw, TrendingUp } from 'lucide-react';
+import { ScoreOut, UseCase, Weights, Constraints } from '@/types/provider';
+import { getSuggestedStack } from '@/data/useCases';
+import { providerFacts } from '@/data/providerFacts';
+import ProviderLogo from '@/components/ProviderLogos';
+import { formatNumber } from '@/lib/string';
 
 interface ResultsProps {
   rankings: ScoreOut[];
   useCase: UseCase | null;
   weights: Weights;
   constraints: Constraints;
-  budget?: number;
-  scale: {
-    monthlyRequests: number;
-    storedGB: number;
-  };
   onReset: () => void;
 }
 
-const providerLogos = {
-  aws: () => (
-    <img 
-      src="https://raw.githubusercontent.com/AAkinDev/CloudProInsights/main/public/assets/logos/aws-logo.png" 
-      alt="AWS" 
-      className="w-12 h-10 object-contain"
-      onError={(e) => {
-        e.target.style.display = 'none';
-        e.target.parentNode.innerHTML = '<div class="w-12 h-10 bg-orange-500 rounded flex items-center justify-center text-white text-sm font-bold">AWS</div>';
-      }}
-    />
-  ),
-  azure: () => (
-    <img 
-      src="https://raw.githubusercontent.com/AAkinDev/CloudProInsights/main/public/assets/logos/azure-logo.png" 
-      alt="Azure" 
-      className="w-12 h-10 object-contain"
-      onError={(e) => {
-        e.target.style.display = 'none';
-        e.target.parentNode.innerHTML = '<div class="w-12 h-10 bg-blue-600 rounded flex items-center justify-center text-white text-sm font-bold">Az</div>';
-      }}
-    />
-  ),
-  gcp: () => (
-    <img 
-      src="https://raw.githubusercontent.com/AAkinDev/CloudProInsights/main/public/assets/logos/gcp-logo.png" 
-      alt="GCP" 
-      className="w-12 h-10 object-contain"
-      onError={(e) => {
-        e.target.style.display = 'none';
-        e.target.parentNode.innerHTML = '<div class="w-12 h-10 bg-red-500 rounded flex items-center justify-center text-white text-sm font-bold">GCP</div>';
-      }}
-    />
-  ),
-  oracle: () => (
-    <img 
-      src="https://raw.githubusercontent.com/AAkinDev/CloudProInsights/main/public/assets/logos/oracle-logo.png" 
-      alt="Oracle" 
-      className="w-12 h-10 object-contain"
-      onError={(e) => {
-        e.target.style.display = 'none';
-        e.target.parentNode.innerHTML = '<div class="w-12 h-10 bg-red-600 rounded flex items-center justify-center text-white text-sm font-bold">OCI</div>';
-      }}
-    />
-  ),
-  ibm: () => (
-    <img 
-      src="https://raw.githubusercontent.com/AAkinDev/CloudProInsights/main/public/assets/logos/ibm-logo.png" 
-      alt="IBM" 
-      className="w-12 h-10 object-contain"
-      onError={(e) => {
-        e.target.style.display = 'none';
-        e.target.parentNode.innerHTML = '<div class="w-12 h-10 bg-blue-500 rounded flex items-center justify-center text-white text-sm font-bold">IBM</div>';
-      }}
-    />
-  )
-};
-
-const getSuggestedStack = (providerId: string, useCase: UseCase | null): string => {
-  const stacks = {
-    'web-app': {
-      aws: 'ALB + ECS Fargate + RDS + CloudFront',
-      azure: 'Application Gateway + App Service + Azure SQL + CDN',
-      gcp: 'Load Balancer + Cloud Run + Cloud SQL + Cloud CDN',
-      oracle: 'Load Balancer + Container Engine + Autonomous DB + CDN',
-      ibm: 'Load Balancer + Code Engine + Db2 + CDN'
-    },
-    'mobile-backend': {
-      aws: 'API Gateway + Lambda + DynamoDB + S3',
-      azure: 'API Management + Functions + Cosmos DB + Blob Storage',
-      gcp: 'Cloud Endpoints + Cloud Functions + Firestore + Cloud Storage',
-      oracle: 'API Gateway + Functions + NoSQL + Object Storage',
-      ibm: 'API Connect + Cloud Functions + Cloudant + Object Storage'
-    },
-    'data-analytics': {
-      aws: 'EMR + Redshift + S3 + QuickSight',
-      azure: 'HDInsight + Synapse + Data Lake + Power BI',
-      gcp: 'Dataproc + BigQuery + Cloud Storage + Looker',
-      oracle: 'Big Data Service + Autonomous Data Warehouse + Object Storage + Analytics Cloud',
-      ibm: 'Cloud Pak for Data + Db2 Warehouse + Object Storage + Cognos'
-    },
-    'machine-learning': {
-      aws: 'SageMaker + ECS + RDS + S3',
-      azure: 'Machine Learning + Container Instances + Azure SQL + Blob Storage',
-      gcp: 'Vertex AI + Cloud Run + Cloud SQL + Cloud Storage',
-      oracle: 'Data Science + Container Engine + Autonomous DB + Object Storage',
-      ibm: 'Watson Studio + Code Engine + Db2 + Object Storage'
-    },
-    'enterprise-migration': {
-      aws: 'Migration Hub + EC2 + RDS + Direct Connect',
-      azure: 'Azure Migrate + Virtual Machines + Azure SQL + ExpressRoute',
-      gcp: 'Migrate for Compute + Compute Engine + Cloud SQL + Cloud Interconnect',
-      oracle: 'Cloud Migrations + Compute + Autonomous DB + FastConnect',
-      ibm: 'Cloud Migration + Virtual Servers + Db2 + Direct Link'
-    },
-    'other': {
-      aws: 'EC2 + RDS + S3 + CloudWatch',
-      azure: 'Virtual Machines + Azure SQL + Blob Storage + Monitor',
-      gcp: 'Compute Engine + Cloud SQL + Cloud Storage + Monitoring',
-      oracle: 'Compute + Autonomous DB + Object Storage + Monitoring',
-      ibm: 'Virtual Servers + Db2 + Object Storage + Monitoring'
-    }
-  };
-
-  const useCaseId = useCase?.id || 'other';
-  return stacks[useCaseId]?.[providerId] || stacks.other[providerId];
-};
-
-const getProviderName = (providerId: string): string => {
-  const names = {
-    aws: 'AWS',
-    azure: 'Azure',
-    gcp: 'Google Cloud',
-    oracle: 'Oracle Cloud',
-    ibm: 'IBM Cloud'
-  };
-  return names[providerId] || providerId.toUpperCase();
-};
-
-const getConfidenceColor = (confidence: string): string => {
-  switch (confidence) {
-    case 'High': return 'text-green-600 bg-green-100';
-    case 'Medium': return 'text-yellow-600 bg-yellow-100';
-    case 'Low': return 'text-red-600 bg-red-100';
-    default: return 'text-gray-600 bg-gray-100';
-  }
-};
-
-const getProsAndCons = (providerId: string): { pros: string[]; cons: string[] } => {
-  const data = {
-    aws: {
-      pros: ['Largest service ecosystem', 'Excellent documentation', 'Strong enterprise features'],
-      cons: ['Complex pricing model', 'Steep learning curve', 'Vendor lock-in concerns']
-    },
-    azure: {
-      pros: ['Strong enterprise integration', 'Excellent Windows support', 'Hybrid cloud leader'],
-      cons: ['Less mature than AWS', 'Complex licensing', 'Limited open source support']
-    },
-    gcp: {
-      pros: ['Excellent data analytics', 'Strong AI/ML capabilities', 'Simple pricing'],
-      cons: ['Smaller service ecosystem', 'Less enterprise focus', 'Limited global presence']
-    },
-    oracle: {
-      pros: ['Competitive pricing', 'Strong database offerings', 'Good enterprise support'],
-      cons: ['Limited service ecosystem', 'Less mature cloud platform', 'Oracle lock-in']
-    },
-    ibm: {
-      pros: ['Strong enterprise focus', 'Excellent security', 'Good hybrid cloud'],
-      cons: ['Higher pricing', 'Limited service ecosystem', 'Less developer-friendly']
-    }
-  };
-  return data[providerId] || { pros: [], cons: [] };
-};
-
-const estimateCost = (providerId: string, budget?: number, scale?: any): string => {
-  if (!budget) return 'Contact provider for pricing';
-  
-  const fact = providerFacts.find(f => f.id === providerId);
-  if (!fact) return 'Contact provider for pricing';
-  
-  // Simple cost estimation based on price index
-  const estimatedCost = budget * fact.priceIndex;
-  return `$${Math.round(estimatedCost).toLocaleString()}/month (estimate)`;
-};
-
-const Results: React.FC<ResultsProps> = ({ 
-  rankings, 
-  useCase, 
-  weights, 
-  constraints, 
-  budget, 
-  scale, 
-  onReset 
+const Results: React.FC<ResultsProps> = ({
+  rankings,
+  useCase,
+  weights,
+  constraints,
+  onReset
 }) => {
+  const getProviderName = (providerId: string): string => {
+    const names = {
+      aws: 'Amazon Web Services',
+      azure: 'Microsoft Azure',
+      gcp: 'Google Cloud Platform',
+      oracle: 'Oracle Cloud Infrastructure',
+      ibm: 'IBM Cloud'
+    };
+    return names[providerId as keyof typeof names] || providerId.toUpperCase();
+  };
+
+  const getConfidenceColor = (confidence: string): string => {
+    switch (confidence) {
+      case 'High': return 'text-green-600 bg-green-100';
+      case 'Medium': return 'text-yellow-600 bg-yellow-100';
+      case 'Low': return 'text-red-600 bg-red-100';
+      default: return 'text-gray-600 bg-gray-100';
+    }
+  };
+
+  const getProsAndCons = (providerId: string) => {
+    const pros = {
+      aws: ['Market leader with most services', 'Excellent documentation', 'Strong enterprise support'],
+      azure: ['Great Windows integration', 'Strong enterprise features', 'Excellent compliance'],
+      gcp: ['Best pricing for many services', 'Strong ML/AI capabilities', 'Excellent networking'],
+      oracle: ['Strong database offerings', 'Good enterprise features', 'Competitive pricing'],
+      ibm: ['Strong enterprise focus', 'Good hybrid cloud options', 'Watson AI platform']
+    };
+
+    const cons = {
+      aws: ['Complex pricing structure', 'Steep learning curve', 'Some services can be expensive'],
+      azure: ['Less mature than AWS', 'Some services limited', 'Windows-centric'],
+      gcp: ['Fewer services than AWS', 'Less enterprise focus', 'Smaller partner ecosystem'],
+      oracle: ['Smaller service portfolio', 'Less mature than others', 'Limited global presence'],
+      ibm: ['Smaller service portfolio', 'Less developer focus', 'Higher pricing for some services']
+    };
+
+    return {
+      pros: pros[providerId as keyof typeof pros] || [],
+      cons: cons[providerId as keyof typeof cons] || []
+    };
+  };
+
+  const estimateCost = (providerId: string, scale: any): string => {
+    const fact = providerFacts.find(f => f.id === providerId);
+    if (!fact) return 'Contact provider for pricing';
+    
+    // Simple cost estimation based on price index and scale
+    const baseCost = 100; // Base cost per month
+    const estimatedCost = baseCost * fact.priceIndex * (scale.monthlyRequests / 1000000) * (scale.storedGB / 100);
+    return `$${Math.round(estimatedCost).toLocaleString()}/month (estimate)`;
+  };
+
   const handleExportPDF = () => {
     window.print();
   };
@@ -218,11 +102,10 @@ const Results: React.FC<ResultsProps> = ({
       {/* Top 3 Results */}
       <div className="space-y-6">
         {rankings.slice(0, 3).map((ranking, index) => {
-          const Logo = providerLogos[ranking.id];
           const fact = providerFacts.find(f => f.id === ranking.id);
-          const suggestedStack = getSuggestedStack(ranking.id, useCase);
+          const suggestedStack = getSuggestedStack(ranking.id, useCase?.id || null);
           const { pros, cons } = getProsAndCons(ranking.id);
-          const estimatedCost = estimateCost(ranking.id, budget, scale);
+          const estimatedCost = estimateCost(ranking.id, constraints.scale);
           
           return (
             <div
@@ -233,7 +116,7 @@ const Results: React.FC<ResultsProps> = ({
               <div className="p-6 border-b border-gray-200">
                 <div className="flex items-center justify-between mb-4">
                   <div className="flex items-center gap-4">
-                    <Logo />
+                    <ProviderLogo providerId={ranking.id} size="lg" />
                     <div>
                       <h3 className="text-xl font-bold text-gray-900">
                         {getProviderName(ranking.id)}
@@ -275,83 +158,91 @@ const Results: React.FC<ResultsProps> = ({
                     Based on your scale and provider pricing
                   </p>
                 </div>
+              </div>
+
+              {/* Content */}
+              <div className="p-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  {/* Pros */}
+                  <div>
+                    <h4 className="font-semibold text-gray-900 mb-3 flex items-center gap-2">
+                      <CheckCircle className="w-5 h-5 text-green-600" />
+                      Strengths
+                    </h4>
+                    <ul className="space-y-2">
+                      {pros.map((pro, i) => (
+                        <li key={i} className="flex items-start gap-2 text-sm text-gray-700">
+                          <span className="text-green-500 mt-1">•</span>
+                          {pro}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+
+                  {/* Cons */}
+                  <div>
+                    <h4 className="font-semibold text-gray-900 mb-3 flex items-center gap-2">
+                      <XCircle className="w-5 h-5 text-red-600" />
+                      Considerations
+                    </h4>
+                    <ul className="space-y-2">
+                      {cons.map((con, i) => (
+                        <li key={i} className="flex items-start gap-2 text-sm text-gray-700">
+                          <span className="text-red-500 mt-1">•</span>
+                          {con}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
 
                 {/* Why This Provider */}
                 {ranking.reasons.length > 0 && (
-                  <div>
-                    <h4 className="font-semibold text-gray-900 mb-2">Why This Provider</h4>
-                    <ul className="space-y-1">
+                  <div className="mt-6">
+                    <h4 className="font-semibold text-gray-900 mb-3 flex items-center gap-2">
+                      <TrendingUp className="w-5 h-5 text-blue-600" />
+                      Why This Provider
+                    </h4>
+                    <ul className="space-y-2">
                       {ranking.reasons.map((reason, i) => (
                         <li key={i} className="flex items-start gap-2 text-sm text-gray-700">
-                          <CheckCircle className="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" />
-                          <span>{reason}</span>
+                          <span className="text-blue-500 mt-1">•</span>
+                          {reason}
                         </li>
                       ))}
                     </ul>
                   </div>
                 )}
-              </div>
 
-              {/* Pros and Cons */}
-              <div className="grid md:grid-cols-2 gap-6 p-6">
-                <div>
-                  <h4 className="font-semibold text-gray-900 mb-3 flex items-center gap-2">
-                    <CheckCircle className="w-4 h-4 text-green-500" />
-                    Pros
-                  </h4>
-                  <ul className="space-y-2">
-                    {pros.map((pro, i) => (
-                      <li key={i} className="text-sm text-gray-700 flex items-start gap-2">
-                        <span className="text-green-500">•</span>
-                        <span>{pro}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-                <div>
-                  <h4 className="font-semibold text-gray-900 mb-3 flex items-center gap-2">
-                    <XCircle className="w-4 h-4 text-red-500" />
-                    Cons
-                  </h4>
-                  <ul className="space-y-2">
-                    {cons.map((con, i) => (
-                      <li key={i} className="text-sm text-gray-700 flex items-start gap-2">
-                        <span className="text-red-500">•</span>
-                        <span>{con}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </div>
-
-              {/* Action Buttons */}
-              <div className="p-6 bg-gray-50 border-t border-gray-200">
-                <div className="flex flex-wrap gap-3">
-                  <a
-                    href={fact?.catalogs.pricing}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
-                  >
-                    <ExternalLink className="w-4 h-4" />
-                    Open Pricing
-                  </a>
-                  <a
-                    href={fact?.catalogs.docs}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center gap-2 px-4 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors"
-                  >
-                    <ExternalLink className="w-4 h-4" />
-                    View Docs
-                  </a>
-                  <button
-                    onClick={handleExportPDF}
-                    className="flex items-center gap-2 px-4 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors"
-                  >
-                    <Download className="w-4 h-4" />
-                    Export PDF
-                  </button>
+                {/* Action Buttons */}
+                <div className="mt-6 pt-6 border-t border-gray-200">
+                  <div className="flex flex-wrap gap-3">
+                    <a
+                      href={fact?.catalogs.pricing}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+                    >
+                      <ExternalLink className="w-4 h-4" />
+                      Open Pricing
+                    </a>
+                    <a
+                      href={fact?.catalogs.docs}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center gap-2 px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-colors"
+                    >
+                      <ExternalLink className="w-4 h-4" />
+                      Open Docs
+                    </a>
+                    <button
+                      onClick={handleExportPDF}
+                      className="flex items-center gap-2 px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors"
+                    >
+                      <Download className="w-4 h-4" />
+                      Export PDF
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>
@@ -360,35 +251,43 @@ const Results: React.FC<ResultsProps> = ({
       </div>
 
       {/* Summary */}
-      <div className="bg-blue-50 rounded-lg p-6 border border-blue-200">
-        <h3 className="font-semibold text-blue-900 mb-3">Recommendation Summary</h3>
-        <div className="grid md:grid-cols-2 gap-4 text-sm text-blue-800">
+      <div className="bg-gray-50 rounded-xl p-6">
+        <h3 className="text-lg font-semibold text-gray-900 mb-4">Recommendation Summary</h3>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <div>
-            <h4 className="font-medium mb-2">Your Priorities</h4>
-            <ul className="space-y-1">
+            <h4 className="font-medium text-gray-900 mb-2">Your Priorities</h4>
+            <div className="space-y-1 text-sm text-gray-600">
               {Object.entries(weights).map(([key, value]) => (
-                <li key={key}>
-                  {key.charAt(0).toUpperCase() + key.slice(1)}: {value}/100
-                </li>
+                <div key={key} className="flex justify-between">
+                  <span className="capitalize">{key}:</span>
+                  <span className="font-medium">{value}%</span>
+                </div>
               ))}
-            </ul>
+            </div>
           </div>
+          
           <div>
-            <h4 className="font-medium mb-2">Your Constraints</h4>
-            <ul className="space-y-1">
+            <h4 className="font-medium text-gray-900 mb-2">Your Constraints</h4>
+            <div className="space-y-1 text-sm text-gray-600">
               {constraints.regions.length > 0 && (
-                <li>Regions: {constraints.regions.join(', ')}</li>
+                <div>Regions: {constraints.regions.length}</div>
               )}
               {constraints.compliance.length > 0 && (
-                <li>Compliance: {constraints.compliance.join(', ')}</li>
+                <div>Compliance: {constraints.compliance.length}</div>
               )}
-              {constraints.db !== 'both' && (
-                <li>Database: {constraints.db.toUpperCase()}</li>
+              <div>Database: {constraints.db}</div>
+              {constraints.gpu !== undefined && (
+                <div>GPU: {constraints.gpu ? 'Required' : 'Not Required'}</div>
               )}
-              {budget && (
-                <li>Budget: ${budget.toLocaleString()}/month</li>
-              )}
-            </ul>
+            </div>
+          </div>
+          
+          <div>
+            <h4 className="font-medium text-gray-900 mb-2">Your Scale</h4>
+            <div className="space-y-1 text-sm text-gray-600">
+              <div>{formatNumber(constraints.scale.monthlyRequests)} requests/month</div>
+              <div>{constraints.scale.storedGB} GB storage</div>
+            </div>
           </div>
         </div>
       </div>
@@ -397,3 +296,4 @@ const Results: React.FC<ResultsProps> = ({
 };
 
 export default Results;
+

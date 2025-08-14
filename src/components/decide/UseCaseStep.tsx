@@ -1,105 +1,83 @@
-import React from 'react';
-import { Globe, Smartphone, BarChart3, Brain, Building2, MoreHorizontal } from 'lucide-react';
-import { UseCase } from './DecideWizard';
+'use client';
 
-const useCases: UseCase[] = [
-  {
-    id: 'web-app',
-    name: 'Web Application',
-    description: 'Traditional web apps, e-commerce, content management systems',
-    icon: Globe
-  },
-  {
-    id: 'mobile-backend',
-    name: 'Mobile Backend',
-    description: 'APIs for mobile apps, real-time data, push notifications',
-    icon: Smartphone
-  },
-  {
-    id: 'data-analytics',
-    name: 'Data Analytics',
-    description: 'Big data processing, business intelligence, data warehouses',
-    icon: BarChart3
-  },
-  {
-    id: 'machine-learning',
-    name: 'Machine Learning',
-    description: 'AI/ML workloads, model training, inference pipelines',
-    icon: Brain
-  },
-  {
-    id: 'enterprise-migration',
-    name: 'Enterprise Migration',
-    description: 'Legacy system migration, hybrid cloud, compliance-heavy workloads',
-    icon: Building2
-  },
-  {
-    id: 'other',
-    name: 'Other',
-    description: 'Specialized workloads, custom requirements, unique use cases',
-    icon: MoreHorizontal
-  }
-];
+import React from 'react';
+import { UseCase } from '@/types/provider';
 
 interface UseCaseStepProps {
-  selectedUseCase: UseCase | null;
-  onSelect: (useCase: UseCase) => void;
+  useCase: UseCase | null;
+  onUpdate: (useCase: UseCase) => void;
+  useCases: UseCase[];
 }
 
-const UseCaseStep: React.FC<UseCaseStepProps> = ({ selectedUseCase, onSelect }) => {
+const UseCaseStep: React.FC<UseCaseStepProps> = ({ useCase, onUpdate, useCases }) => {
   return (
     <div className="space-y-6">
-      <div className="text-center mb-8">
-        <h3 className="text-lg font-medium text-gray-900 mb-2">
-          What type of application are you building?
-        </h3>
-        <p className="text-sm text-gray-600">
-          Choose the primary use case that best describes your workload
+      <div className="text-center">
+        <h2 className="text-2xl font-bold text-gray-900 mb-2">
+          Choose Your Use Case
+        </h2>
+        <p className="text-gray-600">
+          Select the primary use case that best describes your workload. This helps us tailor recommendations to your specific needs.
         </p>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        {useCases.map((useCase) => {
-          const Icon = useCase.icon;
-          const isSelected = selectedUseCase?.id === useCase.id;
+        {useCases.map((uc) => {
+          const Icon = uc.icon;
+          const isSelected = useCase?.id === uc.id;
           
           return (
             <button
-              key={useCase.id}
-              onClick={() => onSelect(useCase)}
-              className={`p-6 rounded-xl border-2 transition-all text-left hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 ${
+              key={uc.id}
+              onClick={() => onUpdate(uc)}
+              className={`p-6 text-left rounded-xl border-2 transition-all duration-200 hover:shadow-md focus:outline-none focus:ring-2 focus:ring-blue-500 ${
                 isSelected
-                  ? 'border-blue-500 bg-blue-50 shadow-md'
-                  : 'border-gray-200 hover:border-gray-300 bg-white'
+                  ? 'border-blue-500 bg-blue-50 ring-2 ring-blue-200'
+                  : 'border-gray-200 bg-white hover:border-gray-300'
               }`}
             >
-              <div className="flex items-start gap-4">
-                <div className={`w-12 h-12 rounded-lg flex items-center justify-center ${
-                  isSelected ? 'bg-blue-500' : 'bg-gray-100'
+              <div className="flex items-start space-x-4">
+                <div className={`p-3 rounded-lg ${
+                  isSelected ? 'bg-blue-100 text-blue-600' : 'bg-gray-100 text-gray-600'
                 }`}>
-                  <Icon className={`w-6 h-6 ${isSelected ? 'text-white' : 'text-gray-600'}`} />
+                  <Icon className="w-6 h-6" />
                 </div>
                 <div className="flex-1">
-                  <h4 className="font-semibold text-gray-900 mb-1">{useCase.name}</h4>
-                  <p className="text-sm text-gray-600 leading-relaxed">{useCase.description}</p>
+                  <h3 className={`font-semibold text-lg ${
+                    isSelected ? 'text-blue-900' : 'text-gray-900'
+                  }`}>
+                    {uc.name}
+                  </h3>
+                  <p className={`text-sm mt-1 ${
+                    isSelected ? 'text-blue-700' : 'text-gray-600'
+                  }`}>
+                    {uc.description}
+                  </p>
                 </div>
+                {isSelected && (
+                  <div className="w-5 h-5 bg-blue-500 rounded-full flex items-center justify-center">
+                    <svg className="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                    </svg>
+                  </div>
+                )}
               </div>
             </button>
           );
         })}
       </div>
 
-      {selectedUseCase && (
-        <div className="mt-6 p-4 bg-blue-50 rounded-lg border border-blue-200">
-          <div className="flex items-center gap-3">
-            <div className="w-8 h-8 bg-blue-500 rounded-lg flex items-center justify-center">
-              <selectedUseCase.icon className="w-4 h-4 text-white" />
+      {useCase && (
+        <div className="mt-6 p-4 bg-blue-50 border border-blue-200 rounded-lg">
+          <div className="flex items-center space-x-3">
+            <div className="p-2 bg-blue-100 rounded-lg">
+              {React.createElement(useCase.icon, { className: 'w-5 h-5 text-blue-600' })}
             </div>
             <div>
               <p className="text-sm font-medium text-blue-900">
-                Selected: <span className="font-semibold">{selectedUseCase.name}</span>
+                Selected: <span className="font-semibold">{useCase.name}</span>
               </p>
-              <p className="text-xs text-blue-700 mt-1">{selectedUseCase.description}</p>
+              <p className="text-sm text-blue-700">{useCase.description}</p>
             </div>
           </div>
         </div>
@@ -109,3 +87,4 @@ const UseCaseStep: React.FC<UseCaseStepProps> = ({ selectedUseCase, onSelect }) 
 };
 
 export default UseCaseStep;
+
