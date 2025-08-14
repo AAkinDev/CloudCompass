@@ -20,6 +20,12 @@ export const useAnalytics = () => {
     try {
       setIsLoading(true);
       setError(null);
+      
+      // Only fetch if we're in the browser
+      if (typeof window === 'undefined') {
+        return;
+      }
+      
       const basePath = getBasePath();
       const response = await fetch(`${basePath}/data/provider-analytics.json`, {
         cache: 'no-store'
@@ -54,7 +60,10 @@ export const useAnalytics = () => {
   }, [fetchAnalytics]);
 
   useEffect(() => {
-    fetchAnalytics();
+    // Only run the effect in the browser
+    if (typeof window !== 'undefined') {
+      fetchAnalytics();
+    }
   }, [fetchAnalytics]);
 
   return {
