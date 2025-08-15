@@ -131,7 +131,7 @@ Comprehensive insights and comparisons:
 ## 🔧 Technical Architecture
 
 ### **Data Sources**
-- **Provider Analytics**: Real-time data from `/public/data/provider-analytics.json`
+- **Provider Analytics**: Real-time data from `/data/provider-analytics.json`
 - **Provider Facts**: Comprehensive provider capabilities and pricing data
 - **Live APIs**: Direct integration with provider service catalogs
 
