@@ -38,7 +38,7 @@ echo "[3/5] ✅ Exported site moved to /docs with .nojekyll"
 # 4) Commit & push
 git add next.config.js docs
 git commit -m "Deploy to GitHub Pages"
-git push
+git push --set-upstream origin main
 
 echo "[4/5] ✅ Changes committed and pushed"
 

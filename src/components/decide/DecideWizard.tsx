@@ -1,19 +1,17 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { RefreshCw, Info } from 'lucide-react';
+import { Info, RefreshCw } from 'lucide-react';
+import { DecideState, UseCase } from '@/types/provider';
 import { useAnalytics } from '@/lib/useAnalytics';
-import { providerFacts } from '@/data/providerFacts';
 import { rankProviders } from '@/lib/recommend/score';
-import { DecideState, UseCase, Weights, Constraints } from '@/types/provider';
+import { providerFacts } from '@/data/providerFacts';
 import { useCases } from '@/data/useCases';
-import UseCaseStep from '@/components/decide/UseCaseStep';
-import PrioritiesStep from '@/components/decide/PrioritiesStep';
-import ConstraintsStep from '@/components/decide/ConstraintsStep';
-import PreviewPane from '@/components/decide/PreviewPane';
-import Results from '@/components/decide/Results';
-
-const STORAGE_KEY = 'cloudproinsights-decide-state';
+import UseCaseStep from './UseCaseStep';
+import PrioritiesStep from './PrioritiesStep';
+import ConstraintsStep from './ConstraintsStep';
+import PreviewPane from './PreviewPane';
+import Results from './Results';
 
 const defaultState: DecideState = {
   step: 1,
@@ -28,6 +26,8 @@ const defaultState: DecideState = {
     regions: [],
     compliance: [],
     db: 'both',
+    gpu: false,
+    serverless: false,
     scale: {
       monthlyRequests: 1000000,
       storedGB: 100
@@ -41,20 +41,24 @@ const DecideWizard: React.FC = () => {
 
   // Load state from localStorage on mount
   useEffect(() => {
-    const saved = localStorage.getItem(STORAGE_KEY);
-    if (saved) {
-      try {
-        const parsed = JSON.parse(saved);
-        setState(parsed);
-      } catch (error) {
-        console.error('Failed to parse saved state:', error);
+    if (typeof window !== 'undefined') {
+      const saved = localStorage.getItem('decideWizardState');
+      if (saved) {
+        try {
+          const parsed = JSON.parse(saved);
+          setState(parsed);
+        } catch (e) {
+          console.warn('Failed to parse saved state:', e);
+        }
       }
     }
   }, []);
 
   // Save state to localStorage whenever it changes
   useEffect(() => {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('decideWizardState', JSON.stringify(state));
+    }
   }, [state]);
 
   const updateState = (updates: Partial<DecideState>) => {
@@ -63,25 +67,26 @@ const DecideWizard: React.FC = () => {
 
   const nextStep = () => {
     if (state.step < 4) {
-      updateState({ step: state.step + 1 });
+      setState(prev => ({ ...prev, step: prev.step + 1 }));
     }
   };
 
   const prevStep = () => {
     if (state.step > 1) {
-      updateState({ step: state.step - 1 });
+      setState(prev => ({ ...prev, step: prev.step - 1 }));
     }
   };
 
   const resetWizard = () => {
     setState(defaultState);
+    if (typeof window !== 'undefined') {
+      localStorage.removeItem('decideWizardState');
+    }
   };
 
   // Calculate rankings when analytics and state are available
   const rankings = analytics && state.useCase ? 
     rankProviders(providerFacts, analytics, state.weights, state.constraints) : [];
-
-
 
   const canProceed = () => {
     switch (state.step) {
@@ -179,7 +184,7 @@ const DecideWizard: React.FC = () => {
               <span className="text-sm text-gray-500">Step {state.step} of 4</span>
             </div>
             <div className="w-full bg-gray-200 rounded-full h-2">
-              <div
+              <div 
                 className="bg-blue-600 h-2 rounded-full transition-all duration-300"
                 style={{ width: `${(state.step / 4) * 100}%` }}
               />
@@ -193,35 +198,42 @@ const DecideWizard: React.FC = () => {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Wizard Steps */}
           <div className="lg:col-span-2">
-            <div className="bg-white rounded-xl border shadow-sm p-6">
+            <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
               {renderStep()}
               
-              {/* Navigation */}
-              {state.step < 4 && (
-                <div className="flex items-center justify-between mt-8 pt-6 border-t border-gray-200">
-                  <button
-                    onClick={prevStep}
-                    disabled={state.step === 1}
-                    className="flex items-center px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed"
-                  >
-                    Previous
-                  </button>
-                  
+              {/* Navigation Buttons */}
+              <div className="flex items-center justify-between mt-8 pt-6 border-t border-gray-200">
+                <button
+                  onClick={prevStep}
+                  disabled={state.step === 1}
+                  className="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  Back
+                </button>
+                
+                {state.step < 4 ? (
                   <button
                     onClick={nextStep}
                     disabled={!canProceed()}
-                    className="flex items-center px-6 py-2 text-sm font-medium text-white bg-blue-600 border border-transparent rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="px-6 py-2 text-sm font-medium text-white bg-blue-600 border border-transparent rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed"
                   >
-                    {state.step === 3 ? 'Get Recommendations' : 'Next'}
+                    Next
                   </button>
-                </div>
-              )}
+                ) : (
+                  <button
+                    onClick={resetWizard}
+                    className="px-6 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  >
+                    Start Over
+                  </button>
+                )}
+              </div>
             </div>
           </div>
 
           {/* Preview Panel */}
           <div className="lg:col-span-1">
-            <PreviewPane
+            <PreviewPane 
               rankings={rankings}
               useCase={state.useCase}
               weights={state.weights}
