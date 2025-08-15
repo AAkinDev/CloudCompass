@@ -10,7 +10,7 @@
     "start": "next start",
     "lint": "next lint",
     "type-check": "tsc --noEmit",
-    "test": "echo 'No tests specified' && exit 0"
+    "test": "echo 'No tests specified'"
   },
   "dependencies": {
     "date-fns": "^2.30.0",
